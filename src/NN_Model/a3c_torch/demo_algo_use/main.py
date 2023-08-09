@@ -35,6 +35,8 @@ import Varible as Var
 import utils
 if __name__ == "__main__":
     start_time = datetime.now()
+
+
     open("record/record.csv", "w")
     utils.write("record/record.csv", "w", "global_ep, name, global_ep_r, ep_r\n")
     gnet = Neural_Network(Var.N_S, Var.N_A)        # global network
