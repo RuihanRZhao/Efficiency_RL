@@ -1,10 +1,10 @@
-import csv
-import mysql.connector as mc
+import pymysql as mc
 
 F_DB = mc.connect(
-    host="localhost",
+    host="127.0.0.1",
     user="root",
-    passwd="Pass4RRZ1s<="
+    passwd="114514",
+    port=114
 )
 
 
@@ -20,6 +20,8 @@ def Get_DB_Method():
 
 
 # CSV version
+
+import csv
 def ReadFile(filename, file_type, separator):
     with open(filename, 'r') as file:
         if file_type == "csv":

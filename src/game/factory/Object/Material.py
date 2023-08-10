@@ -1,8 +1,8 @@
-import DB
-
+from src.game.factory.util import Database as DB
 
 class Material(object):
-    def __init__(self, name, storage=0, max_store=0, extra_store=0):
+    def __init__(self, id, name, storage=0, max_store=0, extra_store=0):
+        self.id = id
         self.name = name
         self.storage = storage
         self.max_storage = max_store
@@ -10,14 +10,15 @@ class Material(object):
         self.max_extra_storage = extra_store
 
     def __repr__(self):
-        return "\n(object: Material, name: {}, storage: {}, max_storage: {}, extra_storage: {}, max_extra_Storage: {})".format(self.name, self.storage, self.max_storage, self.extra_storage, self.max_extra_storage)
+        return "\n(object: Material, name: {}, storage: {}, max_storage: {}, extra_storage: {}, max_extra_Storage: {})".format(
+            self.name, self.storage, self.max_storage, self.extra_storage, self.max_extra_storage)
+
     def buy(self, amount, day):
         reward = 0
         if self.max_storage >= self.storage + amount:
             reward -= amount * DB.Get_Material_Price(self.name, day)
         else:
-            _reward, amount = self.buy(int(input("Buy {} Amount will cause storage overflow: {} units free\ntry again: \nInput: {}".format(
-                self.name,self.max_storage - self.storage, amount))), day)
+            raise ValueError("More than stock ability.")
 
         self.Update_Material_Stock(amount)
         return reward, amount
@@ -27,8 +28,7 @@ class Material(object):
         if self.storage >= amount:
             reward += amount * DB.Get_Material_Price(self.name, day)
         else:
-            reward += self.sell(int(input("Sell {} Amount more than storage: {} units\ntry again: \nInput: {}".format(self.name,self.storage, amount))),
-                                day)
+            raise ValueError("More than stock left.")
 
         self.Update_Material_Stock(-amount)
         return reward, amount

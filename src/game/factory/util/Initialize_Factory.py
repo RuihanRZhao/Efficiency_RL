@@ -1,6 +1,7 @@
-import DB
-from Material import Material
-from Producer import Producer
+from . import Database as DB
+from src.game.factory.Object.Material import Material
+from src.game.factory.Object.Producer import Producer
+
 
 def Initialize_Factory_DB():
     db = DB.Get_DB_Method()
@@ -24,7 +25,7 @@ def Initialize_Material():
     cursor = db.cursor()
     cursor.execute("select * from Efficiency_RL.material")
     for i in cursor.fetchall():
-        material_list.append(Material(i[0], i[1], i[2], i[3]))
+        material_list.append(Material(i[0], i[1], i[2], i[3], i[4]))
 
     return material_list
 
@@ -36,7 +37,7 @@ def Initialize_Producer():
     cursor.execute("select distinct Produce from efficiency_rl.producer")
     target_list = cursor.fetchall()
     for target in target_list:
-        cursor.execute("select Origin, Origin_Volume from efficiency_rl.producer where Produce = (%s)",target)
+        cursor.execute("select Origin, Origin_Volume from efficiency_rl.producer where Produce = (%s)", target)
         ori_list = cursor.fetchall()
         producer_list.append(Producer(target[0], ori_list, 0, 5))
 

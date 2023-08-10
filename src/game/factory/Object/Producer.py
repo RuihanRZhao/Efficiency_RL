@@ -1,10 +1,11 @@
-import DB
-from Material import Material
+from .Material import Material
+
+
 class Producer(object):
     def __init__(self, name, origin, low_cost, max_times):
-        self.name =name
+        self.product = name
         self.origin = origin
-        self.lowest_maintain_cost = low_cost
+        self.lowest_maintain_cost = low_cost  # not in use
         self.max_action_in_1_step = max_times
 
     def __repr__(self):
@@ -19,20 +20,16 @@ class Producer(object):
         for i in self.origin:
             for m in mat_list:
                 if m.name == i[0] and m.storage < i[1]:
-                    self.produce(int(input(
-                        "Origin {} not enough: {} needed per unit\ntry again: \nInput: {}".format(i[0], i[1],times))))
+                    raise ValueError("Material not enough.")
         if self.max_action_in_1_step < times:
-            self.produce(int(input(
-                "Produce {} times of {} more than available: {} units\ntry again: \nInput: {}".format(times, self.name,
-                                                                                           self.max_action_in_1_step,times))))
+            raise ValueError("Product time Overflow.")
 
         # produce
         for i in self.origin:
             for m in mat_list:
                 if m.name == i[0]:
                     m.Update_Material_Stock(-i[1])
-                if m.name == self.name:
+                if m.name == self.product:
                     m.Update_Material_Stock(times)
 
         return reward
-
