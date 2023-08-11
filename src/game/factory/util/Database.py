@@ -15,13 +15,24 @@ def Get_Material_Price(name, day):
     C.execute(sql, value)
     return C.fetchone()[0]
 
+
 def Get_DB_Method():
     return F_DB
 
 
+def check_max_table_lenght():
+    C = F_DB.cursor()
+    C.execute("SELECT COUNT(*) FROM Efficiency_RL.material;")
+    mL = C.fetchone()[0]
+    C.execute("SELECT COUNT(*) FROM Efficiency_RL.producer;")
+    pL = C.fetchone()[0]
+    return mL if mL > pL else pL
+
 # CSV version
 
 import csv
+
+
 def ReadFile(filename, file_type, separator):
     with open(filename, 'r') as file:
         if file_type == "csv":

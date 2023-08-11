@@ -21,7 +21,7 @@ class Material(object):
             raise ValueError("More than stock ability.")
 
         self.Update_Material_Stock(amount)
-        return reward, amount
+        return reward
 
     def sell(self, amount, day):
         reward = 0
@@ -31,7 +31,7 @@ class Material(object):
             raise ValueError("More than stock left.")
 
         self.Update_Material_Stock(-amount)
-        return reward, amount
+        return reward
 
     def Check_Material_Stock(self):
         database = DB.Get_DB_Method()
@@ -47,7 +47,7 @@ class Material(object):
         sql = "update efficiency_rl.material set storage = (%s) where name = (%s)"
         material_state_now = self.Check_Material_Stock()
         value = (
-            amount_change + material_state_now[1],
+            amount_change + int(material_state_now[1]),
             self.name,)
         cursor.execute(sql, value)
         database.commit()
