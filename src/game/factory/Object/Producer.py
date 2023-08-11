@@ -19,17 +19,18 @@ class Producer(object):
         # if too much times / origin not enough, start again
         for i in self.origin:
             for m in mat_list:
-                if m.name == i[0] and m.storage < i[1]:
-                    raise ValueError("Material not enough.")
-        if self.max_action_in_1_step < times:
-            raise ValueError("Product time Overflow.")
-
+                if m.name == i[0] and m.storage < i[1]*int(times):
+                    return -1
+                    # raise ValueError("Material not enough.")
+        if self.max_action_in_1_step < int(times):
+            # raise ValueError("Product time Overflow.")
+            return -1
         # produce
         for i in self.origin:
             for m in mat_list:
                 if m.name == i[0]:
-                    m.Update_Material_Stock(-i[1])
+                    m.Update_Material_Stock(-i[1]*int(times))
                 if m.name == self.product:
-                    m.Update_Material_Stock(times)
+                    m.Update_Material_Stock(int(times))
 
         return reward

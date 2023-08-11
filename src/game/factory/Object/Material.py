@@ -18,7 +18,8 @@ class Material(object):
         if self.max_storage >= self.storage + amount:
             reward -= amount * DB.Get_Material_Price(self.name, day)
         else:
-            raise ValueError("More than stock ability.")
+            # raise ValueError("More than stock ability.")
+            return -1
 
         self.Update_Material_Stock(amount)
         return reward
@@ -28,7 +29,8 @@ class Material(object):
         if self.storage >= amount:
             reward += amount * DB.Get_Material_Price(self.name, day)
         else:
-            raise ValueError("More than stock left.")
+            # raise ValueError("More than stock left.")
+            return -1
 
         self.Update_Material_Stock(-amount)
         return reward
@@ -47,7 +49,7 @@ class Material(object):
         sql = "update efficiency_rl.material set storage = (%s) where name = (%s)"
         material_state_now = self.Check_Material_Stock()
         value = (
-            amount_change + int(material_state_now[1]),
+            amount_change + int(material_state_now[2]),
             self.name,)
         cursor.execute(sql, value)
         database.commit()

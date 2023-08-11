@@ -95,30 +95,30 @@ def take_action(player_actions, day):
     pro_rewards = []
     sel_rewards = []
 
-
-    try:
-        # buy
-        count = 0
-        for i1 in Material_List:
-            r = i1.buy(int(buy_actions[count]), day)
-            buy_rewards.append(r)
-            count += 1
-
-        # produce
-        for i1 in range(len(Producer_List)):
-            pro_rewards.append(Producer_List[i1].produce(pro_actions[i1], Material_List))
-
-        # sell
-        for i1 in range(len(Material_List)):
-            r = Material_List[i1].sell(sel_actions[i1], day)
-            sel_rewards.append(r)
-    except ValueError:
-        max_len = 12
-        return [
-            [0 for i in range(max_len)] for i in range(3)
-        ]
-
     print([buy_actions, pro_actions, sel_actions])
+
+    # buy
+    count = 0
+    for i1 in Material_List:
+        r = i1.buy(int(buy_actions[count]), day)
+        buy_rewards.append(r)
+        count += 1
+
+    # produce
+    count = 0
+    for i1 in Producer_List:
+        pro_rewards.append(i1.produce(pro_actions[count], Material_List))
+        count += 1
+
+    # sell
+
+    count = 0
+    for i1 in Material_List:
+        r = i1.sell(int(sel_actions[count]), day)
+        buy_rewards.append(r)
+        count += 1
+
+
     print([buy_rewards, pro_rewards, sel_rewards])
     return [buy_rewards, pro_rewards, sel_rewards]
 
