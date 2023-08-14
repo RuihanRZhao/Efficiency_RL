@@ -1,3 +1,4 @@
+from . import Fac_Value as FV
 from .Material import Material
 
 
@@ -20,11 +21,11 @@ class Producer(object):
         for i in self.origin:
             for m in mat_list:
                 if m.name == i[0] and m.storage < i[1]*int(times):
-                    return -1
+                    return FV.Cost_Do_Nothing
                     # raise ValueError("Material not enough.")
         if self.max_action_in_1_step < int(times):
             # raise ValueError("Product time Overflow.")
-            return -1
+            return FV.Cost_Do_Nothing
         # produce
         for i in self.origin:
             for m in mat_list:

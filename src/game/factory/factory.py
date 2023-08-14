@@ -37,6 +37,8 @@ Material_List = IF.Initialize_Material()
 # print("Get Material Data  ........ Done")
 # print("Get Producer Data  ........ ")
 Producer_List = IF.Initialize_Producer()
+
+
 # print("Get Producer Data  ........ Done")
 
 
@@ -87,7 +89,6 @@ def get_environment(day):
 
 
 def take_action(player_actions, day):
-    len = get_matrix_size()
     buy_actions = player_actions[0]
     pro_actions = player_actions[1]
     sel_actions = player_actions[2]
@@ -95,32 +96,34 @@ def take_action(player_actions, day):
     pro_rewards = []
     sel_rewards = []
 
-    print([buy_actions, pro_actions, sel_actions])
+    print(player_actions)
 
     # buy
-    count = 0
-    for i1 in Material_List:
-        r = i1.buy(int(buy_actions[count]), day)
-        buy_rewards.append(r)
-        count += 1
+    for i1 in range(len(Material_List)):
+        buy_rewards.append(Material_List[i1].buy(int(buy_actions[i1]), day))
 
     # produce
     count = 0
-    for i1 in Producer_List:
-        pro_rewards.append(i1.produce(pro_actions[count], Material_List))
-        count += 1
+    for i1 in range(len(Producer_List)):
+        pro_rewards.append(Producer_List[i1].produce(int(pro_actions[i1]), Material_List))
 
     # sell
 
     count = 0
-    for i1 in Material_List:
-        r = i1.sell(int(sel_actions[count]), day)
-        buy_rewards.append(r)
-        count += 1
+    for i1 in range(len(Material_List)):
+        sel_rewards.append(Material_List[i1].sell(int(sel_actions[i1]), day))
 
 
-    print([buy_rewards, pro_rewards, sel_rewards])
-    return [buy_rewards, pro_rewards, sel_rewards]
+    info = np.zeros((3, get_matrix_size()), dtype=np.float32)
+
+    info[0, :len(buy_rewards)] = buy_rewards
+    info[1, :len(pro_rewards)] = pro_rewards
+    info[2, :len(sel_rewards)] = sel_rewards
+
+
+    # print("REWARD: ", info)
+
+    return info
 
 
 def get_matrix_size():

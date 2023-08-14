@@ -1,4 +1,6 @@
 from src.game.factory.util import Database as DB
+from . import Fac_Value as FV
+
 
 class Material(object):
     def __init__(self, id, name, storage=0, max_store=0, extra_store=0):
@@ -19,7 +21,7 @@ class Material(object):
             reward -= amount * DB.Get_Material_Price(self.name, day)
         else:
             # raise ValueError("More than stock ability.")
-            return -1
+            return FV.Cost_Do_Nothing
 
         self.Update_Material_Stock(amount)
         return reward
@@ -30,7 +32,8 @@ class Material(object):
             reward += amount * DB.Get_Material_Price(self.name, day)
         else:
             # raise ValueError("More than stock left.")
-            return -1
+            return FV.Cost_Do_Nothing
+
 
         self.Update_Material_Stock(-amount)
         return reward

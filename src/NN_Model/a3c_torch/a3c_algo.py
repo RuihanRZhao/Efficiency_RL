@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.multiprocessing as mp
 import torch.nn.functional as F
-
+import utils
 # from src.NN_Model.a3c_torch.unet import UNet
 
 
@@ -102,10 +102,13 @@ class A3CWorker(mp.Process):
                 action_prob, _ = model(state)
                 action = sample_action(action_prob)  # Implement action sampling
                 # Interact with environment
+
+
                 reward_info = env.take_action(action, self.step)  # Get reward information
+
                 next_state = torch.tensor(env.get_environment(self.step + 1), dtype=torch.float32)
                 next_state = next_state.unsqueeze(0).unsqueeze(0)
-                reward = torch.tensor(reward_info).sum()
+                reward = torch.tensor(reward_info, dtype=torch.float32).sum()
                 Total_Reward += float(reward.float())
                 # Compute advantage and TD error
                 value, _ = model(state)
@@ -115,27 +118,29 @@ class A3CWorker(mp.Process):
 
                 # Compute policy loss
                 def log_prob():
-                    sum = 0
+                    _sum = 0
+                    apn = action_prob_normalize(action_prob)
                     for i in range(3):
                         for ii in range(env.get_matrix_size()):
-                            sum += action_prob[i][ii]*action[i][ii]/action_prob.sum()
-                    return sum
+                            _sum += apn[i][ii]*action[i][ii]
+                    return _sum
 
                 actor_loss = -log_prob() * advantage.detach()
 
                 # Backpropagate and update model
                 self.optimizer.zero_grad()
-                # actor_loss.backward()
-                # critic_loss.backward()
+                sum(sum(actor_loss)).backward()
+                sum(sum(critic_loss)).backward()
                 self.optimizer.step()
 
-                # print("Step: ", self.step,end="|")
                 state = next_state
                 self.step += 1
                 done = not (self.step < self.step_max)
 
             if done:
-                print(Total_Reward)
+
+
+                utils.write("data/record.csv", "a", "%f, %f\n" % (Total_Reward, sum(sum(actor_loss)).item()))
                 break
 
 
@@ -145,10 +150,15 @@ def self_env():
     return factory
 
 
-def sample_action(action_prob):
-    action_prob = action_prob - action_prob.min()
+def action_prob_normalize(action_prob):
     # Normalize action_prob matrix to probabilities
-    action_prob_normalized = action_prob / action_prob.sum()
+    action_p = action_prob - action_prob.min()
+    return action_p / action_p.sum()
+
+def sample_action(action_prob):
+
+    # Normalize action_prob matrix to probabilities
+    action_prob_normalized = action_prob_normalize(action_prob)
 
     # Generating random indices based on the normalized action probabilities
     num_samples = 3 * 12
@@ -162,6 +172,9 @@ def sample_action(action_prob):
 # Run the A3C training loop with the new environment
 # Main Training Loop
 if __name__ == '__main__':
+
+    open("data/record.csv", "w")
+    utils.write("data/record.csv", "w", "Total_Reward,Current_Loss\n")
     # Initialize shared model and optimizer
     env = self_env()
 
@@ -169,7 +182,7 @@ if __name__ == '__main__':
     Total_Step = 30
     gamma = 0.7
     num_episodes = 10000000
-    checkpoint_interval = 10
+    checkpoint_interval = 100
 
     n = env.get_matrix_size()
     shared_model = ActorCritic(8 * n, 3 * n)  # Define the input and output sizes
