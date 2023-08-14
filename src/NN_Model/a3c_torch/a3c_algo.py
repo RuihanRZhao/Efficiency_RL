@@ -138,8 +138,7 @@ class A3CWorker(mp.Process):
                 done = not (self.step < self.step_max)
 
             if done:
-
-
+                print("Total Reward: ", Total_Reward, "\tLoss: ", sum(sum(actor_loss)).item())
                 utils.write("data/record.csv", "a", "%f, %f\n" % (Total_Reward, sum(sum(actor_loss)).item()))
                 break
 
