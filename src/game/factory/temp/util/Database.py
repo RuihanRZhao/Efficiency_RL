@@ -10,7 +10,7 @@ F_DB = mc.connect(
 
 def Get_Material_Price(name, day):
     C = F_DB.cursor()
-    sql = "select price from Efficiency_RL.material_price where name = (%s) and day = (%s)";
+    sql = f"select price from Efficiency_RL.material_price where name = {%s} and day = (%s)";
     value = (name, day)
     C.execute(sql, value)
     return C.fetchone()[0]
@@ -31,8 +31,6 @@ def check_max_table_lenght():
 # CSV version
 
 import csv
-
-
 def ReadFile(filename, file_type, separator):
     with open(filename, 'r') as file:
         if file_type == "csv":

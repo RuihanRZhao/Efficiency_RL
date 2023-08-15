@@ -1,6 +1,6 @@
 from . import Database as DB
-from src.game.factory.Object.Material import Material
-from src.game.factory.Object.Producer import Producer
+from game.factory.Object.Material import Material
+from game.factory.Object.Producer import Producer
 
 
 def Initialize_Factory_DB():

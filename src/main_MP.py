@@ -1,57 +1,53 @@
 import torch
+import torch.nn as nn
+import torch.optim as optim
 import torch.multiprocessing as mp
-from torch_cuda_util import GPU_Info
-
-
-G_Seed = 10
+import torch.nn.functional as F
+import utils
+# from src.NN_Model.a3c_torch.unet import UNet
 
 if __name__ == '__main__':
-    if torch.cuda.is_available():
-        device = torch.device("cuda")
-        print("Found {} {}: ".format(torch.cuda.device_count(),( "GPU", "GPUs")[torch.cuda.device_count() <= 1]))
-        for i in GPU_Info.Get_GPUs_Info():
-            print(i)
-        torch.cuda.manual_seed(G_Seed)
-    else:
-        device = torch.device("cpu")
-        torch.manual_seed(G_Seed)
 
+    open("data/record.csv", "w")
+    utils.write("data/record.csv", "w", "Total_Reward,Current_Loss\n")
+    # Initialize shared model and optimizer
+    env = self_env()
+
+    learning_rate = 0.001
+    Total_Step = 30
+    gamma = 0.7
+    num_episodes = 10000000
+    checkpoint_interval = 100
+
+    n = env.get_matrix_size()
+    shared_model = ActorCritic(8 * n, 3 * n)  # Define the input and output sizes
+    shared_model.share_memory()
+    optimizer = optim.Adam(shared_model.parameters(), lr=learning_rate)
 
     mp.set_start_method("spawn")
 
-
-
-    shared_model = A3Clstm(env.observation_space.shape[0], env.action_space, args)
-    if args.load:
-        saved_state = torch.load(
-            f"{args.load_model_dir}{args.env}.dat",
-            map_location=lambda storage, loc: storage,
-        )
-        shared_model.load_state_dict(saved_state)
-    shared_model.share_memory()
-
-    if args.shared_optimizer:
-        if args.optimizer == 'RMSprop':
-            optimizer = SharedRMSprop(shared_model.parameters(), lr=args.lr)
-        if args.optimizer == 'Adam':
-            optimizer = SharedAdam(
-                shared_model.parameters(), lr=args.lr, amsgrad=args.amsgrad)
-        optimizer.share_memory()
-    else:
-        optimizer = None
-
+    # Create worker processes
+    num_processes = mp.cpu_count() + torch.cuda.device_count() if torch.cuda.is_available() else 0
     processes = []
 
-    p = mp.Process(target=test, args=(args, shared_model, env_conf))
-    p.start()
-    processes.append(p)
-    time.sleep(0.001)
-    for rank in range(0, args.workers):
-        p = mp.Process(
-            target=train, args=(rank, args, shared_model, optimizer, env_conf))
-        p.start()
-        processes.append(p)
-        time.sleep(0.001)
+    try:
+        for episode in range(num_episodes):
+
+            print("Ep: ", episode)
+
+            for rank in range(num_processes):
+                p = A3CWorker(rank, shared_model, optimizer, env, gamma, Total_Step)
+                p.run()
+                processes.append(p)
+
+            if episode % checkpoint_interval == 0:
+                checkpoint_path = f'./model/checkpoint_{episode}.pth'
+                torch.save(shared_model.state_dict(), checkpoint_path)
+                print(f"Saved checkpoint at episode {episode}")
+    except KeyboardInterrupt:
+        checkpoint_path = f'./model/checkpoint_{episode}_Interrupt.pth'
+        print("Training interrupted. Saving current state...")
+        torch.save(shared_model.state_dict(), checkpoint_path)
+
     for p in processes:
-        time.sleep(0.001)
         p.join()

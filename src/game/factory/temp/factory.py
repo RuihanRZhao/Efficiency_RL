@@ -1,9 +1,9 @@
 # import
 import torch
 
-from src.game.factory.util import Database as DB
-from src.game.factory.util import Initialize_Factory as IF
-from src.game.factory.util import factory_util as f_func
+from game.factory.util import Database as DB
+from game.factory.util import Initialize_Factory as IF
+from game.factory.util import factory_util as f_func
 
 import numpy as np
 
@@ -96,7 +96,6 @@ def take_action(player_actions, day):
     pro_rewards = []
     sel_rewards = []
 
-    print(player_actions)
 
     # buy
     for i1 in range(len(Material_List)):
