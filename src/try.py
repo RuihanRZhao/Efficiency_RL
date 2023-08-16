@@ -1,9 +1,10 @@
 import torch
-import game.factory.temp as fac
+import temp.factory as fac
 from NN_Model.a3c_torch.v_0_0_1.AC import ActorCritic  # Import your ActorCritic class
 import NN_Model.a3c_torch.v_0_0_1.func as f
+import temp.Database as util
 
-def test_model(model, env, num_episodes=10):
+def test_model(model, env, num_episodes=1000):
     total_rewards = []
     model.eval()
     for episode in range(num_episodes):
@@ -13,15 +14,15 @@ def test_model(model, env, num_episodes=10):
         state = state.unsqueeze(0).unsqueeze(0)
         done = False
         episode_reward = 0
-        print("Start")
+        print(f"Episode {episode}/1000")
         while step < 31:
-            print(f"Episode {episode}, Step {step}")
-            action_prob, _ = model(state)
 
+            action_prob, _ = model(state)
+            _step = step + 30
             action = f.sample_action(action_prob)
 
-            reward_info = env.take_action(action, step)  # Get reward information
-            next_state = torch.tensor(env.get_environment(step + 1), dtype=torch.float32)
+            reward_info = env.take_action(action, _step)  # Get reward information
+            next_state = torch.tensor(env.get_environment(_step + 1), dtype=torch.float32)
             next_state = next_state.unsqueeze(0).unsqueeze(0)
             reward = torch.tensor(reward_info, dtype=torch.float32).sum()
             episode_reward += reward
@@ -29,17 +30,22 @@ def test_model(model, env, num_episodes=10):
             step += 1
 
         total_rewards.append(episode_reward)
+
         print(f"Reward: {episode_reward}")
+        util.WriteFile("test.csv", [episode, episode_reward.item()])
 
     average_reward = sum(total_rewards) / num_episodes
+
+
     print(f"Average reward over {num_episodes} episodes: {average_reward}")
+
 
 
 
 if __name__ == '__main__':
     # Load the trained model
     model = ActorCritic(8*12, 3*12)  # Define input_size and output_size
-    model.load_state_dict(torch.load("./NN_Model/a3c_torch/model/Interrput_checkpoint_524939.pth")["model_state_dict"])  # Load your trained model's state dict
+    model.load_state_dict(torch.load("./NN_Model/a3c_torch/model/checkpoint_3900000.pth"))  # Load your trained model's state dict
 
     # Create the environment
     env = fac  # Initialize your environment

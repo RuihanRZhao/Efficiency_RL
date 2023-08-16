@@ -1,9 +1,9 @@
 # import
 import torch
 
-from game.factory.util import Database as DB
-from game.factory.util import Initialize_Factory as IF
-from game.factory.util import factory_util as f_func
+from . import Database as DB
+from . import Initialize_Factory as IF
+from . import factory_util as f_func
 
 import numpy as np
 

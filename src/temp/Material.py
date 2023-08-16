@@ -1,4 +1,4 @@
-from game.factory.util import Database as DB
+from . import Database as DB
 from . import Fac_Value as FV
 
 

@@ -8,8 +8,8 @@ class SQL:
             passwd=password,
             port=port,
         )
-        self.table_list =
+        self.cursor = self.Database.Cursor()
+        self.table_list = get_tables(database)
 
-    def choose_table(self, database, name):
-
+    def get_tables(self, database):
         table_list = []
