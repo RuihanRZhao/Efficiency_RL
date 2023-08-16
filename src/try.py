@@ -1,5 +1,5 @@
 import torch
-import game.factory as fac
+import game.factory.temp as fac
 from NN_Model.a3c_torch.v_0_0_1.AC import ActorCritic  # Import your ActorCritic class
 import NN_Model.a3c_torch.v_0_0_1.func as f
 
