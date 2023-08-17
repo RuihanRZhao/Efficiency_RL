@@ -1,6 +1,6 @@
-from . import Database as DB
-from .Material import Material
-from .Producer import Producer
+import Database as DB
+from Material import Material
+from Producer import Producer
 
 
 def Initialize_Factory_DB():
@@ -34,10 +34,10 @@ def Initialize_Producer():
     producer_list = []
     db = DB.Get_DB_Method()
     cursor = db.cursor()
-    cursor.execute("select distinct Produce from efficiency_rl.producer")
+    cursor.execute("select distinct Produce from Efficiency_RL.producer")
     target_list = cursor.fetchall()
     for target in target_list:
-        cursor.execute("select Origin, Origin_Volume from efficiency_rl.producer where Produce = (%s)", target)
+        cursor.execute("select Origin, Origin_Volume from Efficiency_RL.producer where Produce = (%s)", target)
         ori_list = cursor.fetchall()
         producer_list.append(Producer(target[0], ori_list, 0, 5))
 

@@ -42,7 +42,7 @@ class ActorCritic(nn.Module):
             nn.Conv2d(64, 128, kernel_size=3)
         )
         self.pool = nn.AdaptiveAvgPool2d(1)
-        self.critic = nn.Sequential(
+        self.shit = nn.Sequential(
             nn.Linear(128 * 1 * 1, 256),
             nn.ReLU(),
             nn.Linear(256, 128),
@@ -61,6 +61,6 @@ class ActorCritic(nn.Module):
         x = self.actor(x)
         x = self.pool(x)
         x = torch.flatten(x, 1)
-        x = self.critic(x)
+        x = self.shit(x)
         # critic_output = self.critic(x)
         return x.reshape(3, 12), None

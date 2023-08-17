@@ -1,1 +1,1 @@
-Cost_Do_Nothing = 0
+Cost_Do_Nothing = -500

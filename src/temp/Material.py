@@ -1,5 +1,5 @@
-from . import Database as DB
-from . import Fac_Value as FV
+import Database as DB
+import Fac_Value as FV
 
 
 class Material(object):
@@ -17,6 +17,7 @@ class Material(object):
 
     def buy(self, amount, day):
         reward = 0
+        if amount < 0: return FV.Cost_Do_Nothing
         if self.max_storage >= self.storage + amount:
             reward -= amount * DB.Get_Material_Price(self.name, day)
         else:
@@ -28,6 +29,7 @@ class Material(object):
 
     def sell(self, amount, day):
         reward = 0
+        if amount < 0: return FV.Cost_Do_Nothing
         if self.storage >= amount:
             reward += amount * DB.Get_Material_Price(self.name, day)
         else:
@@ -41,7 +43,7 @@ class Material(object):
     def Check_Material_Stock(self):
         database = DB.Get_DB_Method()
         cursor = database.cursor()
-        sql = "select * from efficiency_rl.material where name = (%s)"
+        sql = "select * from Efficiency_RL.material where name = (%s)"
         value = (self.name,)
         cursor.execute(sql, value)
         return cursor.fetchone()
@@ -49,7 +51,7 @@ class Material(object):
     def Update_Material_Stock(self, amount_change):
         database = DB.Get_DB_Method()
         cursor = database.cursor()
-        sql = "update efficiency_rl.material set storage = (%s) where name = (%s)"
+        sql = "update Efficiency_RL.material set storage = (%s) where name = (%s)"
         material_state_now = self.Check_Material_Stock()
         value = (
             amount_change + int(material_state_now[2]),

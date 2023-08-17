@@ -4,12 +4,14 @@ import torch.optim as optim
 import torch.multiprocessing as mp
 import torch.nn.functional as F
 import utils
-# from src.NN_Model.a3c_torch.unet import UNet
+import temp.factory as fac
+from NN_Model.a3c_torch.v_0_0_1.worker import A3CWorker
+from NN_Model.a3c_torch.v_0_0_1.AC import ActorCritic
+import NN_Model.a3c_torch.v_0_0_1.func as f
+import temp.Database as DB
 
 if __name__ == '__main__':
-
-    open("data/record.csv", "w")
-    utils.write("data/record.csv", "w", "Total_Reward,Current_Loss\n")
+    DB.WriteFile("record.csv", "Total_Reward,Current_Loss\n")
     # Initialize shared model and optimizer
     env = self_env()
 

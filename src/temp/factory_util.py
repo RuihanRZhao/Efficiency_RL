@@ -1,4 +1,4 @@
-from . import Database as DB
+import Database as DB
 
 def Get_Material_by_Name(name, Material_List):
     for i in Material_List:

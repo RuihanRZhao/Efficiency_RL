@@ -1,5 +1,5 @@
-from . import Fac_Value as FV
-from .Material import Material
+import Fac_Value as FV
+from Material import Material
 
 
 class Producer(object):
@@ -15,9 +15,10 @@ class Producer(object):
                                                     self.lowest_maintain_cost, self.max_action_in_1_step)
 
     def produce(self, times, mat_list: list[Material]):
-        reward = 0
 
         # if too much times / origin not enough, start again
+        if times < 0:
+            return FV.Cost_Do_Nothing
         for i in self.origin:
             for m in mat_list:
                 if m.name == i[0] and m.storage < i[1]*int(times):
@@ -34,4 +35,4 @@ class Producer(object):
                 if m.name == self.product:
                     m.Update_Material_Stock(int(times))
 
-        return reward
+        return 0

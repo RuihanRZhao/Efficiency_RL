@@ -1,9 +1,9 @@
 # import
 import torch
 
-from . import Database as DB
-from . import Initialize_Factory as IF
-from . import factory_util as f_func
+import Database as DB
+import Initialize_Factory as IF
+import factory_util as f_func
 
 import numpy as np
 
@@ -119,11 +119,9 @@ def take_action(player_actions, day):
     info[1, :len(pro_rewards)] = pro_rewards
     info[2, :len(sel_rewards)] = sel_rewards
 
-
-    # print("REWARD: ", info)
-
     return info
 
 
 def get_matrix_size():
     return DB.check_max_table_lenght()
+

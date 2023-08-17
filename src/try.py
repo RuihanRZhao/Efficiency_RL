@@ -14,7 +14,7 @@ def test_model(model, env, num_episodes=1000):
         state = state.unsqueeze(0).unsqueeze(0)
         done = False
         episode_reward = 0
-        print(f"Episode {episode}/1000")
+        print(f"Episode {episode}/100")
         while step < 31:
 
             action_prob, _ = model(state)
@@ -32,7 +32,7 @@ def test_model(model, env, num_episodes=1000):
         total_rewards.append(episode_reward)
 
         print(f"Reward: {episode_reward}")
-        util.WriteFile("test.csv", [episode, episode_reward.item()])
+        util.WriteFile("test_ori.csv", [episode, episode_reward.item()])
 
     average_reward = sum(total_rewards) / num_episodes
 
@@ -45,7 +45,7 @@ def test_model(model, env, num_episodes=1000):
 if __name__ == '__main__':
     # Load the trained model
     model = ActorCritic(8*12, 3*12)  # Define input_size and output_size
-    model.load_state_dict(torch.load("./NN_Model/a3c_torch/model/checkpoint_3900000.pth"))  # Load your trained model's state dict
+    model.load_state_dict(torch.load("./NN_Model/a3c_torch/model/checkpoint_0.pth"))  # Load your trained model's state dict
 
     # Create the environment
     env = fac  # Initialize your environment
