@@ -97,6 +97,7 @@ class A3CWorker(mp.Process):
         model.eval()
 
         while True:
+            device = 0
             # Perform A3C training steps
             state = torch.tensor(env.get_environment(self.step), dtype=torch.float32)  # Get the 8*n matrix
             state = state.unsqueeze(0).unsqueeze(0)
@@ -108,12 +109,12 @@ class A3CWorker(mp.Process):
             while not done:
                 # Sample action from policy
                 action_probs, value = model(state)
-                action = action_probs.int().to(0)
+                action = action_probs.int()
                 # Interact with environment
 
                 reward_info = env.take_action(action, self.step)  # Get reward information
                 next_state = torch.tensor(env.get_environment(self.step + 1), dtype=torch.float32)
-                next_state = next_state.unsqueeze(0).unsqueeze(0).to(0)
+                next_state = next_state.unsqueeze(0).unsqueeze(0)
                 reward = torch.tensor(reward_info).sum()
                 Total_Reward += float(reward.float())
                 # Compute advantage and TD error
