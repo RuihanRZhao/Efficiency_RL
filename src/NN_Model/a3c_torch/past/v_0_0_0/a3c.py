@@ -3,23 +3,24 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.multiprocessing as mp
 import torch.nn.functional as F
-import utils
-import temp.factory as fac
-from NN_Model.a3c_torch.v_1_0_0.worker import A3CWorker
-from NN_Model.a3c_torch.v_1_0_0.neural_network import ActorCritic
-import NN_Model.a3c_torch.v_1_0_0.func as f
-import temp.Database as DB
+import Database as DB
+import os
+from factory import factory
+from neuralnet import ActorCritic
+from worker import A3CWorker
 
+# Run the A3C training loop with the new environment
+# Main Training Loop
 if __name__ == '__main__':
-    DB.WriteFile("record.csv", "Total_Reward,Current_Loss\n")
+    DB.WriteFile("record.csv", ["Episode", "Actor", "Total_Reward", "Actor_Loss", "critic_Loss"])
     # Initialize shared model and optimizer
-    env = self_env()
+    env = factory
 
     learning_rate = 0.001
     Total_Step = 30
     gamma = 0.7
     num_episodes = 10000000
-    checkpoint_interval = 100
+    checkpoint_interval = 1000
 
     n = env.get_matrix_size()
     shared_model = ActorCritic(8 * n, 3 * n)  # Define the input and output sizes
@@ -29,16 +30,13 @@ if __name__ == '__main__':
     mp.set_start_method("spawn")
 
     # Create worker processes
-    num_processes = mp.cpu_count() + torch.cuda.device_count() if torch.cuda.is_available() else 0
+    num_processes = mp.cpu_count()
     processes = []
 
     try:
         for episode in range(num_episodes):
-
-            print("Ep: ", episode)
-
             for rank in range(num_processes):
-                p = A3CWorker(rank, shared_model, optimizer, env, gamma, Total_Step)
+                p = A3CWorker(rank, shared_model, optimizer, env, gamma, Total_Step, episode)
                 p.run()
                 processes.append(p)
 

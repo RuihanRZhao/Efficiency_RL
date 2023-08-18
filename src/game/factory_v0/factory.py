@@ -12,7 +12,7 @@ np.set_printoptions(suppress=True)
 
 # print("Initialize global value...")
 
-# register all material and producer
+# register all object and producer
 reward = 0
 # Setting Args: about the game
 period = 1

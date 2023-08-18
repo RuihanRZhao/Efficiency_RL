@@ -42,25 +42,26 @@ class ActorCritic(nn.Module):
             nn.Conv2d(64, 128, kernel_size=3)
         )
         self.pool = nn.AdaptiveAvgPool2d(1)
-        self.shit = nn.Sequential(
+        self.actor_action = nn.Sequential(
             nn.Linear(128 * 1 * 1, 256),
             nn.ReLU(),
             nn.Linear(256, 128),
             nn.ReLU(),
             nn.Linear(128, 3 * 12),
         )
-        # self.critic = nn.Sequential(
-        #     nn.Conv2d(1, 32, kernel_size=1),  # Adjust the number of channels and kernel size
-        #     nn.ReLU(),
-        #     nn.Conv2d(32, 64, kernel_size=1),
-        #     nn.ReLU(),
-        #     nn.Conv2d(64, 1, kernel_size=1)
-        # )
+        self.critic = nn.Sequential(
+            nn.Linear(128 * 1 * 1, 256),
+            nn.ReLU(),
+            nn.Linear(256, 128),
+            nn.ReLU(),
+            nn.Linear(128, 1)  # Output a single value for the value function
+        )
+
 
     def forward(self, x):
         x = self.actor(x)
         x = self.pool(x)
         x = torch.flatten(x, 1)
-        x = self.shit(x)
-        # critic_output = self.critic(x)
-        return x.reshape(3, 12), None
+        x = self.actor_action(x)
+        value_G = self.critic(x)
+        return x.reshape(3, 12), value_G

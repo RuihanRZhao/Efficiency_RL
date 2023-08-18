@@ -22,7 +22,7 @@ def Get_DB_Method():
 
 def check_max_table_lenght():
     C = F_DB.cursor()
-    C.execute("SELECT COUNT(*) FROM Efficiency_RL.material;")
+    C.execute("SELECT COUNT(*) FROM Efficiency_RL.object;")
     mL = C.fetchone()[0]
     C.execute("SELECT COUNT(*) FROM Efficiency_RL.producer;")
     pL = C.fetchone()[0]

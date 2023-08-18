@@ -1,5 +1,5 @@
-import Database as DB
-import Fac_Value as FV
+from . import Database as DB
+from . import Fac_Value as FV
 
 
 class Material(object):
@@ -16,29 +16,28 @@ class Material(object):
             self.name, self.storage, self.max_storage, self.extra_storage, self.max_extra_storage)
 
     def buy(self, amount, day):
-        reward = 0
-        if amount < 0: return FV.Cost_Do_Nothing
-        if self.max_storage >= self.storage + amount:
-            reward -= amount * DB.Get_Material_Price(self.name, day)
+        reward, value = 0, 0
+        if self.max_storage >= self.storage + amount and amount >= 0:
+            value -= amount * DB.Get_Material_Price(self.name, day)
+            self.Update_Material_Stock(amount)
+            reward += FV.Cost_Do_Nothing*2
         else:
             # raise ValueError("More than stock ability.")
-            return FV.Cost_Do_Nothing
-
-        self.Update_Material_Stock(amount)
-        return reward
+            value = 0
+            reward -= FV.Cost_Do_Nothing*2
+        return reward, value
 
     def sell(self, amount, day):
-        reward = 0
-        if amount < 0: return FV.Cost_Do_Nothing
-        if self.storage >= amount:
-            reward += amount * DB.Get_Material_Price(self.name, day)
+        reward, value = 0, 0
+        if self.storage >= amount >= 0:
+            value += amount * DB.Get_Material_Price(self.name, day)
+            self.Update_Material_Stock(-amount)
+            reward += FV.Cost_Do_Nothing*3
         else:
             # raise ValueError("More than stock left.")
-            return FV.Cost_Do_Nothing
-
-
-        self.Update_Material_Stock(-amount)
-        return reward
+            value = 0
+            reward -= FV.Cost_Do_Nothing*3
+        return reward, value
 
     def Check_Material_Stock(self):
         database = DB.Get_DB_Method()

@@ -1,8 +1,5 @@
 import torch
 
-def self_env():
-    import src.game.factory as factory
-    return factory
 
 
 def action_prob_normalize(action_prob):

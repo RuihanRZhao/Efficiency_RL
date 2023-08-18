@@ -1,8 +1,9 @@
 """
 Object Class: object
-Describe:   all materials during the producing in target factory system,
-            including ingredient, intermediate and product
-Variable:
+
+all materials during the producing in target factory system,
+including ingredient, intermediate and product
+
 
 
 """
@@ -21,10 +22,20 @@ class Material(object):
         self._load_price()
 
     def __repr__(self):
-        return ""
+        return (
+            f"#################\n"
+            f"type: Material\n"
+            f"Unique ID: {self.un_id}\n"
+            f"name: {self.name}\n"
+            f"inventory: {self.inventory}\n"
+            f"inventory capability: {self.inventory_cap}\n"
+            f"cache: {self.cache}\n"
+            f"max_cache: {self.cache_cap}\n"
+        )
 
     def initialize(self):
 
+        pass
 
     def _load_price(self):
-
+        pass

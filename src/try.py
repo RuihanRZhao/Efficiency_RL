@@ -1,7 +1,7 @@
 import torch
 import temp.factory as fac
-from NN_Model.a3c_torch.v_0_0_1.AC import ActorCritic  # Import your ActorCritic class
-import NN_Model.a3c_torch.v_0_0_1.func as f
+from NN_Model.a3c_torch.v_1_0_0.neural_network import ActorCritic  # Import your ActorCritic class
+import NN_Model.a3c_torch.v_1_0_0.func as f
 import temp.Database as util
 
 def test_model(model, env, num_episodes=1000):
