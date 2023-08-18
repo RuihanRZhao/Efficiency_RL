@@ -1,0 +1,4 @@
+# git and project related files
+.idea/
+# test files in programing
+src/temp_DB.ipynb
