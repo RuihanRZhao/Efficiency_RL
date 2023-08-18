@@ -59,8 +59,7 @@ class ActorCritic(nn.Module):
             nn.ReLU(),
             nn.Linear(256, 128),
             nn.ReLU(),
-            nn.Linear(128, 1),  # Output a single value for the value function
-            nn.ReLU(),
+            nn.Linear(128, 1)  # Output a single value for the value function
         )
 
     def forward(self, x):
@@ -97,7 +96,6 @@ class A3CWorker(mp.Process):
         model.eval()
 
         while True:
-            device = 0
             # Perform A3C training steps
             state = torch.tensor(env.get_environment(self.step), dtype=torch.float32)  # Get the 8*n matrix
             state = state.unsqueeze(0).unsqueeze(0)
@@ -138,14 +136,14 @@ class A3CWorker(mp.Process):
                 total_loss.backward()
                 self.optimizer.step()
 
-                print(action_probs)
+                print(reward)
                 # print("Step: ", self.step,end="|")
                 state = next_state
                 self.step += 1
                 done = not (self.step < self.step_max)
 
             if done:
-                os.system("clear")
+                os.system("cls")
                 print(f"EP: {self.ep}-{self.rank}, T_Reward: {Total_Reward}, A_Loss: {float(TA_loss)}, C_Loss: {float(TC_loss)}")
                 DB.WriteFile("record.csv", [self.ep, self.rank,Total_Reward, float(TA_loss), float(TC_loss)])
                 break
@@ -167,8 +165,8 @@ if __name__ == '__main__':
     learning_rate = 0.001
     Total_Step = 30
     gamma = 0.7
-    num_episodes = 10000000
-    checkpoint_interval = 1000000
+    num_episodes =    10000000
+    checkpoint_interval = 1000
 
     n = env.get_matrix_size()
     shared_model = ActorCritic(8 * n, 3 * n)  # Define the input and output sizes

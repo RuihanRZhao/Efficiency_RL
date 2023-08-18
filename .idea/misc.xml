@@ -4,5 +4,5 @@
     <option name="pathToExecutable" value="C:\ProgramData\anaconda3\Scripts\black.exe" />
     <option name="sdkUUID" value="c92caf12-32f8-448c-b68f-644058403ab8" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="C:\ProgramData\anaconda3" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="pytorch" project-jdk-type="Python SDK" />
 </project>
