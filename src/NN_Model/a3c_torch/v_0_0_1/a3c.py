@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     env = factory.factory()
 
-    learning_rate = 0.95
+    learning_rate = 0.1
     Total_Step = 2
     gamma = 0.7
     num_episodes = 10000000
