@@ -2,6 +2,7 @@
 Last Change: 2023/aug/23 11:28
 Author: Ryen Zhao
 """
+# utility packages
 import pymysql
 
 
@@ -52,7 +53,7 @@ class SQL:
         cursor.execute(f"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='{self.database}'")
         result = cursor.fetchall()
         table_list = []
-        for table in result: table_list.append(table[0])    # transfer data from tuple into a new list
+        for table in result: table_list.append(table[0])  # transfer data from tuple into a new list
 
         return table_list
 
@@ -63,16 +64,15 @@ class SQL:
                 :param table_name: The name of the table to fetch data from.
                 :return: A list of dictionaries where each dictionary represents a row of data.
                 """
-        data = []
+        data: list[dict[Any, Any]] = []
 
         query = f"SELECT * FROM {table_name}"
         self.cursor.execute(query)
 
-        columns = [_column[0] for _column in self.cursor.description]   # get column information
+        columns = [_column[0] for _column in self.cursor.description]  # get column information
 
         for row in self.cursor.fetchall():
             data_dict = dict(zip(columns, row))
             data.append(data_dict)
 
         return data
-
