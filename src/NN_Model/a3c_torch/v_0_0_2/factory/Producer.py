@@ -27,7 +27,10 @@ class Producer(object):
         if self.max_action_in_1_step < int(times):
             # raise ValueError("Product time Overflow.")
             reward -= FV.Cost_Do_Nothing * 1
-        if reward < 0: return reward, -50
+        if reward < 0:
+            return reward, 0
+        else:
+            reward += FV.Cost_Do_Nothing * 3
         # produce
         for m in mat_list:
             for i in self.origin:
@@ -36,4 +39,4 @@ class Producer(object):
             if m.name == self.product:
                 m.Update_Material_Stock(int(times))
 
-        return reward, -50
+        return reward, 0
