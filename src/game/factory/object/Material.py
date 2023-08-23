@@ -1,15 +1,13 @@
 """
-Object Class: object
-Describe:   all materials during the producing in target factory system,
-            including ingredient, intermediate and product
-Variable:
-
-
+Last Change: 2023/aug/23 11:28
+Author: Ryen Zhao
 """
 
 
 class Material(object):
-    def __init__(self, un_id, name, max_store=0, max_extra_store=0, ori_storage=0):
+    def __init__(self, un_id, name, database: sql.SQL | None, max_store=0, max_extra_store=0, ori_storage=0):
+        if database is None: raise ObjectError("Do not have target server to get initialization data.")
+
         assert isinstance(un_id, Material)
         self.un_id = un_id
         self.name = name if name is not None else ""
@@ -18,13 +16,17 @@ class Material(object):
         self.cache = 0
         self.cache_cap = max_extra_store
         self.price = []
-        self._load_price()
+        # raw data for reset the factory
+        self.database = database
+        self.raw_data = self.initialize()
 
     def __repr__(self):
         return ""
 
-    def initialize(self):
+    def initialize(self, database):
+        raw_data =
 
+        return
 
     def _load_price(self):
 
