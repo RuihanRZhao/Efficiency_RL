@@ -2,3 +2,11 @@
 .idea/
 # test files in programing
 src/temp_DB.ipynb
+# mac system dir
+.DS_Store
+*/.DS_Store
+# pycahche
+__pycache__
+# local files
+/Files
+/mysql
