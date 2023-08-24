@@ -45,7 +45,7 @@ class CSV:
         elif mode == "old":
             try:
                 # Try to open the existing file for reading
-                open(self.filename, 'r', newline="")
+                open(self.filename, 'r', newline="").close()
             except FileNotFoundError:
                 # If the file doesn't exist, print an error message
                 print(f"Not Found File: {self.filename}")

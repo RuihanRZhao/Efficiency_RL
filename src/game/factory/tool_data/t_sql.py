@@ -44,6 +44,11 @@ class SQL:
         self.cursor = self.DB_server.Cursor()  # Initialize a cursor for database operations.
         self.table_list = self.get_tables()  # Fetch the list of tables in the specified database.
 
+    def __repr__(self):
+        return (
+            f"{self.database}"
+        )
+
     def get_tables(self):
         """
         Retrieve a list of table names in the specified database.

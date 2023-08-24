@@ -3,10 +3,56 @@ Last Change: 2023/aug/23 11:28
 Author: Ryen Zhao
 """
 
+# utilities
+from src.game.factory.tool_data.t_sql import SQL
+
 
 class Material(object):
-    def __init__(self, un_id, name, database: sql.SQL | None, max_store=0, max_extra_store=0, ori_storage=0):
-        if database is None: raise ObjectError("Do not have target server to get initialization data.")
+    """
+    Represents a material used in a factory process.
+
+    Args:
+        name (str): The name of the material.
+        un_id (int, optional): Unique identifier for the material. Default is None.
+        database (SQL, optional): The database connection to retrieve initialization data.
+        max_store (int, optional): Maximum storage capacity for inventory. Default is 0.
+        max_extra_store (int, optional): Maximum extra storage capacity in cache. Default is 0.
+        ori_storage (int, optional): Initial inventory storage. Default is 0.
+
+    Attributes:
+        un_id (int): Unique identifier for the material.
+        name (str): The name of the material.
+        inventory (int): Current inventory storage.
+        inventory_cap (int): Maximum storage capacity for inventory.
+        cache (int): Current cache storage.
+        cache_cap (int): Maximum extra storage capacity in cache.
+        database (SQL): The database connection for initialization data.
+        raw_data (list[dict]): Raw data for resetting the factory.
+        raw_price (list[dict]): Raw price data for the material.
+
+    Methods:
+        __init__(name, un_id=None, database=None, max_store=0, max_extra_store=0, ori_storage=0):
+            Initialize a Material instance.
+
+        __repr__():
+            Return a string representation of the Material.
+
+        initialize():
+            Initialize raw_data and raw_price based on database information.
+
+        load_price(date):
+            Load the price data for a specific date.
+
+        :param date: The date for which to load the price data.
+        :type date: Any (add type here)
+        :return: The price data for the specified date.
+        :rtype: dict
+    """
+
+    def __init__(self, name: str, un_id: int | None = None, database: SQL | None = None, max_store=0, max_extra_store=0,
+                 ori_storage=0):
+        if database is None:
+            raise ObjectError("Do not have target server to get initialization data.")
 
         assert isinstance(un_id, Material)
         self.un_id = un_id
@@ -15,18 +61,42 @@ class Material(object):
         self.inventory_cap = max_store
         self.cache = 0
         self.cache_cap = max_extra_store
-        self.price = []
-        # raw data for reset the factory
         self.database = database
-        self.raw_data = self.initialize()
+        self.raw_data = []
+        self.raw_price = []
+        self.initialize()
 
     def __repr__(self):
-        return ""
+        """
+        Return a string representation of the Material.
 
-    def initialize(self, database):
-        raw_data =
+        :return: A formatted string describing the Material's properties.
+        :rtype: str
+        """
+        return (
+            f"{self.name}[{un_id}]\n"
+            f"Origin Inventory: {self.inventory}  |  Capability of Inventory: {self.inventory_cap}\n"
+            f"Origin Cache: {self.cache}  |  Capability of Cache: {self.cache_cap}\n"
+            f"Raw Database: {self.database}"
+        )
 
-        return
+    def initialize(self):
+        """
+        Initialize raw_data and raw_price based on database information.
+        """
+        self.raw_data = [(element if element["name"] is self.name else None) for element in
+                         self.database.get_table_by_name("material")]
+        self.raw_price = [(element if element["name"] is self.name else None) for element in
+                          self.database.get_table_by_name("material_price")]
 
-    def _load_price(self):
+    def load_price(self, date):
+        """
+        Load the price data for a specific date.
+
+        :param date: The date for which to load the price data.
+        :type date: Any (add type here)
+        :return: The price data for the specified date.
+        :rtype: dict
+        """
+        return self.raw_price[date]
 
