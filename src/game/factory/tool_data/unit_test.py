@@ -67,3 +67,25 @@ class csv_test(test.TestCase):
 
 
 class sql_test(test.TestCase):
+
+
+    def test_get_tables(self):
+        sql = SQL("localhost", "root", "114514", 114, "Efficiency_RL_Ori")
+
+        mock_table_list = [("material",), ("material_price",), ("producer",)]
+
+        table_list = sql.get_tables()
+        print(type(table_list))
+
+        self.mock_cursor.fetchall.return_value = mock_table_list
+
+        table_list = sql.get_tables()
+        print(table_list)
+        self.assertEqual(table_list, self.mock_cursor.fetchall.return_value)
+
+    def test_get_table_by_name(self):
+        sql = SQL("localhost", "root", "114514", 114, "Efficiency_RL_Ori")
+
+        table_data = sql.get_table_by_name("material")
+
+        print(table_data)

@@ -67,10 +67,10 @@ class SQL:
                 Fetch data from a specified table and return it as a list of dictionaries.
 
                 :param table_name: The name of the table to fetch data from.
-                :return: A list of dictionaries where each dictionary represents a row of data.
+                :return: A list of dictionaries where ea ch dictionary represents a row of data.
                 """
         data: list[dict[Any, Any]] = []
-
+        self.cursor.execute(f"USE {self.database}")
         query = f"SELECT * FROM {table_name}"
         self.cursor.execute(query)
 
