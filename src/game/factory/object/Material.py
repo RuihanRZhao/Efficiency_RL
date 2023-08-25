@@ -30,29 +30,12 @@ class Material(object):
         raw_data (list[dict]): Raw data for resetting the factory.
         raw_price (list[dict]): Raw price data for the material.
 
-    Methods:
-        __init__(name, un_id=None, database=None, max_store=0, max_extra_store=0, ori_storage=0):
-            Initialize a Material instance.
-
-        __repr__():
-            Return a string representation of the Material.
-
-        initialize():
-            Initialize raw_data and raw_price based on database information.
-
-        load_price(date):
-            Load the price data for a specific date.
-
-        :param date: The date for which to load the price data.
-        :type date: Any (add type here)
-        :return: The price data for the specified date.
-        :rtype: dict
     """
 
-    def __init__(self, name: str, un_id: int | None = None, database: SQL | None = None, max_store=0, max_extra_store=0,
-                 ori_storage=0):
+    def __init__(self, name: str, un_id: int | None = None, database: SQL | None = None,
+                 max_store=0, max_extra_store=0, ori_storage=0):
         if database is None:
-            raise ObjectError("Do not have target server to get initialization data.")
+            raise ValueError("Do not have target server to get initialization data.")
 
         assert isinstance(un_id, Material)
         self.un_id = un_id
@@ -74,13 +57,13 @@ class Material(object):
         :rtype: str
         """
         return (
-            f"{self.name}[{un_id}]\n"
+            f"{self.name}[{self.un_id}]\n"
             f"Origin Inventory: {self.inventory}  |  Capability of Inventory: {self.inventory_cap}\n"
             f"Origin Cache: {self.cache}  |  Capability of Cache: {self.cache_cap}\n"
             f"Raw Database: {self.database}"
         )
 
-    def initialize(self):
+    def raw_storage(self, data: list | None):
         """
         Initialize raw_data and raw_price based on database information.
         """
