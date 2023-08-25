@@ -41,7 +41,7 @@ class SQL:
             port=port,
         )
         self.database = database  # the name of target database in the server
-        self.cursor = self.DB_server.Cursor()  # Initialize a cursor for database operations.
+        self.cursor = self.DB_server.cursor()  # Initialize a cursor for database operations.
         self.table_list = self.get_tables()  # Fetch the list of tables in the specified database.
 
     def __repr__(self):
@@ -55,8 +55,8 @@ class SQL:
 
         :return: A list of table names present in the specified database.
         """
-        cursor.execute(f"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='{self.database}'")
-        result = cursor.fetchall()
+        self.cursor.execute(f"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='{self.database}'")
+        result = self.cursor.fetchall()
         table_list = []
         for table in result: table_list.append(table[0])  # transfer data from tuple into a new list
 

@@ -8,8 +8,7 @@ from src.game.factory.tool_data.t_sql import SQL
 
 
 class Producer(object):
-    def __init__(self, un_id: int, low_cost: int, day_cap, database: SQL | None):
-        if database is None: raise ObjectError("Do not have target server to get initialization data.")
+    def __init__(self, un_id: int, low_cost: int=0, day_cap: int=0, ):
 
         assert isinstance(un_id, Material)
         self.un_id = un_id
@@ -18,7 +17,6 @@ class Producer(object):
         self.daily_low_cost = low_cost
         self.daily_produce_cap = day_cap
         # raw data for reset the factory
-        self.database = database
         self.raw_data = []
         self.initialize()
 

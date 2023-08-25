@@ -32,22 +32,18 @@ class Material(object):
 
     """
 
-    def __init__(self, name: str, un_id: int | None = None, database: SQL | None = None,
-                 max_store=0, max_extra_store=0, ori_storage=0):
-        if database is None:
-            raise ValueError("Do not have target server to get initialization data.")
+    def __init__(self, element: dist | dist | None = None):
 
         assert isinstance(un_id, Material)
-        self.un_id = un_id
-        self.name = name if name is not None else ""
-        self.inventory = ori_storage
-        self.inventory_cap = max_store
+        self.un_id = ""
+        self.name = ""
+        self.inventory = 0
+        self.inventory_cap = 0
         self.cache = 0
-        self.cache_cap = max_extra_store
-        self.database = database
-        self.raw_data = []
+        self.cache_cap = 0
+        self.raw_data = element
         self.raw_price = []
-        self.initialize()
+        self.initialize(element)
 
     def __repr__(self):
         """
@@ -63,14 +59,14 @@ class Material(object):
             f"Raw Database: {self.database}"
         )
 
+    def initialize(self, element):
+        pass
+
     def raw_storage(self, data: list | None):
         """
         Initialize raw_data and raw_price based on database information.
         """
-        self.raw_data = [(element if element["name"] is self.name else None) for element in
-                         self.database.get_table_by_name("material")]
-        self.raw_price = [(element if element["name"] is self.name else None) for element in
-                          self.database.get_table_by_name("material_price")]
+        pass
 
     def load_price(self, date):
         """
