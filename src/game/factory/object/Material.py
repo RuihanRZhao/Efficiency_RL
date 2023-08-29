@@ -4,25 +4,19 @@ Author: Ryen Zhao
 """
 # python standard
 from datetime import datetime, timedelta
+
 # utilities
 from src.game.factory.tool_data.t_sql import SQL
 
 
 class Material(object):
-    """
-    Represents a material used in a factory process.
-
-    Attributes:
-        un_id (int): Unique identifier for the material.
-        name (str): The name of the material.
-        inventory (int): Current inventory storage.
-        inventory_cap (int): Maximum storage capacity for inventory.
-        cache (int): Current cache storage.
-        cache_cap (int): Maximum extra storage capacity in cache.
-        raw_data (dict): Raw data for resetting the factory.
-    """
-
     def __init__(self, element: dict | None = None):
+        """
+        Initialize a Material object.
+
+        :param element: A dictionary containing initial values for the Material's properties.
+        :type element: dict, optional
+        """
         self.un_id = ""
         assert isinstance(self.un_id, Material)
 
@@ -65,7 +59,10 @@ class Material(object):
             f"Origin Cache: {self.cache}  |  Capability of Cache: {self.cache_cap}\n"
         )
 
-    def initialize(self):
+    def initialize(self) -> bool:
+        """
+        Initialize the Material's properties based on the raw_data dictionary.
+        """
         self.un_id = self.raw_data["un_id"]
         self.name = self.raw_data["name"]
         self.inventory = self.raw_data["inventory"]
@@ -74,15 +71,25 @@ class Material(object):
         self.cache_cap = self.raw_data["cache_cap"]
         return True
 
-    def reset(self):
+    def reset(self) -> bool:
+        """
+        Reset the Material's properties to their initial values.
+        """
         return self.initialize()
 
-    def load_price(self, date: datetime, source: dict | None = None):
+    def load_price(self, date: datetime, source: dict) -> dict:
         """
         Load the price data for a specific date.
+
+        :param date: The date for which to load the price data.
+        :type date: datetime
+        :param source: A dictionary containing price data for different dates.
+        :type source: dict
+        :return: A dictionary containing the loaded price data.
+        :rtype: dict
         """
         now_price = source[date]
-        trend = self.Trend_Cal(now_price, source[date-timedelta(days=3)], 3)
+        trend = self.Trend_Cal(now_price, source[date - timedelta(days=3)], 3)
         self.price = {
             "date": date,
             "price_now": now_price,
@@ -90,11 +97,76 @@ class Material(object):
         }
         return self.price
 
-    def Trend_Cal(self, end, start, scale):
+    def Trend_Cal(self, end, start, scale) -> float:
+        """
+        Calculate the trend based on start and end values and a scaling factor.
+
+        :param end: The end value.
+        :param start: The start value.
+        :param scale: The scaling factor.
+        :return: The calculated trend value.
+        """
         return (end - start) / scale
 
-    def trade(self, amount):
+    def inventory_change(self, amount: float) -> bool:
+        """
+        Change the inventory based on the given amount.
+
+        :param amount: The amount by which to change the inventory.
+        :type amount: float
+        :return: A boolean indicating whether the inventory was changed.
+        :rtype: bool
+        """
+        _if_changed = False
+        if amount > 0:
+            if amount + self.inventory <= self.inventory_cap:
+                self.inventory += amount
+                _if_changed = True
+        elif amount < 0:
+            if abs(amount) < self.inventory + self.cache:
+                if self.inventory >= abs(amount):
+                    self.inventory += amount
+                    amount = 0
+                    _if_changed = True
+                else:
+                    amount += self.inventory
+                    self.inventory = 0
+                    self.cache += amount
+                    amount = 0
+                    _if_changed = True
+        else:
+            _if_changed = True
+        return _if_changed
+
+    def trade(self, amount: float, date: datetime, price_source: dict) -> (dict, str):
+        """
+        Perform a trade action.
+
+        :param amount: The amount of the trade.
+        :type amount: float
+        :param date: The date of the trade.
+        :type date: datetime
+        :param price_source: A dictionary containing price data for different dates.
+        :type price_source: dict
+        :return: A dictionary containing the trade result and the action type.
+        :rtype: dict, str
+        """
         result = {
             "Earn": 0,
             "Reward": 0,
         }
+        Action_Type = ""
+        if amount > 0:
+            Action_Type = "buy"
+        elif amount < 0:
+            Action_Type = "sel"
+        else:
+            Action_Type = "hol"
+        if self.inventory_change(amount):
+            result["Earn"] += amount * self.load_price(date, price_source)["price_now"]
+            result["Reward"] += 10
+            Action_Type += " succeed"
+        else:
+            Action_Type += " failed"
+
+        return result, Action_Type
