@@ -4,7 +4,7 @@ from Material import Material
 from Producer import Producer
 
 
-class initialize:
+class Initialize:
     def __init__(self, database: SQL | None = None):
         if database is None: raise ValueError("Do not have target server to get initialization data.")
         self.database = database
@@ -14,10 +14,7 @@ class initialize:
         for element in self.database.get_table_by_name("material"):
             material_list.append(
                 Material(
-                    name=element["name"],
-                    un_id=element["id"],
-                    max_store=element["Max_Store"],
-                    max_extra_store=element["Max_Extra_Store"]
+
                 )
             )
 

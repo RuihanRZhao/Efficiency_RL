@@ -5,7 +5,6 @@ Author: Ryen Zhao
 # utility packages
 import pymysql
 
-
 class SQL:
     """
     A utility class for managing SQL database connections and operations.
@@ -69,7 +68,7 @@ class SQL:
                 :param table_name: The name of the table to fetch data from.
                 :return: A list of dictionaries where ea ch dictionary represents a row of data.
                 """
-        data: list[dict[Any, Any]] = []
+        data = []
         self.cursor.execute(f"USE {self.database}")
         query = f"SELECT * FROM {table_name}"
         self.cursor.execute(query)
@@ -81,3 +80,4 @@ class SQL:
             data.append(data_dict)
 
         return data
+

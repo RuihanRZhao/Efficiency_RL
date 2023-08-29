@@ -2,7 +2,8 @@
 Last Change: 2023/aug/23 11:28
 Author: Ryen Zhao
 """
-
+# python standard
+from datetime import datetime, timedelta
 # utilities
 from src.game.factory.tool_data.t_sql import SQL
 
@@ -11,14 +12,6 @@ class Material(object):
     """
     Represents a material used in a factory process.
 
-    Args:
-        name (str): The name of the material.
-        un_id (int, optional): Unique identifier for the material. Default is None.
-        database (SQL, optional): The database connection to retrieve initialization data.
-        max_store (int, optional): Maximum storage capacity for inventory. Default is 0.
-        max_extra_store (int, optional): Maximum extra storage capacity in cache. Default is 0.
-        ori_storage (int, optional): Initial inventory storage. Default is 0.
-
     Attributes:
         un_id (int): Unique identifier for the material.
         name (str): The name of the material.
@@ -26,24 +19,38 @@ class Material(object):
         inventory_cap (int): Maximum storage capacity for inventory.
         cache (int): Current cache storage.
         cache_cap (int): Maximum extra storage capacity in cache.
-        database (SQL): The database connection for initialization data.
-        raw_data (list[dict]): Raw data for resetting the factory.
-        raw_price (list[dict]): Raw price data for the material.
-
+        raw_data (dict): Raw data for resetting the factory.
     """
 
-    def __init__(self, element: dist | dist | None = None):
-
-        assert isinstance(un_id, Material)
+    def __init__(self, element: dict | None = None):
         self.un_id = ""
+        assert isinstance(self.un_id, Material)
+
+        # initialize all parameters of a material and default to "" or 0
         self.name = ""
         self.inventory = 0
         self.inventory_cap = 0
         self.cache = 0
         self.cache_cap = 0
+        self.price = {
+            "date": 0,
+            "price_now": 0,
+            "price_trend": 0.0,
+        }
+        # the storage of the original data of Material
         self.raw_data = element
-        self.raw_price = []
-        self.initialize(element)
+        """
+            the format of the raw data should be like:
+                {
+                    "un_id": ""
+                    "name": ""
+                    "inventory": 0
+                    "inventory_cap": 0
+                    "cache": 0
+                    "cache_cap": 0
+                }
+        """
+        self.initialize()
 
     def __repr__(self):
         """
@@ -56,26 +63,38 @@ class Material(object):
             f"{self.name}[{self.un_id}]\n"
             f"Origin Inventory: {self.inventory}  |  Capability of Inventory: {self.inventory_cap}\n"
             f"Origin Cache: {self.cache}  |  Capability of Cache: {self.cache_cap}\n"
-            f"Raw Database: {self.database}"
         )
 
-    def initialize(self, element):
-        pass
+    def initialize(self):
+        self.un_id = self.raw_data["un_id"]
+        self.name = self.raw_data["name"]
+        self.inventory = self.raw_data["inventory"]
+        self.inventory_cap = self.raw_data["inventory_cap"]
+        self.cache = self.raw_data["cache"]
+        self.cache_cap = self.raw_data["cache_cap"]
+        return True
 
-    def raw_storage(self, data: list | None):
-        """
-        Initialize raw_data and raw_price based on database information.
-        """
-        pass
+    def reset(self):
+        return self.initialize()
 
-    def load_price(self, date):
+    def load_price(self, date: datetime, source: dict | None = None):
         """
         Load the price data for a specific date.
-
-        :param date: The date for which to load the price data.
-        :type date: Any (add type here)
-        :return: The price data for the specified date.
-        :rtype: dict
         """
-        return self.raw_price[date]
+        now_price = source[date]
+        trend = self.Trend_Cal(now_price, source[date-timedelta(days=3)], 3)
+        self.price = {
+            "date": date,
+            "price_now": now_price,
+            "price_trend": trend,
+        }
+        return self.price
 
+    def Trend_Cal(self, end, start, scale):
+        return (end - start) / scale
+
+    def trade(self, amount):
+        result = {
+            "Earn": 0,
+            "Reward": 0,
+        }
