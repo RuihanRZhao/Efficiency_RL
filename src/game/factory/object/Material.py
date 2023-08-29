@@ -5,9 +5,6 @@ Author: Ryen Zhao
 # python standard
 from datetime import datetime, timedelta
 
-# utilities
-from src.game.factory.tool_data.t_sql import SQL
-
 
 class Material(object):
     def __init__(self, element: dict):
@@ -103,7 +100,8 @@ class Material(object):
         }
         return self.price
 
-    def Trend_Cal(self, end: datetime, price_source: dict, scale: int) -> float:
+    @staticmethod
+    def Trend_Cal(end: datetime, price_source: dict, scale: int) -> float:
         """
         Calculate the trend based on start and end values and a scaling factor.
 
