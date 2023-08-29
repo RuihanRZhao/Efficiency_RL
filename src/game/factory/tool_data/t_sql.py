@@ -5,6 +5,7 @@ Author: Ryen Zhao
 # utility packages
 import pymysql
 
+
 class SQL:
     """
     A utility class for managing SQL database connections and operations.
@@ -18,7 +19,7 @@ class SQL:
     :param port: The port number to use for the database connection.
     :param database: The name of the database to operate on.
 
-    :ivar Database: The database connection object.
+    :ivar database: The database connection object.
     :ivar cursor: The cursor object for executing SQL queries.
     :ivar table_list: A list of table names within the specified database.
     """
@@ -48,7 +49,7 @@ class SQL:
             f"{self.database}"
         )
 
-    def get_tables(self):
+    def get_tables(self) -> list:
         """
         Retrieve a list of table names in the specified database.
 
@@ -57,17 +58,18 @@ class SQL:
         self.cursor.execute(f"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='{self.database}'")
         result = self.cursor.fetchall()
         table_list = []
-        for table in result: table_list.append(table[0])  # transfer data from tuple into a new list
+        for table in result:
+            table_list.append(table[0])  # transfer data from tuple into a new list
 
         return table_list
 
-    def get_table_by_name(self, table_name):
+    def get_table_by_name(self, table_name: str) -> list:
         """
-                Fetch data from a specified table and return it as a list of dictionaries.
+        Fetch data from a specified table and return it as a list of dictionaries.
 
-                :param table_name: The name of the table to fetch data from.
-                :return: A list of dictionaries where ea ch dictionary represents a row of data.
-                """
+        :param table_name: The name of the table to fetch data from.
+        :return: A list of dictionaries where ea ch dictionary represents a row of data.
+        """
         data = []
         self.cursor.execute(f"USE {self.database}")
         query = f"SELECT * FROM {table_name}"
@@ -80,4 +82,3 @@ class SQL:
             data.append(data_dict)
 
         return data
-
