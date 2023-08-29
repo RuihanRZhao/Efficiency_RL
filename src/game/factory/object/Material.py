@@ -10,7 +10,7 @@ from src.game.factory.tool_data.t_sql import SQL
 
 
 class Material(object):
-    def __init__(self, element: dict | None = None):
+    def __init__(self, element: dict):
         """
         Initialize a Material object.
 
@@ -18,7 +18,6 @@ class Material(object):
         :type element: dict, optional
         """
         self.un_id = ""
-        assert isinstance(self.un_id, Material)
 
         # initialize all parameters of a material and default to "" or 0
         self.name = ""
@@ -96,7 +95,7 @@ class Material(object):
         :rtype: dict
         """
         now_price = source[date]
-        trend = self.Trend_Cal(now_price, source[date - timedelta(days=3)], 3)
+        trend = self.Trend_Cal(date, source, 3)
         self.price = {
             "date": date,
             "price_now": now_price,
@@ -104,16 +103,20 @@ class Material(object):
         }
         return self.price
 
-    def Trend_Cal(self, end, start, scale) -> float:
+    def Trend_Cal(self, end: datetime, price_source: dict, scale: int) -> float:
         """
         Calculate the trend based on start and end values and a scaling factor.
 
         :param end: The end value.
-        :param start: The start value.
+        :param price_source: The table of price_data.
         :param scale: The scaling factor.
         :return: The calculated trend value.
         """
-        return (end - start) / scale
+        trend = 0.
+        if end-timedelta(days=scale) in price_source:
+            trend = (price_source[end]-price_source[end-timedelta(days=scale)])
+
+        return trend
 
     def inventory_change(self, amount: float) -> bool:
         """
@@ -174,6 +177,7 @@ class Material(object):
             result["Reward"] += 10
             Action_Type += " succeed"
         else:
+            result["Reward"] -= 10
             Action_Type += " failed"
 
         return result, Action_Type
