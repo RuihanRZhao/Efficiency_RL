@@ -32,16 +32,23 @@ class Material(object):
             "price_trend": 0.0,
         }
         # the storage of the original data of Material
-        self.raw_data = element
+        self.raw_data = element if element is not None else {
+                    "un_id": "",
+                    "name": "",
+                    "inventory": 0,
+                    "inventory_cap": 0,
+                    "cache": 0,
+                    "cache_cap": 0,
+                }
         """
             the format of the raw data should be like:
                 {
-                    "un_id": ""
-                    "name": ""
-                    "inventory": 0
-                    "inventory_cap": 0
-                    "cache": 0
-                    "cache_cap": 0
+                    "un_id": "",
+                    "name": "",
+                    "inventory": 0,
+                    "inventory_cap": 0,
+                    "cache": 0,
+                    "cache_cap": 0,
                 }
         """
         self.initialize()
