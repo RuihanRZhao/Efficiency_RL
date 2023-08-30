@@ -4,21 +4,21 @@ from Material import Material
 from Producer import Producer
 
 
-class Initialize:
+class Objects:
     def __init__(self, database: SQL | None = None):
         if database is None: raise ValueError("Do not have target server to get initialization data.")
         self.database = database
+        self.material_list = []
+        self.producer_list = []
 
-    def material_initialize(self):
-        material_list = []
+    def material_initialize(self) -> list:
         for element in self.database.get_table_by_name("material"):
-            material_list.append(
+            self.material_list.append(
                 Material(
-
+                    element
                 )
             )
-
-        return material_list
+        return self.material_list
 
     def producer_initialize(self):
         producer_list = []
