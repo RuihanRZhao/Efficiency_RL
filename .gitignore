@@ -10,3 +10,4 @@ __pycache__
 # local files
 /Files
 /mysql
+/data
