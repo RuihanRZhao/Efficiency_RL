@@ -10,7 +10,7 @@
 
 ## Install Instructions 安装指南
 ### anaconda
-##### Install the GUI version (best for new to python)<br>安装图形操作界面 (新手友好)
+##### Install the GUI version (best for new to Python)<br>安装图形操作界面 (新手友好)
 官网下载: https://www.anaconda.com/download/ <br>
 Official Website download: https://www.anaconda.com/download/
 
@@ -28,4 +28,6 @@ To be complete
 To be complete
 
 ## Release 发行
-To be complete
+Please check link below
+请查看下方的链接
+[Release](https://github.com/RuihanRZhao/Efficiency_RL/tree/master/release)
