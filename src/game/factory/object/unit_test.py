@@ -50,41 +50,34 @@ class TestMaterial(unittest.TestCase):
         self.assertFalse(self.material.inventory_change(-300))
         self.assertEqual(self.material.inventory, self.mock_data["inventory"] + 50)
 
-    def test_trade_buy(self):
-
-        self.material.reset()
+    def test_unit(self, section: str, num: int, date: datetime, price: float, amount: int, result: bool, reward: int):
+        print(f"Test: {section} - {num}: ", end="\n")
         mock_prices = {
-            datetime(2023, 8, 23): 65,
+            date: price,
         }
-        date_to_test = datetime(2023, 8, 23)
-        result, action_type = self.material.trade(20, date_to_test, mock_prices)
-        self.assertEqual(action_type, "buy succeed")
-        self.assertEqual(result["Earn"], 20 * mock_prices[date_to_test])
-        self.assertEqual(result["Reward"], 10)
-        self.assertEqual(self.material.inventory, self.mock_data["inventory"] + 20)
+        earn = amount * mock_prices[date]
+        inventory_after = self.mock_data["inventory"] - amount
+
+        mock_prices = {date: price, }
+        date_to_test = date
+        result, action_type = self.material.trade(amount, date_to_test, mock_prices)
+        self.assertEqual(result, (action_type[4:] == "succeed"))
+        self.assertEqual(result["Earn"], earn)
+        self.assertEqual(reward, result["Reward"])
+        self.assertEqual(inventory_after, self.material.inventory)
+
+    def test_trade_buy(self):
+        self.material.reset()
+        self.test_unit("Buy", 1, datetime(2023, 8, 23), 65, 20, True, 10)
 
     def test_trade_sell(self):
-
         self.material.reset()
-        mock_prices = {
-            datetime(2023, 8, 23): 65,
-        }
-        date_to_test = datetime(2023, 8, 23)
-        result, action_type = self.material.trade(-30, date_to_test, mock_prices)
-        self.assertEqual("sel succeed", action_type)
-        self.assertEqual(10, result["Reward"])
-        self.assertEqual(self.mock_data["inventory"]-30, self.material.inventory)
+        self.test_unit("Buy", 1, datetime(2023, 8, 23), 65, -30, True, 10)
 
     def test_trade_hold(self):
         self.material.reset()
-        mock_prices = {
-            datetime(2023, 8, 23): 65,
-        }
-        date_to_test = datetime(2023, 8, 23)
-        result, action_type = self.material.trade(0, date_to_test, mock_prices)
-        self.assertEqual("hol succeed", action_type)
-        self.assertEqual(10, result["Reward"])
-        self.assertEqual(self.mock_data["inventory"], self.material.inventory)
+        self.test_unit("Buy", 1, datetime(2023, 8, 23), 65, 0, True, 10)
+
 
 if __name__ == '__main__':
     unittest.main()
