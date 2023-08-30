@@ -29,5 +29,5 @@ To be complete
 
 ## Release 发行
 Please check link below
-请查看下方的链接
+请查看下方的链接<br>
 [Release](https://github.com/RuihanRZhao/Efficiency_RL/tree/master/release)
