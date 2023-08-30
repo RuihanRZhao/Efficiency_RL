@@ -50,7 +50,7 @@ class CSV:
                 # If the file doesn't exist, print an error message
                 print(f"Not Found File: {self.filename}")
 
-    def Read(self):
+    def Read(self) -> list:
         """
         Read the contents of the target file.
         :return: A 2D list with the same data and structure of the origin file.
@@ -66,7 +66,7 @@ class CSV:
             print(f"Not Found File: {self.filename}")
             return []
 
-    def OverWrite(self, head: list | None, content: list | None):
+    def OverWrite(self, head: list | None, content: list | None) -> None:
         """
         Overwrite the target file with new head and content.
 
@@ -86,7 +86,7 @@ class CSV:
             # Print a success message
             print(f"Overwrite {self.filename} succeed.")
 
-    def Append(self, content: list | None):
+    def Append(self, content: list | None) -> None:
         """
         Append content to the CSV file.
 
