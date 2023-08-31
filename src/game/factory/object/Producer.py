@@ -73,7 +73,7 @@ class Producer(object):
                 if element.un_id in self.material_list:
 
 
-        return None, None
+        return result, None
 
 
 '''
