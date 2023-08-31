@@ -6,6 +6,8 @@ Author: Ryen Zhao
 # utilities
 from src.game.factory.tool_data.t_sql import SQL
 
+from Material import Material
+
 
 class Producer(object):
     def __init__(self, element: dict):
@@ -58,10 +60,23 @@ class Producer(object):
         """
         return self.initialize()
 
-    def produce(self) -> tuple:
-        """
-        Produce items using the Producer.
+    def produce(self, amount: int, materials: list[Material]) -> tuple:
+        result = {
+            "Earn": 0,
+            "Reward": 0,
+        }
+        # check produce ability
+        if amount > self.daily_produce_cap:
+            result["Reward"] -= 10
+        else:
+            for element in materials:
+                if element.un_id in self.material_list:
 
-        :return: A tuple containing production results.
-        """
+
         return None, None
+
+
+'''
+问题：
+将material_list material_amount合并为dict
+'''

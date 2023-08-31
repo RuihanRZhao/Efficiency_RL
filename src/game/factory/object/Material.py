@@ -179,3 +179,19 @@ class Material(object):
             Action_Type += " failed"
 
         return result, Action_Type
+
+    def total_inventory(self):
+        return {
+            "inventory": self.inventory,
+            "cache": self.cache
+        }
+
+
+
+'''
+问题：
+cache当日不应该用于生产
+cache将在第二个阶段进入装置，所以应该将inventory_change 逻辑重新修改！！！
+只有producer可以从inventory+cache 取库存，
+trade只关系到inventory （生产销售环节彼此独立开）
+'''
