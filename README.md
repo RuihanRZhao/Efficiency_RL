@@ -31,3 +31,31 @@ To be complete
 Please check link below
 请查看下方的链接<br>
 [Release](https://github.com/RuihanRZhao/Efficiency_RL/tree/master/release)
+
+## mySQL Server Structure 服务器结构
+```mysql
+use Factory;
+
+create table Factory.Material(
+    un_id           varchar(255)    primary key     unique,
+    name            varchar(255),
+    inventory       int,
+    inventory_cap   int,
+    cache           int,
+    cache_cap       int
+);
+
+create table Factory.Price(
+    un_id           varchar(255),
+    date            datetime,
+    price           float
+);
+
+create table Factory.Producer(
+    un_id               varchar(255) PRIMARY KEY UNIQUE,
+    Material_id         varchar(255),
+    Material_amount     int,
+    daily_low_cost      float,
+    daily_produce_cap   int
+);
+```
