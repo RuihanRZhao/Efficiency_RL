@@ -36,17 +36,17 @@ class Material(object):
             "cache": 0,
             "cache_cap": 0,
         }
-        """
-            the format of the raw data should be like:
-                {
-                    "un_id": "",
-                    "name": "",
-                    "inventory": 0,
-                    "inventory_cap": 0,
-                    "cache": 0,
-                    "cache_cap": 0,
-                }
-        """
+        # """
+        #     the format of the raw data should be like:
+        #         {
+        #             "un_id": "",
+        #             "name": "",
+        #             "inventory": 0,
+        #             "inventory_cap": 0,
+        #             "cache": 0,
+        #             "cache_cap": 0,
+        #         }
+        # """
         self.initialize()
 
     def __repr__(self):
@@ -142,33 +142,33 @@ class Material(object):
                 - 'change_type' (str): A string indicating the type of change performed.
 
         Inventory Change Modes:
-        - 'trade': Adjusts the inventory based on the trade amount. If the trade is successful, the inventory is updated,
-                    and the 'if_changed' flag is set to True. Otherwise, the flag is set to False.
-        - 'produce': Changes both inventory and cache based on the given amount. It first adds to the cache, and if
-                     there's still an amount remaining, it adds to the inventory. If cache or inventory capacities are
-                     reached, the remaining amount is not added.
-        - 'refresh': Transfers cache to inventory if there's enough space in the inventory. If there's not enough space
-                     in the inventory, the remaining cache amount is left in the cache.
+            - 'trade': Adjusts the inventory based on the trade amount. If the trade is successful, the inventory is updated,
+                        and the 'if_changed' flag is set to True. Otherwise, the flag is set to False.
+            - 'produce': Changes both inventory and cache based on the given amount. It first adds to the cache, and if
+                         there's still an amount remaining, it adds to the inventory. If cache or inventory capacities are
+                         reached, the remaining amount is not added.
+            - 'refresh': Transfers cache to inventory if there's enough space in the inventory. If there's not enough space
+                         in the inventory, the remaining cache amount is left in the cache.
 
         Note:
-        - Positive 'amount' values represent addition to inventory or cache.
-        - Zero 'amount' values indicate holding the current inventory state.
-        - Negative 'amount' values represent reduction from inventory or cache.
+            - Positive 'amount' values represent addition to inventory or cache.
+            - Zero 'amount' values indicate holding the current inventory state.
+            - Negative 'amount' values represent reduction from inventory or cache.
 
         Example usage:
-        ```python
-        # Create a Material instance
-        material = Material(element)
+            ```python
+            # Create a Material instance
+            material = Material(element)
 
-        # Change inventory in trade mode with a specified amount
-        trade_result = material.inventory_change("trade", 100)
+            # Change inventory in trade mode with a specified amount
+            trade_result = material.inventory_change("trade", 100)
 
-        # Change inventory in produce mode with a specified amount
-        produce_result = material.inventory_change("produce", 50)
+            # Change inventory in produce mode with a specified amount
+            produce_result = material.inventory_change("produce", 50)
 
-        # Change inventory in refresh mode
-        refresh_result = material.inventory_change("refresh")
-        ```
+            # Change inventory in refresh mode
+            refresh_result = material.inventory_change("refresh")
+            ```
 
         """
         state = {
@@ -303,33 +303,33 @@ class Material(object):
                                  details such as the amount, material name, trade type (buy/sell/hold), and price.
 
         Trade Decision Logic:
-        - The function determines the trade decision (buy/sell/hold) based on the sign of the 'amount':
-            - If 'amount' is positive, a buy action is recommended.
-            - If 'amount' is zero, a hold action is recommended.
-            - If 'amount' is negative, a sell action is recommended.
-        - The function then checks whether the inventory_change operation for the specified amount was successful using
-          the 'if_changed' flag.
-        - If the inventory_change operation was successful:
-            - The 'Earn' value is calculated by multiplying the 'amount' by the current price retrieved from 'price_source'.
-            - The 'Output' string is updated to indicate the success of the trade action.
-            - The 'Reward' is increased by 10 points to reflect the successful trade.
-        - If the inventory_change operation failed:
-            - The 'Output' string is updated to indicate the failure of the trade action.
-            - The 'Reward' is decreased by 10 points to reflect the unsuccessful trade.
+            - The function determines the trade decision (buy/sell/hold) based on the sign of the 'amount':
+                - If 'amount' is positive, a buy action is recommended.
+                - If 'amount' is zero, a hold action is recommended.
+                - If 'amount' is negative, a sell action is recommended.
+            - The function then checks whether the inventory_change operation for the specified amount was successful using
+              the 'if_changed' flag.
+            - If the inventory_change operation was successful:
+                - The 'Earn' value is calculated by multiplying the 'amount' by the current price retrieved from 'price_source'.
+                - The 'Output' string is updated to indicate the success of the trade action.
+                - The 'Reward' is increased by 10 points to reflect the successful trade.
+            - If the inventory_change operation failed:
+                - The 'Output' string is updated to indicate the failure of the trade action.
+                - The 'Reward' is decreased by 10 points to reflect the unsuccessful trade.
 
         Example usage:
-        ```
-        # Create a Material instance
-        material = Material(element)
+            ```
+            # Create a Material instance
+            material = Material(element)
 
-        # Define trade parameters
-        trade_amount = 100
-        trade_date = datetime(2023, 8, 25)
-        trade_price_source = {...}  # A dictionary containing price data
+            # Define trade parameters
+            trade_amount = 100
+            trade_date = datetime(2023, 8, 25)
+            trade_price_source = {...}  # A dictionary containing price data
 
-        # Perform a trade action
-        trade_result = material.trade(trade_amount, trade_date, trade_price_source)
-        ```
+            # Perform a trade action
+            trade_result = material.trade(trade_amount, trade_date, trade_price_source)
+            ```
         """
 
         result = {

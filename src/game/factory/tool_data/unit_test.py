@@ -1,8 +1,8 @@
 import unittest as test
 from unittest.mock import Mock
 # test target
-from t_csv import CSV
-from t_sql import SQL
+from .t_csv import CSV
+from .t_sql import SQL
 # system utility
 import os
 import csv

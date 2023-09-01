@@ -1,7 +1,7 @@
 # utilities
 from src.game.factory.tool_data.t_sql import SQL
-from Material import Material
-from Producer import Producer
+from .Material import Material
+from .Producer import Producer
 
 
 class Objects:

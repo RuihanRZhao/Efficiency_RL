@@ -1,0 +1,45 @@
+factory.object package
+======================
+
+Submodules
+----------
+
+factory.object.Material module
+------------------------------
+
+.. automodule:: factory.object.Material
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+factory.object.Producer module
+------------------------------
+
+.. automodule:: factory.object.Producer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+factory.object.object\_initialize module
+----------------------------------------
+
+.. automodule:: factory.object.object_initialize
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+factory.object.unit\_test module
+--------------------------------
+
+.. automodule:: factory.object.unit_test
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: factory.object
+   :members:
+   :undoc-members:
+   :show-inheritance:

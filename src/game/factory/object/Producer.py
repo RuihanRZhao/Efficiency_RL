@@ -6,7 +6,7 @@ Author: Ryen Zhao
 # utilities
 from src.game.factory.tool_data.t_sql import SQL
 
-from Material import Material
+from .Material import Material
 
 
 class Producer(object):
@@ -71,7 +71,7 @@ class Producer(object):
         else:
             for element in materials:
                 if element.un_id in self.material_list:
-
+                    pass
 
         return result, None
 
