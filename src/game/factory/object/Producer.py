@@ -7,18 +7,17 @@ Author: Ryen Zhao
 from src.game.factory.tool_data.t_sql import SQL
 
 from .Material import Material
-
+from typing import Dict, Union
 
 class Producer(object):
-    def __init__(self, element: dict):
+    def __init__(self, element: Dict[str, Union[str, int, float]]):
         """
         Initialize a Producer object.
 
         :param element: Initial configuration data for the producer.
         """
         self.un_id = ""
-        self.material_list = []
-        self.material_amount = []
+        self.material = {}
         self.daily_low_cost = 0
         self.daily_produce_cap = 0
         # raw data for reset the factory
@@ -45,9 +44,8 @@ class Producer(object):
 
         :return: True if initialization is successful, else False.
         """
-        self.un_id = ""
-        self.material_list = []
-        self.material_amount = []
+        self.un_id = self.raw_data["un_id"]
+        self.material = {}
         self.daily_low_cost = 0
         self.daily_produce_cap = 0
         return True
@@ -74,9 +72,3 @@ class Producer(object):
                     pass
 
         return result, None
-
-
-'''
-问题：
-将material_list material_amount合并为dict
-'''
