@@ -1,5 +1,8 @@
 # Efficiency_RL
 
+## Documentation
+Click [here](https://ruihanrzhao.github.io/Efficiency_RL/index.html) to the documentation.
+
 ## Requirement 需求
 
 | name     | version | require |
