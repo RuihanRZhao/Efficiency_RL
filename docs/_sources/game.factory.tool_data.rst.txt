@@ -20,13 +20,6 @@ game.factory.tool\_data.t\_sql module
    :undoc-members:
    :show-inheritance:
 
-game.factory.tool\_data.unit\_test module
------------------------------------------
-
-.. automodule:: game.factory.tool_data.unit_test
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 Module contents
 ---------------
