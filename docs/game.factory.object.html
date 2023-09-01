@@ -241,19 +241,20 @@ reached, the remaining amount is not added.</p>
 <li><p>Negative ‘amount’ values represent reduction from inventory or cache.</p></li>
 </ul>
 </div>
-<dl>
-<dt>Example usage:</dt><dd><p><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>python
-# Create a Material instance
-material = Material(element)</p>
-<p># Change inventory in trade mode with a specified amount
-trade_result = material.inventory_change(“trade”, 100)</p>
-<p># Change inventory in produce mode with a specified amount
-produce_result = material.inventory_change(“produce”, 50)</p>
-<p># Change inventory in refresh mode
-refresh_result = material.inventory_change(“refresh”)
-<a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id7"><span class="problematic" id="id8">`</span></a></p>
-</dd>
-</dl>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Material instance</span>
+<span class="n">material</span> <span class="o">=</span> <span class="n">Material</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+<span class="c1"># Change inventory in trade mode with a specified amount</span>
+<span class="n">trade_result</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">inventory_change</span><span class="p">(</span><span class="s2">&quot;trade&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Change inventory in produce mode with a specified amount</span>
+<span class="n">produce_result</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">inventory_change</span><span class="p">(</span><span class="s2">&quot;produce&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># Change inventory in refresh mode</span>
+<span class="n">refresh_result</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">inventory_change</span><span class="p">(</span><span class="s2">&quot;refresh&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -341,7 +342,7 @@ and values are corresponding price values.</p></li>
 <dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
-<dl>
+<dl class="simple">
 <dt>Trade Decision Logic:</dt><dd><ul class="simple">
 <li><dl class="simple">
 <dt>The function determines the trade decision (buy/sell/hold) based on the sign of the ‘amount’:</dt><dd><ul>
@@ -373,18 +374,20 @@ the ‘if_changed’ flag.</p></li>
 </li>
 </ul>
 </dd>
-<dt>Example usage:</dt><dd><p><a href="#id9"><span class="problematic" id="id10">``</span></a>`
-# Create a Material instance
-material = Material(element)</p>
-<p># Define trade parameters
-trade_amount = 100
-trade_date = datetime(2023, 8, 25)
-trade_price_source = {…}  # A dictionary containing price data</p>
-<p># Perform a trade action
-trade_result = material.trade(trade_amount, trade_date, trade_price_source)
-<a href="#id11"><span class="problematic" id="id12">``</span></a><a href="#id13"><span class="problematic" id="id14">`</span></a></p>
-</dd>
 </dl>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Material instance</span>
+<span class="n">material</span> <span class="o">=</span> <span class="n">Material</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+<span class="c1"># Define trade parameters</span>
+<span class="n">trade_amount</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">trade_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+<span class="n">trade_price_source</span> <span class="o">=</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>  <span class="c1"># A dictionary containing price data</span>
+
+<span class="c1"># Perform a trade action</span>
+<span class="n">trade_result</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">trade</span><span class="p">(</span><span class="n">trade_amount</span><span class="p">,</span> <span class="n">trade_date</span><span class="p">,</span> <span class="n">trade_price_source</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </dd></dl>
