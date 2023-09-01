@@ -155,8 +155,8 @@ class Material(object):
             - Zero 'amount' values indicate holding the current inventory state.
             - Negative 'amount' values represent reduction from inventory or cache.
 
-        Example usage:
-            ```python
+        Example usage::
+
             # Create a Material instance
             material = Material(element)
 
@@ -168,7 +168,6 @@ class Material(object):
 
             # Change inventory in refresh mode
             refresh_result = material.inventory_change("refresh")
-            ```
 
         """
         state = {
@@ -317,8 +316,8 @@ class Material(object):
                 - The 'Output' string is updated to indicate the failure of the trade action.
                 - The 'Reward' is decreased by 10 points to reflect the unsuccessful trade.
 
-        Example usage:
-            ```
+        Example usage::
+
             # Create a Material instance
             material = Material(element)
 
@@ -329,7 +328,7 @@ class Material(object):
 
             # Perform a trade action
             trade_result = material.trade(trade_amount, trade_date, trade_price_source)
-            ```
+
         """
 
         result = {
