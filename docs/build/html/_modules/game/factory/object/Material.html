@@ -1,0 +1,636 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
+
+    <!-- Generated with Sphinx 7.2.4 and Furo 2023.08.19 -->
+        <title>game.factory.object.Material - Efficiency_RL 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../index.html"><div class="brand">Efficiency_RL 1.0.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../index.html">
+  
+  
+  <span class="sidebar-brand-text">Efficiency_RL 1.0.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:
+modules</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../modules.html">src</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of src</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../game.html">game package</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of game package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../game.factory.html">game.factory package</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of game.factory package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../game.factory.object.html">game.factory.object package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../game.factory.tool_data.html">game.factory.tool_data package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../main_MP.html">main_MP module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../try.html">try module</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <h1>Source code for game.factory.object.Material</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Last Change: 2023/aug/23 11:28</span>
+<span class="sd">Author: Ryen Zhao</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># python standard</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
+
+<div class="viewcode-block" id="Material">
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.Material.Material">[docs]</a>
+<span class="k">class</span> <span class="nc">Material</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a Material object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            element (dict, optional): A dictionary containing initial values for the Material&#39;s properties.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">un_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="c1"># initialize all parameters of a material and default to &quot;&quot; or 0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cap</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache_cap</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">price</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;price_now&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;price_trend&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="c1"># the storage of the original data of Material</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span> <span class="o">=</span> <span class="n">element</span> <span class="k">if</span> <span class="n">element</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="s2">&quot;un_id&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;inventory&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;inventory_cap&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;cache&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;cache_cap&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="c1"># &quot;&quot;&quot;</span>
+        <span class="c1">#     the format of the raw data should be like:</span>
+        <span class="c1">#         {</span>
+        <span class="c1">#             &quot;un_id&quot;: &quot;&quot;,</span>
+        <span class="c1">#             &quot;name&quot;: &quot;&quot;,</span>
+        <span class="c1">#             &quot;inventory&quot;: 0,</span>
+        <span class="c1">#             &quot;inventory_cap&quot;: 0,</span>
+        <span class="c1">#             &quot;cache&quot;: 0,</span>
+        <span class="c1">#             &quot;cache_cap&quot;: 0,</span>
+        <span class="c1">#         }</span>
+        <span class="c1"># &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a string representation of the Material.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: A formatted string describing the Material&#39;s properties.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">un_id</span><span class="si">}</span><span class="s2">]</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Origin Inventory: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">inventory</span><span class="si">}</span><span class="s2">  |  Capability of Inventory: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">inventory_cap</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Origin Cache: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="si">}</span><span class="s2">  |  Capability of Cache: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cache_cap</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="Material.initialize">
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.Material.Material.initialize">[docs]</a>
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the Material&#39;s properties based on the raw_data dictionary.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if initialization is successful.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">un_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;un_id&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;inventory&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;inventory_cap&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;cache&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache_cap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;cache_cap&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="Material.reset">
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.Material.Material.reset">[docs]</a>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reset the Material&#39;s properties to their initial values.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if reset is successful.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Material.load_price">
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.Material.Material.load_price">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_price</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load the price data for a specific date.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            date (datetime): The date for which to load the price data.</span>
+<span class="sd">            source (dict): A dictionary containing price data for different dates.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing the loaded price data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">now_price</span> <span class="o">=</span> <span class="n">source</span><span class="p">[</span><span class="n">date</span><span class="p">]</span>
+        <span class="n">trend</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Trend_Cal</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">price</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="n">date</span><span class="p">,</span>
+            <span class="s2">&quot;price_now&quot;</span><span class="p">:</span> <span class="n">now_price</span><span class="p">,</span>
+            <span class="s2">&quot;price_trend&quot;</span><span class="p">:</span> <span class="n">trend</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">price</span></div>
+
+
+<div class="viewcode-block" id="Material.Trend_Cal">
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.Material.Material.Trend_Cal">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">Trend_Cal</span><span class="p">(</span><span class="n">end</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">price_source</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">scale</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the trend based on start and end values and a scaling factor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            end (datetime): The end value.</span>
+<span class="sd">            price_source (dict): The table of price_data.</span>
+<span class="sd">            scale (int): The scaling factor.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The calculated trend value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">trend</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="k">if</span> <span class="n">end</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">scale</span><span class="p">)</span> <span class="ow">in</span> <span class="n">price_source</span><span class="p">:</span>
+            <span class="n">trend</span> <span class="o">=</span> <span class="p">(</span><span class="n">price_source</span><span class="p">[</span><span class="n">end</span><span class="p">]</span> <span class="o">-</span> <span class="n">price_source</span><span class="p">[</span><span class="n">end</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">scale</span><span class="p">)])</span>
+
+        <span class="k">return</span> <span class="n">trend</span></div>
+
+
+<div class="viewcode-block" id="Material.inventory_change">
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.Material.Material.inventory_change">[docs]</a>
+    <span class="k">def</span> <span class="nf">inventory_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Change the inventory based on the given amount.</span>
+
+<span class="sd">        This method allows you to perform different inventory changes depending on the specified mode.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mode (str): The mode of inventory change. Valid modes are: &#39;trade&#39;, &#39;produce&#39;, and &#39;refresh&#39;.</span>
+<span class="sd">            amount (int, optional): The amount by which to change the inventory. Defaults to 0.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary indicating whether the inventory was changed. The dictionary contains the following keys:</span>
+<span class="sd">                - &#39;mode&#39; (str): The input mode.</span>
+<span class="sd">                - &#39;if_changed&#39; (bool): A boolean indicating if the inventory was changed.</span>
+<span class="sd">                - &#39;change_type&#39; (str): A string indicating the type of change performed.</span>
+
+<span class="sd">        Inventory Change Modes:</span>
+<span class="sd">            - &#39;trade&#39;: Adjusts the inventory based on the trade amount. If the trade is successful, the inventory is updated,</span>
+<span class="sd">                        and the &#39;if_changed&#39; flag is set to True. Otherwise, the flag is set to False.</span>
+<span class="sd">            - &#39;produce&#39;: Changes both inventory and cache based on the given amount. It first adds to the cache, and if</span>
+<span class="sd">                         there&#39;s still an amount remaining, it adds to the inventory. If cache or inventory capacities are</span>
+<span class="sd">                         reached, the remaining amount is not added.</span>
+<span class="sd">            - &#39;refresh&#39;: Transfers cache to inventory if there&#39;s enough space in the inventory. If there&#39;s not enough space</span>
+<span class="sd">                         in the inventory, the remaining cache amount is left in the cache.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            - Positive &#39;amount&#39; values represent addition to inventory or cache.</span>
+<span class="sd">            - Zero &#39;amount&#39; values indicate holding the current inventory state.</span>
+<span class="sd">            - Negative &#39;amount&#39; values represent reduction from inventory or cache.</span>
+
+<span class="sd">        Example usage:</span>
+<span class="sd">            ```python</span>
+<span class="sd">            # Create a Material instance</span>
+<span class="sd">            material = Material(element)</span>
+
+<span class="sd">            # Change inventory in trade mode with a specified amount</span>
+<span class="sd">            trade_result = material.inventory_change(&quot;trade&quot;, 100)</span>
+
+<span class="sd">            # Change inventory in produce mode with a specified amount</span>
+<span class="sd">            produce_result = material.inventory_change(&quot;produce&quot;, 50)</span>
+
+<span class="sd">            # Change inventory in refresh mode</span>
+<span class="sd">            refresh_result = material.inventory_change(&quot;refresh&quot;)</span>
+<span class="sd">            ```</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="n">mode</span><span class="p">,</span>
+            <span class="s2">&quot;if_changed&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;change_type&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">}</span>
+
+        <span class="k">def</span> <span class="nf">cache_to_inventory</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+            <span class="n">change_state</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;if_changed&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;change_type&quot;</span><span class="p">:</span> <span class="s2">&quot;refresh&quot;</span>
+            <span class="p">}</span>
+            <span class="n">space</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cap</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span>
+            <span class="k">if</span> <span class="n">space</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">elif</span> <span class="n">space</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cap</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">-=</span> <span class="n">space</span>
+            <span class="k">return</span> <span class="n">change_state</span>
+
+        <span class="k">def</span> <span class="nf">change_only_in_inventory</span><span class="p">(</span><span class="n">_amount</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+            <span class="n">change_state</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;if_changed&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;change_type&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span> <span class="n">_amount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;add&quot;</span>
+                <span class="n">space</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cap</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span>
+                <span class="k">if</span> <span class="n">space</span> <span class="o">&gt;=</span> <span class="n">_amount</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">+=</span> <span class="n">_amount</span>
+                    <span class="n">_amount</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="k">elif</span> <span class="n">_amount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;hold&quot;</span>
+                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">elif</span> <span class="n">_amount</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;reduce&quot;</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">&gt;=</span> <span class="n">_amount</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">-=</span> <span class="n">_amount</span>
+                    <span class="n">_amount</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="k">return</span> <span class="n">change_state</span>
+
+        <span class="k">def</span> <span class="nf">change_in_both</span><span class="p">(</span><span class="n">_amount</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+            <span class="n">change_state</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;if_changed&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;change_type&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="n">_amount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;add&quot;</span>
+                <span class="n">cache_space</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_cap</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span>
+                <span class="c1"># increase in cache first</span>
+                <span class="k">if</span> <span class="n">cache_space</span> <span class="o">&gt;=</span> <span class="n">_amount</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">+=</span> <span class="n">_amount</span>
+                    <span class="n">_amount</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_cap</span>
+                    <span class="n">_amount</span> <span class="o">-=</span> <span class="n">cache_space</span>
+                <span class="c1"># rest go to inventory</span>
+                <span class="n">inventory_space</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cap</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span>
+                <span class="k">if</span> <span class="n">inventory_space</span> <span class="o">&gt;=</span> <span class="n">_amount</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">+=</span> <span class="n">_amount</span>
+                    <span class="n">_amount</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cap</span>
+                    <span class="n">_amount</span> <span class="o">-=</span> <span class="n">inventory_space</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">elif</span> <span class="n">_amount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;hold&quot;</span>
+                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">elif</span> <span class="n">_amount</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;reduce&quot;</span>
+
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">_amount</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">&gt;=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">_amount</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">+=</span> <span class="n">_amount</span>
+                        <span class="n">_amount</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">_amount</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">+=</span> <span class="n">_amount</span>
+                        <span class="n">_amount</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">return</span> <span class="n">change_state</span>
+
+        <span class="n">mode_list</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;trade&quot;</span><span class="p">:</span> <span class="n">change_only_in_inventory</span><span class="p">(),</span>
+            <span class="s2">&quot;produce&quot;</span><span class="p">:</span> <span class="n">change_in_both</span><span class="p">(),</span>
+            <span class="s2">&quot;refresh&quot;</span><span class="p">:</span> <span class="n">cache_to_inventory</span><span class="p">()</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">mode</span> <span class="ow">in</span> <span class="n">mode_list</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">mode_list</span><span class="p">[</span><span class="n">mode</span><span class="p">](</span><span class="n">amount</span><span class="p">)</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">state</span></div>
+
+
+<div class="viewcode-block" id="Material.trade">
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.Material.Material.trade">[docs]</a>
+    <span class="k">def</span> <span class="nf">trade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">price_source</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform a trade action based on the given amount, date, and price data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            amount (int): The amount of the trade. Positive values represent buying, negative values represent selling,</span>
+<span class="sd">                          and zero represents holding.</span>
+<span class="sd">            date (datetime): The date of the trade.</span>
+<span class="sd">            price_source (dict): A dictionary containing price data for different dates, where keys are datetime objects</span>
+<span class="sd">                                and values are corresponding price values.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing trade-related information. The dictionary includes the following keys:</span>
+<span class="sd">                - &#39;Earn&#39; (float): The amount earned or lost from the trade, calculated as amount * price.</span>
+<span class="sd">                - &#39;Reward&#39; (int): The reward points earned or lost based on the success of the trade. Positive values</span>
+<span class="sd">                                 indicate earning rewards, and negative values indicate losing rewards.</span>
+<span class="sd">                - &#39;Output&#39; (str): A descriptive string indicating the action taken in the trade, along with relevant</span>
+<span class="sd">                                 details such as the amount, material name, trade type (buy/sell/hold), and price.</span>
+
+<span class="sd">        Trade Decision Logic:</span>
+<span class="sd">            - The function determines the trade decision (buy/sell/hold) based on the sign of the &#39;amount&#39;:</span>
+<span class="sd">                - If &#39;amount&#39; is positive, a buy action is recommended.</span>
+<span class="sd">                - If &#39;amount&#39; is zero, a hold action is recommended.</span>
+<span class="sd">                - If &#39;amount&#39; is negative, a sell action is recommended.</span>
+<span class="sd">            - The function then checks whether the inventory_change operation for the specified amount was successful using</span>
+<span class="sd">              the &#39;if_changed&#39; flag.</span>
+<span class="sd">            - If the inventory_change operation was successful:</span>
+<span class="sd">                - The &#39;Earn&#39; value is calculated by multiplying the &#39;amount&#39; by the current price retrieved from &#39;price_source&#39;.</span>
+<span class="sd">                - The &#39;Output&#39; string is updated to indicate the success of the trade action.</span>
+<span class="sd">                - The &#39;Reward&#39; is increased by 10 points to reflect the successful trade.</span>
+<span class="sd">            - If the inventory_change operation failed:</span>
+<span class="sd">                - The &#39;Output&#39; string is updated to indicate the failure of the trade action.</span>
+<span class="sd">                - The &#39;Reward&#39; is decreased by 10 points to reflect the unsuccessful trade.</span>
+
+<span class="sd">        Example usage:</span>
+<span class="sd">            ```</span>
+<span class="sd">            # Create a Material instance</span>
+<span class="sd">            material = Material(element)</span>
+
+<span class="sd">            # Define trade parameters</span>
+<span class="sd">            trade_amount = 100</span>
+<span class="sd">            trade_date = datetime(2023, 8, 25)</span>
+<span class="sd">            trade_price_source = {...}  # A dictionary containing price data</span>
+
+<span class="sd">            # Perform a trade action</span>
+<span class="sd">            trade_result = material.trade(trade_amount, trade_date, trade_price_source)</span>
+<span class="sd">            ```</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Earn&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;Reward&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;Output&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">}</span>
+
+        <span class="n">price</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_price</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">price_source</span><span class="p">)[</span><span class="s2">&quot;price_now&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Output&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Buy </span><span class="si">{</span><span class="n">amount</span><span class="si">}</span><span class="s2"> of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">un_id</span><span class="si">}</span><span class="s2"> when price = </span><span class="si">{</span><span class="n">price</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">elif</span> <span class="n">amount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Output&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Hold </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">un_id</span><span class="si">}</span><span class="s2"> when price = </span><span class="si">{</span><span class="n">price</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">elif</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Output&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Sell </span><span class="si">{</span><span class="n">amount</span><span class="si">}</span><span class="s2"> of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">un_id</span><span class="si">}</span><span class="s2"> when price = </span><span class="si">{</span><span class="n">price</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory_change</span><span class="p">(</span><span class="s2">&quot;trade&quot;</span><span class="p">,</span> <span class="n">amount</span><span class="p">)[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]:</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Earn&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">price</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Output&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="s2">&quot; succeed. &quot;</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Reward&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">10</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Output&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="s2">&quot; failed. &quot;</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Reward&quot;</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">10</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="Material.total_inventory">
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.Material.Material.total_inventory">[docs]</a>
+    <span class="k">def</span> <span class="nf">total_inventory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the total inventory of the material.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing the total inventory and cache amounts.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;inventory&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span><span class="p">,</span>
+            <span class="s2">&quot;cache&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">,</span>
+        <span class="p">}</span></div>
+</div>
+
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023, Ruihan Zhao
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/scripts/furo.js?v=32e29ea5"></script>
+    </body>
+</html>
