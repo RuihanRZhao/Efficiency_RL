@@ -1,6 +1,9 @@
 game package
 ============
 
+Subpackages
+-----------
+
 .. toctree::
    :maxdepth: 4
 
