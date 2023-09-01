@@ -1,7 +1,0 @@
-factory
-=======
-
-.. toctree::
-   :maxdepth: 2
-
-   factory
