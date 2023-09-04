@@ -207,12 +207,15 @@
 <span class="kn">from</span> <span class="nn">unittest.mock</span> <span class="kn">import</span> <span class="n">MagicMock</span>
 <span class="kn">from</span> <span class="nn">src.game.factory.tool_data.t_sql</span> <span class="kn">import</span> <span class="n">SQL</span>  <span class="c1"># You might need to adjust the import path</span>
 <span class="kn">from</span> <span class="nn">.material</span> <span class="kn">import</span> <span class="n">Material</span>
+<span class="kn">from</span> <span class="nn">.producer</span> <span class="kn">import</span> <span class="n">Producer</span>
 
 
 <div class="viewcode-block" id="TestMaterial">
 <a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.unit_test.TestMaterial">[docs]</a>
 <span class="k">class</span> <span class="nc">TestMaterial</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    NEED TO BE UPDATE</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="TestMaterial.setUp">
 <a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.unit_test.TestMaterial.setUp">[docs]</a>
     <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -311,6 +314,81 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">test_unit</span><span class="p">(</span><span class="s2">&quot;Buy&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">23</span><span class="p">),</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span></div>
 </div>
 
+
+
+
+<div class="viewcode-block" id="TestProducer">
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.unit_test.TestProducer">[docs]</a>
+<span class="k">class</span> <span class="nc">TestProducer</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TestProducer.setUp">
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.unit_test.TestProducer.setUp">[docs]</a>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Initialize any common setup code here.</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="TestProducer.tearDown">
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.unit_test.TestProducer.tearDown">[docs]</a>
+    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Clean up after each test case if needed.</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="TestProducer.test_produce_valid">
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.unit_test.TestProducer.test_produce_valid">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_produce_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Test producing goods with valid data.</span>
+        <span class="n">element</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;un_id&quot;</span><span class="p">:</span> <span class="s2">&quot;123&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;material&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;daily_low_cost&quot;</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
+            <span class="s2">&quot;daily_produce_cap&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">producer</span> <span class="o">=</span> <span class="n">Producer</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+        <span class="n">materials</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Replace with actual Material objects</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">producer</span><span class="o">.</span><span class="n">produce</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">materials</span><span class="p">)</span>
+
+        <span class="c1"># Define expected results</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Earn&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;Reward&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Perform assertions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_result</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestProducer.test_produce_invalid">
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.unit_test.TestProducer.test_produce_invalid">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_produce_invalid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Test producing goods with invalid data.</span>
+        <span class="n">element</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;un_id&quot;</span><span class="p">:</span> <span class="s2">&quot;456&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;material&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;daily_low_cost&quot;</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">,</span>
+            <span class="s2">&quot;daily_produce_cap&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">producer</span> <span class="o">=</span> <span class="n">Producer</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+        <span class="n">materials</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Replace with actual Material objects</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">producer</span><span class="o">.</span><span class="n">produce</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">materials</span><span class="p">)</span>
+
+        <span class="c1"># Define expected results</span>
+        <span class="n">expected_result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Earn&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;Reward&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Perform assertions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected_result</span><span class="p">)</span></div>
+</div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>

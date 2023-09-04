@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from typing import Dict, Union
 
 class Material(object):
-    def __init__(self, element: Dict[str, Union[str, int]]):
+    def __init__(self, element: Dict[str, Union[str, int, bool]]):
         """
         Initialize a Material object.
 
@@ -22,6 +22,10 @@ class Material(object):
         self.inventory_cap = 0
         self.cache = 0
         self.cache_cap = 0
+        self.trade_permit = {
+            "purchase": False,
+            "sale": False,
+        }
         self.price = {
             "date": 0,
             "price_now": 0,
@@ -75,6 +79,10 @@ class Material(object):
         self.inventory_cap = self.raw_data["inventory_cap"]
         self.cache = self.raw_data["cache"]
         self.cache_cap = self.raw_data["cache_cap"]
+        self.trade_permit ={
+            "purchase": self.raw_data["purchase_permit"],
+            "sale": self.raw_data["sale_permit"],
+        }
         return True
 
     def reset(self) -> bool:
@@ -336,22 +344,27 @@ class Material(object):
             "Reward": 0,
             "Output": ""
         }
+        permit = False
 
         price = self.load_price(date, price_source)["price_now"]
         if amount > 0:
+            permit = self.trade_permit["purchase"]
             result["Output"] = f"Buy {amount} of {self.name}-{self.un_id} when price = {price}"
         elif amount == 0:
+            permit = True
             result["Output"] = f"Hold {self.name}-{self.un_id} when price = {price}"
         elif amount < 0:
+            permit = self.trade_permit["sale"]
             result["Output"] = f"Sell {amount} of {self.name}-{self.un_id} when price = {price}"
 
-        if self.inventory_change("trade", amount)["if_changed"]:
-            result["Earn"] += amount * price
-            result["Output"] += " succeed. "
-            result["Reward"] += 10
-        else:
-            result["Output"] += " failed. "
-            result["Reward"] -= 10
+        if permit:
+            if self.inventory_change("trade", amount)["if_changed"]:
+                result["Earn"] += amount * price
+                result["Output"] += " succeed. "
+                result["Reward"] += 10
+            else:
+                result["Output"] += " failed. "
+                result["Reward"] -= 10
 
         return result
 

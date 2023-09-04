@@ -7,7 +7,9 @@ from .producer import Producer
 
 
 class TestMaterial(unittest.TestCase):
-
+    """
+    NEED TO BE UPDATE
+    """
     def setUp(self):
         # Initialize any common variables here that might be needed for testing
         self.mock_data = {
