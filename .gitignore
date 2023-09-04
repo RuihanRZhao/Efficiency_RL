@@ -11,3 +11,5 @@ __pycache__
 /Files
 /mysql
 /data
+# password
+/src/game/factory/.database
