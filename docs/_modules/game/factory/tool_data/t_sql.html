@@ -153,8 +153,7 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Contents:
-modules</span></p>
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../modules.html">src</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of src</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../../game.html">game package</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of game package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -210,7 +209,6 @@ modules</span></p>
 <span class="c1"># utility packages</span>
 <span class="kn">import</span> <span class="nn">pymysql</span>
 
-
 <div class="viewcode-block" id="SQL">
 <a class="viewcode-back" href="../../../../game.factory.tool_data.html#game.factory.tool_data.t_sql.SQL">[docs]</a>
 <span class="k">class</span> <span class="nc">SQL</span><span class="p">:</span>
@@ -231,7 +229,7 @@ modules</span></p>
 <span class="sd">    :ivar table_list: A list of table names within the specified database.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">database</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">database</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize an SQL object to manage database connections and operations.</span>
 
@@ -296,6 +294,12 @@ modules</span></p>
         <span class="k">return</span> <span class="n">data</span></div>
 </div>
 
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">SQL</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;1919810&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">114</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="s2">&quot;Factory&quot;</span><span class="p">)</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">get_table_by_name</span><span class="p">(</span><span class="s2">&quot;Producer&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
 </pre></div>
         </article>
       </div>
