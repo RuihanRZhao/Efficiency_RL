@@ -6,6 +6,7 @@ Author: Ryen Zhao
 from datetime import datetime, timedelta
 from typing import Dict, Union
 
+
 class Material(object):
     def __init__(self, element: Dict[str, Union[str, int, bool]]):
         """

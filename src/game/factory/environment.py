@@ -1,7 +1,9 @@
 # python standard
-
 # JSON support to load the database info
 import json
+
+# pytorch
+import torch
 
 
 def _load_database_info():
@@ -16,7 +18,8 @@ from .tool_data import SQL
 
 
 class factory:
-    def __init__(self):
+    def __init__(self, date_plus, date_period):
+
         # factory inner data in gaming
         self.materials = []
         self.producers = []
@@ -43,12 +46,47 @@ class factory:
         # initialize
         self.reset()
 
-
     def reset(self) -> None:
         self.materials = self.raw["material"]
         self.producers = self.raw["producer"]
 
-    def step(self) -> dict:  # make one step forward
+    def info(self) -> torch.tensor:
+        mat_info = []
+        pro_info = []
+        # generate the material data matrix
+        for item in self.materials:
+            mat_info.append([
+                int(item.un_id),
+                item.inventory,
+                item.inventory_cap,
+                item.cache,
+                item.cache_cap,
+                1 if item.trade_permit["purchase"] else 0,
+                1 if item.trade_permit["sale"] else 0,
+                item.price["price_now"],
+            ])
+
+        # generate the producer data matrix
+        for item in self.producers:
+            for mat_key, mat_value in item.material.items():
+                pro_info.append([
+                    int(item.un_id),
+                    item.daily_low_cost,
+                    item.daily_produce_cap,
+                    int(mat_key),
+                    mat_value,
+                ])
+
+        print(mat_info, "\n", pro_info)
+
+        # transfer list matrix into tensor
+        env_tensor = torch.zeros()
+        mat_tensor = torch.tensor(mat_info)
+
+
+
+    def step(self, action: list[float]) -> dict:  # make one step forward
+
         pass
 
 
