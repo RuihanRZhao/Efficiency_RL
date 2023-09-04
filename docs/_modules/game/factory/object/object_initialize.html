@@ -153,8 +153,7 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Contents:
-modules</span></p>
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../modules.html">src</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of src</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../../game.html">game package</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of game package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -204,23 +203,44 @@ modules</span></p>
         <article role="main">
           <h1>Source code for game.factory.object.object_initialize</h1><div class="highlight"><pre>
 <span></span><span class="c1"># utilities</span>
-<span class="kn">from</span> <span class="nn">src.game.factory.tool_data.t_sql</span> <span class="kn">import</span> <span class="n">SQL</span>
-<span class="kn">from</span> <span class="nn">.Material</span> <span class="kn">import</span> <span class="n">Material</span>
-<span class="kn">from</span> <span class="nn">.Producer</span> <span class="kn">import</span> <span class="n">Producer</span>
+<span class="kn">from</span> <span class="nn">src.game.factory.tool_data</span> <span class="kn">import</span> <span class="n">SQL</span>
+<span class="kn">from</span> <span class="nn">.material</span> <span class="kn">import</span> <span class="n">Material</span>
+<span class="kn">from</span> <span class="nn">.producer</span> <span class="kn">import</span> <span class="n">Producer</span>
 
 
-<div class="viewcode-block" id="Objects">
-<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.object_initialize.Objects">[docs]</a>
-<span class="k">class</span> <span class="nc">Objects</span><span class="p">:</span>
+<div class="viewcode-block" id="Objects_Initial">
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.object_initialize.Objects_Initial">[docs]</a>
+<span class="k">class</span> <span class="nc">Objects_Initial</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initializes objects from a database.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        database (SQL | None): The database to retrieve initialization data from.</span>
+<span class="sd">            Defaults to None.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If `database` is None.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        database (SQL | None): The database used for initialization data.</span>
+<span class="sd">        material_list (list[Material]): List to store Material objects.</span>
+<span class="sd">        producer_list (list[Producer]): List to store Producer objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">database</span><span class="p">:</span> <span class="n">SQL</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">database</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Do not have target server to get initialization data.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">database</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Do not have target server to get initialization data.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">material_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">producer_list</span> <span class="o">=</span> <span class="p">[]</span>
 
-<div class="viewcode-block" id="Objects.material_initialize">
-<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.object_initialize.Objects.material_initialize">[docs]</a>
-    <span class="k">def</span> <span class="nf">material_initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<div class="viewcode-block" id="Objects_Initial.material_initialize">
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.object_initialize.Objects_Initial.material_initialize">[docs]</a>
+    <span class="k">def</span> <span class="nf">material_initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Material</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize materials from the database.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[Material]: List of Material objects.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">get_table_by_name</span><span class="p">(</span><span class="s2">&quot;material&quot;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">material_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                 <span class="n">Material</span><span class="p">(</span>
@@ -230,18 +250,46 @@ modules</span></p>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">material_list</span></div>
 
 
-<div class="viewcode-block" id="Objects.producer_initialize">
-<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.object_initialize.Objects.producer_initialize">[docs]</a>
-    <span class="k">def</span> <span class="nf">producer_initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Objects_Initial.producer_initialize">
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.object_initialize.Objects_Initial.producer_initialize">[docs]</a>
+    <span class="k">def</span> <span class="nf">producer_initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Producer</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize producers from the database.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list[Producer]: List of Producer objects.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">raw</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">producer_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">get_table_by_name</span><span class="p">(</span><span class="s2">&quot;producer&quot;</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">element</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">producer_list</span><span class="p">]:</span>
-                <span class="k">pass</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">pass</span>
-        <span class="k">return</span> <span class="n">producer_list</span></div>
+            <span class="n">_if_change</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">raw</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;un_id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">element</span><span class="p">[</span><span class="s2">&quot;un_id&quot;</span><span class="p">]:</span>
+                    <span class="n">item</span><span class="p">[</span><span class="s2">&quot;material&quot;</span><span class="p">][</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">element</span><span class="p">[</span><span class="s1">&#39;Material_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="p">[</span><span class="s1">&#39;Material_amount&#39;</span><span class="p">]</span>
+                    <span class="n">_if_change</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">_if_change</span><span class="p">:</span>
+                <span class="n">raw</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                    <span class="s2">&quot;un_id&quot;</span><span class="p">:</span> <span class="n">element</span><span class="p">[</span><span class="s2">&quot;un_id&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;daily_low_cost&quot;</span><span class="p">:</span> <span class="n">element</span><span class="p">[</span><span class="s2">&quot;daily_low_cost&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;daily_produce_cap&quot;</span><span class="p">:</span> <span class="n">element</span><span class="p">[</span><span class="s2">&quot;daily_produce_cap&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;material&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="n">element</span><span class="p">[</span><span class="s1">&#39;Material_id&#39;</span><span class="p">]:</span> <span class="n">element</span><span class="p">[</span><span class="s1">&#39;Material_amount&#39;</span><span class="p">]</span>
+                    <span class="p">},</span>
+                <span class="p">})</span>
+
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">raw</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">producer_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Producer</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">producer_list</span></div>
 </div>
 
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>  <span class="c1"># for individual test</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">SQL</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;1919810&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">114</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="s2">&quot;Factory&quot;</span><span class="p">)</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">Objects_Initial</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">producer_initialize</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">producer_list</span><span class="p">)</span>
 </pre></div>
         </article>
       </div>

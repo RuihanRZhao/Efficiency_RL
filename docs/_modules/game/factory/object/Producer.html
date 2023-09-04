@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
     <!-- Generated with Sphinx 7.2.4 and Furo 2023.08.19 -->
-        <title>game.factory.object.Producer - Efficiency_RL 1.0.0 documentation</title>
+        <title>game.factory.object.producer - Efficiency_RL 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?v=36a5483c" />
@@ -153,8 +153,7 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Contents:
-modules</span></p>
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../modules.html">src</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of src</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../../game.html">game package</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of game package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -202,80 +201,104 @@ modules</span></p>
           </label>
         </div>
         <article role="main">
-          <h1>Source code for game.factory.object.Producer</h1><div class="highlight"><pre>
+          <h1>Source code for game.factory.object.producer</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Last Change: 2023/aug/23 11:28</span>
 <span class="sd">Author: Ryen Zhao</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># python standard</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="c1"># utilities</span>
-<span class="kn">from</span> <span class="nn">src.game.factory.tool_data.t_sql</span> <span class="kn">import</span> <span class="n">SQL</span>
+<span class="kn">from</span> <span class="nn">.material</span> <span class="kn">import</span> <span class="n">Material</span>
 
-<span class="kn">from</span> <span class="nn">.Material</span> <span class="kn">import</span> <span class="n">Material</span>
+<span class="kn">from</span> <span class="nn">src.game.factory.tool_data</span> <span class="kn">import</span> <span class="n">SQL</span>
 
 
 <div class="viewcode-block" id="Producer">
-<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.Producer.Producer">[docs]</a>
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.producer.Producer">[docs]</a>
 <span class="k">class</span> <span class="nc">Producer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initialize a Producer object.</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize a Producer object.</span>
 
-<span class="sd">        :param element: Initial configuration data for the producer.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            element (Dict[str, Union[str, int, float, dict]]): Initial configuration data for the producer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">un_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">material_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">material_amount</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">daily_low_cost</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">daily_produce_cap</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">material</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="c1"># raw data for reset the factory</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span> <span class="o">=</span> <span class="n">element</span>
+        <span class="c1"># &#39;&#39;&#39;</span>
+        <span class="c1"># Structure of raw_data</span>
+        <span class="c1"># self.raw_date ={</span>
+        <span class="c1">#     &quot;un_id&quot;: 0,</span>
+        <span class="c1">#     &quot;material&quot;: {</span>
+        <span class="c1">#         &quot;A&quot;: 0.0,</span>
+        <span class="c1">#     },</span>
+        <span class="c1">#     &quot;daily_low_cost&quot;: 0.0,</span>
+        <span class="c1">#     &quot;daily_produce_cap&quot;: 0,</span>
+        <span class="c1"># }</span>
+        <span class="c1"># &#39;&#39;&#39;</span>
+
         <span class="c1"># do initialize</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return a string representation of the Producer object.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a string representation of the Producer object.</span>
 
-<span class="sd">        :return: String representation of the object.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            str: String representation of the object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">un_id</span><span class="si">}</span><span class="s2">]</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Origin Inventory: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">inventory</span><span class="si">}</span><span class="s2">  |  Capability of Inventory: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">inventory_cap</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Origin Cache: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="si">}</span><span class="s2">  |  Capability of Cache: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cache_cap</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Raw Database: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="p">)</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">info</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;Unique ID: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">un_id</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">info</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;Daily Low Cost: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">daily_low_cost</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">info</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;Daily Produce Cap: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">daily_produce_cap</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">info</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;Material Info:</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">for</span> <span class="n">amt</span><span class="p">,</span> <span class="n">mat</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="p">):</span>
+            <span class="n">info</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="si">{</span><span class="n">mat</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">amt</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+        <span class="k">return</span> <span class="n">info</span>
 
 <div class="viewcode-block" id="Producer.initialize">
-<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.Producer.Producer.initialize">[docs]</a>
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.producer.Producer.initialize">[docs]</a>
     <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initialize the Producer object with default values.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the Producer object with default values.</span>
 
-<span class="sd">        :return: True if initialization is successful, else False.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if initialization is successful, else False.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">un_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">material_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">material_amount</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">daily_low_cost</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">daily_produce_cap</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">un_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;un_id&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">material</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;material&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">daily_low_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;daily_low_cost&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">daily_produce_cap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;daily_produce_cap&quot;</span><span class="p">]</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
 
 <div class="viewcode-block" id="Producer.reset">
-<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.Producer.Producer.reset">[docs]</a>
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.producer.Producer.reset">[docs]</a>
     <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Reset the Producer&#39;s properties to their initial values.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset the Producer&#39;s properties to their initial values.</span>
 
-<span class="sd">        :return: True if reset is successful, else False.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if reset is successful, else False.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Producer.produce">
-<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.Producer.Producer.produce">[docs]</a>
-    <span class="k">def</span> <span class="nf">produce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">materials</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Material</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.producer.Producer.produce">[docs]</a>
+    <span class="k">def</span> <span class="nf">produce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">materials</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Material</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Produce goods.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            amount (int): The amount of goods to produce.</span>
+<span class="sd">            materials (list[Material]): List of Material objects.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: A tuple containing two dictionaries, &quot;result&quot; and &quot;None&quot;.</span>
+<span class="sd">                &quot;result&quot; contains information about the production result, and &quot;None&quot; is not used in this context.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;Earn&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
             <span class="s2">&quot;Reward&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
@@ -285,18 +308,23 @@ modules</span></p>
             <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Reward&quot;</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">10</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">materials</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">un_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">material_list</span><span class="p">:</span>
-                    <span class="k">pass</span>
+                <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">un_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">un_id</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">element</span><span class="o">.</span><span class="n">inventory</span> <span class="o">+</span> <span class="n">element</span><span class="o">.</span><span class="n">cache</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">un_id</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Reward&quot;</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">10</span>
+                    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">un_id</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">element</span><span class="o">.</span><span class="n">inventory_cap</span> <span class="o">+</span> <span class="n">element</span><span class="o">.</span><span class="n">cache_cap</span> <span class="o">-</span> <span class="p">(</span>
+                                <span class="n">element</span><span class="o">.</span><span class="n">inventory</span> <span class="o">+</span> <span class="n">element</span><span class="o">.</span><span class="n">cache</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">un_id</span><span class="p">]:</span>
+                            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Reward&quot;</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">10</span>
 
-        <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="kc">None</span></div>
+            <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Reward&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">materials</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">un_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="p">:</span>
+                        <span class="n">element</span><span class="o">.</span><span class="n">inventory_change</span><span class="p">(</span><span class="s2">&quot;produce&quot;</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
 </div>
 
-
-
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">问题：</span>
-<span class="sd">将material_list material_amount合并为dict</span>
-<span class="sd">&#39;&#39;&#39;</span>
 </pre></div>
         </article>
       </div>

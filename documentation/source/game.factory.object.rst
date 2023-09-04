@@ -4,18 +4,10 @@ game.factory.object package
 Submodules
 ----------
 
-game.factory.object.Material module
+game.factory.object.material module
 -----------------------------------
 
-.. automodule:: game.factory.object.Material
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-game.factory.object.Producer module
------------------------------------
-
-.. automodule:: game.factory.object.Producer
+.. automodule:: game.factory.object.material
    :members:
    :undoc-members:
    :show-inheritance:
@@ -28,6 +20,21 @@ game.factory.object.object\_initialize module
    :undoc-members:
    :show-inheritance:
 
+game.factory.object.producer module
+-----------------------------------
+
+.. automodule:: game.factory.object.producer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+game.factory.object.unit\_test module
+-------------------------------------
+
+.. automodule:: game.factory.object.unit_test
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Module contents
 ---------------
