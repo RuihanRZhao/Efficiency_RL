@@ -55,7 +55,7 @@ create table Factory.Price(
 );
 
 create table Factory.Producer(
-    un_id               varchar(255) PRIMARY KEY UNIQUE,
+    un_id               varchar(255),
     Material_id         varchar(255),
     Material_amount     int,
     daily_low_cost      float,
