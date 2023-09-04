@@ -12,4 +12,4 @@ __pycache__
 /mysql
 /data
 # password
-/src/game/factory/.database
+src/game/factory/.database
