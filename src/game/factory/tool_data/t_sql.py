@@ -24,7 +24,7 @@ class SQL:
     :ivar table_list: A list of table names within the specified database.
     """
 
-    def __init__(self, host, user, password, port, database):
+    def __init__(self, host, user, password, port: int, database):
         """
         Initialize an SQL object to manage database connections and operations.
 
@@ -82,3 +82,9 @@ class SQL:
             data.append(data_dict)
 
         return data
+
+
+if __name__ == "__main__":
+    A = SQL(host="localhost", user="root", password="1919810", port=114, database="Factory")
+    target = A.get_table_by_name("Producer")
+    print(target)
