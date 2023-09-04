@@ -1,9 +1,9 @@
 # python standard
 # JSON support to load the database info
 import json
-
-# pytorch
 import torch
+# pytorch
+
 
 
 def _load_database_info():
