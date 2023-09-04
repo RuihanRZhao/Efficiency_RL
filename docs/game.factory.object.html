@@ -214,7 +214,7 @@
 Author: Ryen Zhao</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="game.factory.object.material.Material">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game.factory.object.material.</span></span><span class="sig-name descname"><span class="pre">Material</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/material.html#Material"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.material.Material" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game.factory.object.material.</span></span><span class="sig-name descname"><span class="pre">Material</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/material.html#Material"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.material.Material" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="game.factory.object.material.Material.Trend_Cal">
@@ -574,13 +574,13 @@ Author: Ryen Zhao</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><dl class="simple">
-<dt>A tuple containing two dictionaries, “result” and “None”.</dt><dd><p>”result” contains information about the production result, and “None” is not used in this context.</p>
+<dt>A dictionary containing information about the production result.</dt><dd><p>The dictionary has keys “Earn” and “Reward” with corresponding values.</p>
 </dd>
 </dl>
 </p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -608,6 +608,7 @@ Author: Ryen Zhao</p>
 <dt class="sig sig-object py" id="game.factory.object.unit_test.TestMaterial">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game.factory.object.unit_test.</span></span><span class="sig-name descname"><span class="pre">TestMaterial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestMaterial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestMaterial" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<p>NEED TO BE UPDATE</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="game.factory.object.unit_test.TestMaterial.setUp">
 <span class="sig-name descname"><span class="pre">setUp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestMaterial.setUp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestMaterial.setUp" title="Link to this definition">#</a></dt>
@@ -652,6 +653,34 @@ Author: Ryen Zhao</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="game.factory.object.unit_test.TestMaterial.test_unit">
 <span class="sig-name descname"><span class="pre">test_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reward</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestMaterial.test_unit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestMaterial.test_unit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="game.factory.object.unit_test.TestProducer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game.factory.object.unit_test.</span></span><span class="sig-name descname"><span class="pre">TestProducer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestProducer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestProducer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.object.unit_test.TestProducer.setUp">
+<span class="sig-name descname"><span class="pre">setUp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestProducer.setUp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestProducer.setUp" title="Link to this definition">#</a></dt>
+<dd><p>Hook method for setting up the test fixture before exercising it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.object.unit_test.TestProducer.tearDown">
+<span class="sig-name descname"><span class="pre">tearDown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestProducer.tearDown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestProducer.tearDown" title="Link to this definition">#</a></dt>
+<dd><p>Hook method for deconstructing the test fixture after testing it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.object.unit_test.TestProducer.test_produce_invalid">
+<span class="sig-name descname"><span class="pre">test_produce_invalid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestProducer.test_produce_invalid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestProducer.test_produce_invalid" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.object.unit_test.TestProducer.test_produce_valid">
+<span class="sig-name descname"><span class="pre">test_produce_valid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestProducer.test_produce_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestProducer.test_produce_valid" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -763,6 +792,13 @@ Author: Ryen Zhao</p>
 <li><a class="reference internal" href="#game.factory.object.unit_test.TestMaterial.test_trade_hold"><code class="docutils literal notranslate"><span class="pre">TestMaterial.test_trade_hold()</span></code></a></li>
 <li><a class="reference internal" href="#game.factory.object.unit_test.TestMaterial.test_trade_sell"><code class="docutils literal notranslate"><span class="pre">TestMaterial.test_trade_sell()</span></code></a></li>
 <li><a class="reference internal" href="#game.factory.object.unit_test.TestMaterial.test_unit"><code class="docutils literal notranslate"><span class="pre">TestMaterial.test_unit()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#game.factory.object.unit_test.TestProducer"><code class="docutils literal notranslate"><span class="pre">TestProducer</span></code></a><ul>
+<li><a class="reference internal" href="#game.factory.object.unit_test.TestProducer.setUp"><code class="docutils literal notranslate"><span class="pre">TestProducer.setUp()</span></code></a></li>
+<li><a class="reference internal" href="#game.factory.object.unit_test.TestProducer.tearDown"><code class="docutils literal notranslate"><span class="pre">TestProducer.tearDown()</span></code></a></li>
+<li><a class="reference internal" href="#game.factory.object.unit_test.TestProducer.test_produce_invalid"><code class="docutils literal notranslate"><span class="pre">TestProducer.test_produce_invalid()</span></code></a></li>
+<li><a class="reference internal" href="#game.factory.object.unit_test.TestProducer.test_produce_valid"><code class="docutils literal notranslate"><span class="pre">TestProducer.test_produce_valid()</span></code></a></li>
 </ul>
 </li>
 </ul>

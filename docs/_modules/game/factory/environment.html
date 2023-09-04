@@ -202,16 +202,72 @@
         </div>
         <article role="main">
           <h1>Source code for game.factory.environment</h1><div class="highlight"><pre>
-<span></span>
+<span></span><span class="c1"># python standard</span>
+
+<span class="c1"># JSON support to load the database info</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+
+<span class="k">def</span> <span class="nf">_load_database_info</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;.database&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
+        <span class="c1"># Load the JSON data into a Python dictionary</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
+
+
+<span class="c1"># components of the factory</span>
+<span class="kn">from</span> <span class="nn">.object</span> <span class="kn">import</span> <span class="n">Material</span><span class="p">,</span> <span class="n">Producer</span><span class="p">,</span> <span class="n">Obj_Initial</span>
+<span class="kn">from</span> <span class="nn">.tool_data</span> <span class="kn">import</span> <span class="n">SQL</span>
+
 
 <div class="viewcode-block" id="factory">
 <a class="viewcode-back" href="../../../game.factory.html#game.factory.environment.factory">[docs]</a>
 <span class="k">class</span> <span class="nc">factory</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># factory inner data in gaming</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">materials</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">producers</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># origin data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raw</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;material&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;producer&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="p">}</span>
+        <span class="c1"># other data that will be used in the environment</span>
+        <span class="c1"># connect mySQL database</span>
+        <span class="n">_database_info</span> <span class="o">=</span> <span class="n">_load_database_info</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">SQL</span><span class="p">(</span>
+            <span class="n">host</span><span class="o">=</span><span class="n">_database_info</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">],</span>
+            <span class="n">port</span><span class="o">=</span><span class="n">_database_info</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">],</span>
+            <span class="n">user</span><span class="o">=</span><span class="n">_database_info</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">],</span>
+            <span class="n">password</span><span class="o">=</span><span class="n">_database_info</span><span class="p">[</span><span class="s2">&quot;password&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="c1"># pass database to obj_initial get the raw data of material and producer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obj_ini</span> <span class="o">=</span> <span class="n">Obj_Initial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">)</span>
+        <span class="c1"># get the raw data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="p">[</span><span class="s2">&quot;material&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_ini</span><span class="o">.</span><span class="n">material_initialize</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="p">[</span><span class="s2">&quot;producer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_ini</span><span class="o">.</span><span class="n">producer_initialize</span><span class="p">()</span>
+        <span class="c1"># initialize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="factory.reset">
+<a class="viewcode-back" href="../../../game.factory.html#game.factory.environment.factory.reset">[docs]</a>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">materials</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="p">[</span><span class="s2">&quot;material&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">producers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="p">[</span><span class="s2">&quot;producer&quot;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="factory.step">
+<a class="viewcode-back" href="../../../game.factory.html#game.factory.environment.factory.step">[docs]</a>
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>  <span class="c1"># make one step forward</span>
         <span class="k">pass</span></div>
+</div>
+
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+
     <span class="k">pass</span>
 </pre></div>
         </article>
