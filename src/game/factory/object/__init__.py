@@ -1,5 +1,5 @@
-from .Material import Material as Material
-from .Producer import Producer as Producer
+from .material import Material
+from .producer import Producer
 
 # version
 __version__ = '2.0.2'

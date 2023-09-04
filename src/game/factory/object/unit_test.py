@@ -2,7 +2,8 @@ import unittest
 from datetime import datetime, timedelta
 from unittest.mock import MagicMock
 from src.game.factory.tool_data.t_sql import SQL  # You might need to adjust the import path
-from .Material import Material
+from .material import Material
+from .producer import Producer
 
 
 class TestMaterial(unittest.TestCase):
@@ -78,6 +79,66 @@ class TestMaterial(unittest.TestCase):
         self.material.reset()
         self.test_unit("Buy", 1, datetime(2023, 8, 23), 65, 0, True, 10)
 
+
+
+class TestProducer(unittest.TestCase):
+
+    def setUp(self):
+        # Initialize any common setup code here.
+        pass
+
+    def tearDown(self):
+        # Clean up after each test case if needed.
+        pass
+
+    def test_produce_valid(self):
+        # Test producing goods with valid data.
+        element = {
+            "un_id": "123",
+            "material": {
+                "A": 5,
+                "B": -3,
+            },
+            "daily_low_cost": 10.0,
+            "daily_produce_cap": 20,
+        }
+        producer = Producer(element)
+
+        materials = []  # Replace with actual Material objects
+        result = producer.produce(15, materials)
+
+        # Define expected results
+        expected_result = {
+            "Earn": 0,
+            "Reward": 0,
+        }
+
+        # Perform assertions
+        self.assertEqual(result, expected_result)
+
+    def test_produce_invalid(self):
+        # Test producing goods with invalid data.
+        element = {
+            "un_id": "456",
+            "material": {
+                "A": -5,
+            },
+            "daily_low_cost": 5.0,
+            "daily_produce_cap": 10,
+        }
+        producer = Producer(element)
+
+        materials = []  # Replace with actual Material objects
+        result = producer.produce(12, materials)
+
+        # Define expected results
+        expected_result = {
+            "Earn": 0,
+            "Reward": -10,
+        }
+
+        # Perform assertions
+        self.assertEqual(result, expected_result)
 
 if __name__ == '__main__':
     unittest.main()
