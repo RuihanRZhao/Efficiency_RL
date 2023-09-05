@@ -74,7 +74,7 @@ class Producer(object):
         """
         return self.initialize()
 
-    def produce(self, amount: int, materials: list[Material]) -> dict:
+    def produce(self, amount: int, materials: list[Material]) -> Dict[str, Union[int, float, str]]:
         """Produce goods.
 
         Args:
@@ -88,24 +88,30 @@ class Producer(object):
         result = {
             "Earn": 0,
             "Reward": 0,
+            "Output": ""
         }
         # check produce ability
         if amount > self.daily_produce_cap:
             result["Reward"] -= 10
+            result["Output"] += f"Exceed Production Capability: input = {amount}, cap for [{self.un_id}] = {self.daily_produce_cap}\n"
         else:
             for element in materials:
                 if element.un_id in self.material:
                     if self.material[element.un_id] < 0:
                         if not element.inventory + element.cache + self.material[element.un_id] > 0:
                             result["Reward"] -= 10
+                            result["Output"] += f"Exceed Inventory Stock: Material: [{element.un_id}] | input = {amount}, stock = {element.inventory + element.cache}\n"
+
                     elif self.material[element.un_id] > 0:
                         if not element.inventory_cap + element.cache_cap - (
                                 element.inventory + element.cache) > self.material[element.un_id]:
                             result["Reward"] -= 10
+                            result["Output"] += f"Exceed Inventory Capability: Material: [{element.un_id}] | input = {amount}, space = {element.inventory_cap + element.cache_cap - (element.inventory + element.cache)}\n"
 
             if result["Reward"] > 0:
                 for element in materials:
                     if element.un_id in self.material:
                         element.inventory_change("produce", amount)
+                result["Output"] += f"Produce {amount} in [{self.un_id}] succeed."
 
         return result
