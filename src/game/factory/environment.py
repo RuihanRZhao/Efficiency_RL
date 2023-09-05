@@ -1,33 +1,38 @@
 # python standard
 # JSON support to load the database info
 import json
-import torch
 # pytorch
-
-
-
-def _load_database_info():
-    with open('.database', 'r') as json_file:
-        # Load the JSON data into a Python dictionary
-        return json.load(json_file)
-
-
+import torch
 # components of the factory
 from .object import Material, Producer, Obj_Initial
 from .tool_data import SQL
-from .FacVarible import FacList
+
+
+# load database information
+def _load_database_info():
+    with open('.database', 'r') as json_file:
+
+        # Load the JSON data into a Python dictionary
+        # {
+        #     "host": "localhost",
+        #     "port": 114,
+        #     "user": "reader",
+        #     "password": "114514"
+        # }
+
+        return json.load(json_file)
 
 
 class factory:
     def __init__(self, date_plus, date_period):
         # factory inner data in gaming
-        self.materials = FacList(items = [], _type=Material)
-        self.producers = FacList(items = [], _type=Producer)
+        self.materials: list[Material] = []
+        self.producers: list[Producer] = []
 
         # origin data
         self.raw = {
-            "material": FacList(items = [], _type=Material),
-            "producer": FacList(items = [], _type=Producer),
+            "material": list[Material],
+            "producer": list[Producer],
         }
         # other data that will be used in the environment
         # connect mySQL database
@@ -42,8 +47,8 @@ class factory:
         # pass database to obj_initial get the raw data of material and producer
         self.obj_ini = Obj_Initial(self.database)
         # get the raw data
-        self.raw["material"] = FacList(items = self.obj_ini.material_initialize(), _type=Material)
-        self.raw["producer"] = FacList(items = self.obj_ini.producer_initialize(), _type=Producer)
+        self.raw["material"] = self.obj_ini.material_initialize()
+        self.raw["producer"] = self.obj_ini.producer_initialize()
         # initialize
         self.reset()
 
@@ -81,13 +86,24 @@ class factory:
         print(mat_info, "\n", pro_info)
 
         mat_count = len(mat_info)
-        pro_count =
-        matrix_size =
+        pro_count = len(pro_info)
+        mat_colum = len(mat_info[0])
+        pro_colum = len(pro_info[0])
+        matrix_size = [mat_colum + pro_colum, mat_count if mat_count > pro_count else pro_count]
         # transfer list matrix into tensor
-        env_tensor = torch.zeros()
-        mat_tensor = torch.tensor(mat_info)
 
-    def step(self, action: list[float]) -> dict:  # make one step forward
+        def write_tensor(target: torch.tensor, matrix: list[list], m_count: int, m_colum: int, start: list):
+            for m_c in range(m_count):
+                for m_l in range(m_colum):
+                    target[m_l + start[0], m_c + start[1]] = matrix[m_c][m_l]
+
+        env_tensor = torch.zeros(matrix_size)
+        write_tensor(env_tensor, mat_info, mat_count, mat_colum, [0, 0])
+        write_tensor(env_tensor, pro_info, pro_count, pro_colum, [mat_colum + 1, 0])
+
+        return env_tensor
+
+    def step(self, action: list[float]) -> torch.tensor:  # make one step forward
 
         pass
 
