@@ -1,6 +1,8 @@
 # python standard
 # JSON support to load the database info
 import json
+from typing import Dict, Union
+
 # pytorch
 import torch
 # components of the factory
@@ -11,13 +13,13 @@ from .tool_data import SQL
 # load database information
 def _load_database_info():
     with open('.database', 'r') as json_file:
-
         # Load the JSON data into a Python dictionary
         # {
         #     "host": "localhost",
-        #     "port": 114,
-        #     "user": "reader",
-        #     "password": "114514"
+        #     "port": 666,
+        #     "user": "username",
+        #     "password": "password"，
+        #     "database": "DB"
         # }
 
         return json.load(json_file)
@@ -56,7 +58,7 @@ class factory:
         self.materials = self.raw["material"]
         self.producers = self.raw["producer"]
 
-    def info(self) -> torch.tensor:
+    def info(self) -> tuple[torch.tensor, list[int]]:
         mat_info = []
         pro_info = []
         # generate the material data matrix
@@ -90,6 +92,7 @@ class factory:
         mat_colum = len(mat_info[0])
         pro_colum = len(pro_info[0])
         matrix_size = [mat_colum + pro_colum, mat_count if mat_count > pro_count else pro_count]
+
         # transfer list matrix into tensor
 
         def write_tensor(target: torch.tensor, matrix: list[list], m_count: int, m_colum: int, start: list):
@@ -101,12 +104,80 @@ class factory:
         write_tensor(env_tensor, mat_info, mat_count, mat_colum, [0, 0])
         write_tensor(env_tensor, pro_info, pro_count, pro_colum, [mat_colum + 1, 0])
 
-        return env_tensor
+        return env_tensor, matrix_size
 
-    def step(self, action: list[float]) -> torch.tensor:  # make one step forward
+    def step(self, action: list[float], mode: str = "train") -> Dict[str, torch.tensor]:  # make one step forward
+        # action amount needs
+        mat_act_count = len(self.materials)
+        pro_act_count = len(self.producers)
 
-        pass
+        # record actions
+        trade_action = action[:mat_act_count]
+        produce_action = action[mat_act_count:]
 
+        # record result
+        trade_result: list[Dict[str, Union[int, float, str]]] = []
+        produce_result: list[Dict[str, Union[int, float, str]]] = []
+
+        # trade
+        for act in range(mat_act_count):
+            trade_result.append(
+                self.materials[act].trade(trade_action[act])
+            )
+
+        # produce
+        for act in range(pro_act_count):
+            produce_result.append(
+                self.producers[act].produce(produce_action[act])
+            )
+
+        # get result unpacked
+        def unpack_result(target: list[Dict[str, Union[int, float, str]]]):
+            Earn: list[float] = []
+            Reward: list[float] = []
+            Output: list[str] = []
+
+            for item in target:
+                Earn.append(item["Earn"])
+                Reward.append(item["Reward"])
+                Output.append(item["Output"])
+
+            return Earn, Reward, Output
+
+        trade_earn, trade_reward, trade_output = unpack_result(trade_result)
+        produce_earn, produce_reward, produce_output = unpack_result(produce_result)
+
+        # choose return values by mode choice
+
+        # return when train mode
+        def train_return() -> Dict[str, torch.tensor]:
+            total_earn = torch.tensor(trade_earn + produce_earn)
+            total_reward = torch.tensor(trade_reward + produce_reward)
+            return {
+                "total_earn": total_earn,
+                "total_reward": total_reward
+            }
+
+        # return when play mode
+        def play_return() -> Dict[str, torch.tensor]:
+            total_earn = torch.tensor(trade_earn + produce_earn)
+            total_reward = torch.tensor(trade_reward + produce_reward)
+            total_output = torch.tensor(trade_output + produce_output)
+            return {
+                "total_earn": total_earn,
+                "total_reward": total_reward,
+                "total_output": total_output
+            }
+
+        # match dictionary
+        switch = {
+            "train": train_return(),
+            "play": play_return()
+        }
+
+        return switch[mode]
 
 if __name__ == '__main__':
+    # a demo to test info and step
     pass
+
