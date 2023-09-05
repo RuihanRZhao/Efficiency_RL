@@ -15,19 +15,19 @@ def _load_database_info():
 # components of the factory
 from .object import Material, Producer, Obj_Initial
 from .tool_data import SQL
+from .FacVarible import FacList
 
 
 class factory:
     def __init__(self, date_plus, date_period):
-
         # factory inner data in gaming
-        self.materials = []
-        self.producers = []
+        self.materials = FacList(items = [], _type=Material)
+        self.producers = FacList(items = [], _type=Producer)
 
         # origin data
         self.raw = {
-            "material": [],
-            "producer": [],
+            "material": FacList(items = [], _type=Material),
+            "producer": FacList(items = [], _type=Producer),
         }
         # other data that will be used in the environment
         # connect mySQL database
@@ -37,12 +37,13 @@ class factory:
             port=_database_info["port"],
             user=_database_info["user"],
             password=_database_info["password"],
+            database=_database_info["database"]
         )
         # pass database to obj_initial get the raw data of material and producer
         self.obj_ini = Obj_Initial(self.database)
         # get the raw data
-        self.raw["material"] = self.obj_ini.material_initialize()
-        self.raw["producer"] = self.obj_ini.producer_initialize()
+        self.raw["material"] = FacList(items = self.obj_ini.material_initialize(), _type=Material)
+        self.raw["producer"] = FacList(items = self.obj_ini.producer_initialize(), _type=Producer)
         # initialize
         self.reset()
 
@@ -79,11 +80,12 @@ class factory:
 
         print(mat_info, "\n", pro_info)
 
+        mat_count = len(mat_info)
+        pro_count =
+        matrix_size =
         # transfer list matrix into tensor
         env_tensor = torch.zeros()
         mat_tensor = torch.tensor(mat_info)
-
-
 
     def step(self, action: list[float]) -> dict:  # make one step forward
 
@@ -91,6 +93,4 @@ class factory:
 
 
 if __name__ == '__main__':
-
-
     pass
