@@ -58,7 +58,7 @@ class factory:
         self.materials = self.raw["material"]
         self.producers = self.raw["producer"]
 
-    def info(self) -> tuple(torch.tensor, list[int]):
+    def info(self) -> tuple[torch.tensor, list[int]]:
         mat_info = []
         pro_info = []
         # generate the material data matrix
@@ -106,7 +106,7 @@ class factory:
 
         return env_tensor, matrix_size
 
-    def step(self, action: list[float]) -> torch.tensor:  # make one step forward
+    def step(self, action: list[float], mode: str = "train") -> Dict[str, torch.tensor]:  # make one step forward
         # action amount needs
         mat_act_count = len(self.materials)
         pro_act_count = len(self.producers)
@@ -147,11 +147,37 @@ class factory:
         trade_earn, trade_reward, trade_output = unpack_result(trade_result)
         produce_earn, produce_reward, produce_output = unpack_result(produce_result)
 
+        # choose return values by mode choice
 
+        # return when train mode
+        def train_return() -> Dict[str, torch.tensor]:
+            total_earn = torch.tensor(trade_earn + produce_earn)
+            total_reward = torch.tensor(trade_reward + produce_reward)
+            return {
+                "total_earn": total_earn,
+                "total_reward": total_reward
+            }
 
+        # return when play mode
+        def play_return() -> Dict[str, torch.tensor]:
+            total_earn = torch.tensor(trade_earn + produce_earn)
+            total_reward = torch.tensor(trade_reward + produce_reward)
+            total_output = torch.tensor(trade_output + produce_output)
+            return {
+                "total_earn": total_earn,
+                "total_reward": total_reward,
+                "total_output": total_output
+            }
 
+        # match dictionary
+        switch = {
+            "train": train_return(),
+            "play": play_return()
+        }
 
-
+        return switch[mode]
 
 if __name__ == '__main__':
+    # a demo to test info and step
     pass
+
