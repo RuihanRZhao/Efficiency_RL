@@ -3,12 +3,12 @@
 import json
 from typing import Dict, Union
 
-# pytorch
-import torch
 # components of the factory
 from .object import Material, Producer, Obj_Initial
 from .tool_data import SQL
 
+# pytorch
+import torch
 
 # load database information
 def _load_database_info():
@@ -25,8 +25,22 @@ def _load_database_info():
         return json.load(json_file)
 
 
-class factory:
+class Factory:
     def __init__(self, date_plus, date_period):
+        """
+        Initialize a factory environment.
+
+        Args:
+            date_plus (int): The number of days to advance the factory's date.
+            date_period (int): The number of days in the factory's date period.
+
+        Attributes:
+            materials (list[Material]): A list of Material objects representing materials in the factory.
+            producers (list[Producer]): A list of Producer objects representing producers in the factory.
+            raw (dict): A dictionary containing raw data for materials and producers.
+            database (SQL): An SQL object for connecting to a MySQL database.
+            obj_ini (Obj_Initial): An Obj_Initial object for initializing raw data.
+        """
         # factory inner data in gaming
         self.materials: list[Material] = []
         self.producers: list[Producer] = []
@@ -55,10 +69,19 @@ class factory:
         self.reset()
 
     def reset(self) -> None:
+        """
+        Reset the factory by restoring materials and producers to their initial state.
+        """
         self.materials = self.raw["material"]
         self.producers = self.raw["producer"]
 
     def info(self) -> tuple[torch.tensor, list[int]]:
+        """
+        Get information about the factory's materials and producers.
+
+        Returns:
+            tuple[torch.tensor, list[int]]: A tuple containing the environment tensor and matrix size.
+        """
         mat_info = []
         pro_info = []
         # generate the material data matrix
@@ -107,6 +130,16 @@ class factory:
         return env_tensor, matrix_size
 
     def step(self, action: list[float], mode: str = "train") -> Dict[str, torch.tensor]:  # make one step forward
+        """
+        Take one step forward in the factory environment.
+
+        Args:
+            action (list[float]): A list of actions to be performed.
+            mode (str, optional): The mode in which the factory is running ("train" or "play"). Default is "train".
+
+        Returns:
+            Dict[str, torch.tensor]: A dictionary containing relevant information based on the chosen mode.
+        """
         # action amount needs
         mat_act_count = len(self.materials)
         pro_act_count = len(self.producers)

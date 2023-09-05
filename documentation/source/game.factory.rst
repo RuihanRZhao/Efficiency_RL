@@ -5,8 +5,9 @@ Subpackages
 -----------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
 
+   game.factory.FacVarible
    game.factory.object
    game.factory.tool_data
 
