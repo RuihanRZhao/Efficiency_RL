@@ -3,9 +3,9 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="game.factory.tool_data package" href="game.factory.tool_data.html" /><link rel="prev" title="game.factory package" href="game.factory.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="game.factory.tool_data package" href="game.factory.tool_data.html" /><link rel="prev" title="game.factory.FacVarible package" href="game.factory.FacVarible.html" />
 
-    <!-- Generated with Sphinx 7.2.4 and Furo 2023.08.19 -->
+    <!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
         <title>game.factory.object package - Efficiency_RL 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
@@ -159,6 +159,7 @@
 <li class="toctree-l1 current has-children"><a class="reference internal" href="modules.html">src</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of src</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2 current has-children"><a class="reference internal" href="game.html">game package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of game package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l3 current has-children"><a class="reference internal" href="game.factory.html">game.factory package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of game.factory package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="game.factory.FacVarible.html">game.factory.FacVarible package</a></li>
 <li class="toctree-l4 current current-page"><a class="current reference internal" href="#">game.factory.object package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="game.factory.tool_data.html">game.factory.tool_data package</a></li>
 </ul>
@@ -166,7 +167,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="main_MP.html">main_MP module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="try.html">try module</a></li>
 </ul>
 </li>
 </ul>
@@ -563,7 +563,7 @@ Author: Ryen Zhao</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="game.factory.object.producer.Producer.produce">
-<span class="sig-name descname"><span class="pre">produce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">materials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#game.factory.object.material.Material" title="game.factory.object.material.Material"><span class="pre">Material</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/game/factory/object/producer.html#Producer.produce"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.producer.Producer.produce" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">produce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">materials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#game.factory.object.material.Material" title="game.factory.object.material.Material"><span class="pre">Material</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game/factory/object/producer.html#Producer.produce"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.producer.Producer.produce" title="Link to this definition">#</a></dt>
 <dd><p>Produce goods.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -705,14 +705,14 @@ Author: Ryen Zhao</p>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="game.factory.html">
+          <a class="prev-page" href="game.factory.FacVarible.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">game.factory package</div>
+                <div class="title">game.factory.FacVarible package</div>
                 
               </div>
             </a>

@@ -6,4 +6,3 @@ src
 
    game
    main_MP
-   try

@@ -17,9 +17,10 @@ release = '1.0.0'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = []
-
+nitpicky = []
 templates_path = ['_templates']
 exclude_patterns = []
+
 
 # The master toctree document.
 root_doc = 'index'
@@ -36,4 +37,3 @@ sys.path.insert(0, os.path.abspath(os.path.join('..', '..', 'src')))
 
 extensions.append('sphinx.ext.autodoc')
 extensions.append('sphinx.ext.viewcode')
-extensions.append('sphinx.ext.napoleon')
