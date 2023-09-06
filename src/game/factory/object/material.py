@@ -197,7 +197,7 @@ class Material(object):
 
         return trend
 
-    def inventory_change(self, mode: str, amount: int = 0) -> Dict[str, Union[str, bool]]:
+    def inventory_change(self, mode: str, amount: float = 0) -> Dict[str, Union[str, bool]]:
         """
         Change the inventory based on the given amount.
 
@@ -330,7 +330,7 @@ class Material(object):
 
         return state
 
-    def trade(self, amount: int, date: datetime, price_source: dict) -> Dict[str, Union[float, int, str]]:
+    def trade(self, amount: float, date: datetime, price_source: dict) -> Dict[str, Union[float, int, str]]:
         """
         Perform a trade action based on the given amount, date, and price data.
 

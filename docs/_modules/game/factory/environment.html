@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
-    <!-- Generated with Sphinx 7.2.4 and Furo 2023.08.19 -->
+    <!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
         <title>game.factory.environment - Efficiency_RL 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=135e06be" />
@@ -165,7 +165,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../main_MP.html">main_MP module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../try.html">try module</a></li>
 </ul>
 </li>
 </ul>
@@ -203,34 +202,71 @@
         <article role="main">
           <h1>Source code for game.factory.environment</h1><div class="highlight"><pre>
 <span></span><span class="c1"># python standard</span>
-
 <span class="c1"># JSON support to load the database info</span>
 <span class="kn">import</span> <span class="nn">json</span>
-
-
-<span class="k">def</span> <span class="nf">_load_database_info</span><span class="p">():</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;.database&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
-        <span class="c1"># Load the JSON data into a Python dictionary</span>
-        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
-
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="c1"># components of the factory</span>
 <span class="kn">from</span> <span class="nn">.object</span> <span class="kn">import</span> <span class="n">Material</span><span class="p">,</span> <span class="n">Producer</span><span class="p">,</span> <span class="n">Obj_Initial</span>
 <span class="kn">from</span> <span class="nn">.tool_data</span> <span class="kn">import</span> <span class="n">SQL</span>
 
+<span class="c1"># pytorch</span>
+<span class="c1"># import torch</span>
 
-<div class="viewcode-block" id="factory">
-<a class="viewcode-back" href="../../../game.factory.html#game.factory.environment.factory">[docs]</a>
-<span class="k">class</span> <span class="nc">factory</span><span class="p">:</span>
+
+<div class="viewcode-block" id="torch">
+<a class="viewcode-back" href="../../../game.factory.html#game.factory.environment.torch">[docs]</a>
+<span class="k">class</span> <span class="nc">torch</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tensor</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">pass</span>
+
+<div class="viewcode-block" id="torch.tensor">
+<a class="viewcode-back" href="../../../game.factory.html#game.factory.environment.torch.tensor">[docs]</a>
+    <span class="k">def</span> <span class="nf">tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+</div>
+
+
+<span class="c1"># load database information</span>
+<span class="k">def</span> <span class="nf">_load_database_info</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;.database&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
+        <span class="c1"># Load the JSON data into a Python dictionary</span>
+        <span class="c1"># {</span>
+        <span class="c1">#     &quot;host&quot;: &quot;localhost&quot;,</span>
+        <span class="c1">#     &quot;port&quot;: 666,</span>
+        <span class="c1">#     &quot;user&quot;: &quot;username&quot;,</span>
+        <span class="c1">#     &quot;password&quot;: &quot;password&quot;，</span>
+        <span class="c1">#     &quot;database&quot;: &quot;DB&quot;</span>
+        <span class="c1"># }</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Factory">
+<a class="viewcode-back" href="../../../game.factory.html#game.factory.environment.Factory">[docs]</a>
+<span class="k">class</span> <span class="nc">Factory</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date_plus</span><span class="p">,</span> <span class="n">date_period</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a factory environment.</span>
+
+<span class="sd">        :param int date_plus: The number of days to advance the factory&#39;s date.</span>
+<span class="sd">        :param int date_period: The number of days in the factory&#39;s date period.</span>
+
+<span class="sd">        :ivar list[Material] materials: A list of Material objects representing materials in the factory.</span>
+<span class="sd">        :ivar list[Producer] producers: A list of Producer objects representing producers in the factory.</span>
+<span class="sd">        :ivar dict raw: A dictionary containing raw data for materials and producers.</span>
+<span class="sd">        :ivar SQL database: An SQL object for connecting to a MySQL database.</span>
+<span class="sd">        :ivar Obj_Initial obj_ini: An Obj_Initial object for initializing raw data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># factory inner data in gaming</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">materials</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">producers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">materials</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Material</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">producers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Producer</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="c1"># origin data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">raw</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;material&quot;</span><span class="p">:</span> <span class="p">[],</span>
-            <span class="s2">&quot;producer&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;material&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Material</span><span class="p">],</span>
+            <span class="s2">&quot;producer&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Producer</span><span class="p">],</span>
         <span class="p">}</span>
         <span class="c1"># other data that will be used in the environment</span>
         <span class="c1"># connect mySQL database</span>
@@ -240,6 +276,7 @@
             <span class="n">port</span><span class="o">=</span><span class="n">_database_info</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">],</span>
             <span class="n">user</span><span class="o">=</span><span class="n">_database_info</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">],</span>
             <span class="n">password</span><span class="o">=</span><span class="n">_database_info</span><span class="p">[</span><span class="s2">&quot;password&quot;</span><span class="p">],</span>
+            <span class="n">database</span><span class="o">=</span><span class="n">_database_info</span><span class="p">[</span><span class="s2">&quot;database&quot;</span><span class="p">]</span>
         <span class="p">)</span>
         <span class="c1"># pass database to obj_initial get the raw data of material and producer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">obj_ini</span> <span class="o">=</span> <span class="n">Obj_Initial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">)</span>
@@ -249,26 +286,165 @@
         <span class="c1"># initialize</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
 
-
-<div class="viewcode-block" id="factory.reset">
-<a class="viewcode-back" href="../../../game.factory.html#game.factory.environment.factory.reset">[docs]</a>
+<div class="viewcode-block" id="Factory.reset">
+<a class="viewcode-back" href="../../../game.factory.html#game.factory.environment.Factory.reset">[docs]</a>
     <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reset the factory by restoring materials and producers to their initial state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">materials</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="p">[</span><span class="s2">&quot;material&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">producers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="p">[</span><span class="s2">&quot;producer&quot;</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="factory.step">
-<a class="viewcode-back" href="../../../game.factory.html#game.factory.environment.factory.step">[docs]</a>
-    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>  <span class="c1"># make one step forward</span>
-        <span class="k">pass</span></div>
+<div class="viewcode-block" id="Factory.info">
+<a class="viewcode-back" href="../../../game.factory.html#game.factory.environment.Factory.info">[docs]</a>
+    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get information about the factory&#39;s materials and producers.</span>
+
+<span class="sd">        :returns: A tuple containing the environment tensor and matrix size.</span>
+<span class="sd">        :rtype: tuple[torch.tensor, list[int]]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mat_info</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">pro_info</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># generate the material data matrix</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">materials</span><span class="p">:</span>
+            <span class="n">mat_info</span><span class="o">.</span><span class="n">append</span><span class="p">([</span>
+                <span class="nb">int</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">un_id</span><span class="p">),</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">inventory</span><span class="p">,</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">inventory_cap</span><span class="p">,</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">cache</span><span class="p">,</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">cache_cap</span><span class="p">,</span>
+                <span class="mi">1</span> <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">trade_permit</span><span class="p">[</span><span class="s2">&quot;purchase&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="mi">1</span> <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">trade_permit</span><span class="p">[</span><span class="s2">&quot;sale&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">price</span><span class="p">[</span><span class="s2">&quot;price_now&quot;</span><span class="p">],</span>
+            <span class="p">])</span>
+
+        <span class="c1"># generate the producer data matrix</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">producers</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">mat_key</span><span class="p">,</span> <span class="n">mat_value</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">pro_info</span><span class="o">.</span><span class="n">append</span><span class="p">([</span>
+                    <span class="nb">int</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">un_id</span><span class="p">),</span>
+                    <span class="n">item</span><span class="o">.</span><span class="n">daily_low_cost</span><span class="p">,</span>
+                    <span class="n">item</span><span class="o">.</span><span class="n">daily_produce_cap</span><span class="p">,</span>
+                    <span class="nb">int</span><span class="p">(</span><span class="n">mat_key</span><span class="p">),</span>
+                    <span class="n">mat_value</span><span class="p">,</span>
+                <span class="p">])</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">mat_info</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">pro_info</span><span class="p">)</span>
+
+        <span class="n">mat_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mat_info</span><span class="p">)</span>
+        <span class="n">pro_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pro_info</span><span class="p">)</span>
+        <span class="n">mat_colum</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mat_info</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">pro_colum</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pro_info</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">matrix_size</span> <span class="o">=</span> <span class="p">[</span><span class="n">mat_colum</span> <span class="o">+</span> <span class="n">pro_colum</span><span class="p">,</span> <span class="n">mat_count</span> <span class="k">if</span> <span class="n">mat_count</span> <span class="o">&gt;</span> <span class="n">pro_count</span> <span class="k">else</span> <span class="n">pro_count</span><span class="p">]</span>
+
+        <span class="c1"># transfer list matrix into tensor</span>
+
+        <span class="k">def</span> <span class="nf">write_tensor</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="n">matrix</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">],</span> <span class="n">m_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">m_colum</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">m_c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m_count</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">m_l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m_colum</span><span class="p">):</span>
+                    <span class="n">target</span><span class="p">[</span><span class="n">m_l</span> <span class="o">+</span> <span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">m_c</span> <span class="o">+</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="n">m_c</span><span class="p">][</span><span class="n">m_l</span><span class="p">]</span>
+
+        <span class="n">env_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">matrix_size</span><span class="p">)</span>
+        <span class="n">write_tensor</span><span class="p">(</span><span class="n">env_tensor</span><span class="p">,</span> <span class="n">mat_info</span><span class="p">,</span> <span class="n">mat_count</span><span class="p">,</span> <span class="n">mat_colum</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">write_tensor</span><span class="p">(</span><span class="n">env_tensor</span><span class="p">,</span> <span class="n">pro_info</span><span class="p">,</span> <span class="n">pro_count</span><span class="p">,</span> <span class="n">pro_colum</span><span class="p">,</span> <span class="p">[</span><span class="n">mat_colum</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">env_tensor</span><span class="p">,</span> <span class="n">matrix_size</span></div>
+
+
+<div class="viewcode-block" id="Factory.step">
+<a class="viewcode-back" href="../../../game.factory.html#game.factory.environment.Factory.step">[docs]</a>
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">]:</span>  <span class="c1"># make one step forward</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">         Take one step forward in the factory environment.</span>
+
+<span class="sd">         :param list[float] action: A list of actions to be performed.</span>
+<span class="sd">         :param str mode: The mode in which the factory is running (&quot;train&quot; or &quot;play&quot;). Default is &quot;train&quot;.</span>
+
+<span class="sd">         :returns: A dictionary containing relevant information based on the chosen mode.</span>
+<span class="sd">         :rtype: Dict[str, torch.tensor]</span>
+
+<span class="sd">         This method simulates one step in the factory environment based on the provided actions.</span>
+<span class="sd">         It takes actions for trading and producing, computes the results, and returns information</span>
+<span class="sd">         such as earnings, rewards, and outputs. The returned information depends on the mode specified.</span>
+<span class="sd">         &quot;&quot;&quot;</span>
+        <span class="c1"># action amount needs</span>
+        <span class="n">mat_act_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">materials</span><span class="p">)</span>
+        <span class="n">pro_act_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">producers</span><span class="p">)</span>
+
+        <span class="c1"># record actions</span>
+        <span class="n">trade_action</span> <span class="o">=</span> <span class="n">action</span><span class="p">[:</span><span class="n">mat_act_count</span><span class="p">]</span>
+        <span class="n">produce_action</span> <span class="o">=</span> <span class="n">action</span><span class="p">[</span><span class="n">mat_act_count</span><span class="p">:]</span>
+
+        <span class="c1"># record result</span>
+        <span class="n">trade_result</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">produce_result</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># trade</span>
+        <span class="k">for</span> <span class="n">act</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">mat_act_count</span><span class="p">):</span>
+            <span class="n">trade_result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">materials</span><span class="p">[</span><span class="n">act</span><span class="p">]</span><span class="o">.</span><span class="n">trade</span><span class="p">(</span><span class="n">trade_action</span><span class="p">[</span><span class="n">act</span><span class="p">])</span>
+            <span class="p">)</span>
+
+        <span class="c1"># produce</span>
+        <span class="k">for</span> <span class="n">act</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pro_act_count</span><span class="p">):</span>
+            <span class="n">produce_result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">producers</span><span class="p">[</span><span class="n">act</span><span class="p">]</span><span class="o">.</span><span class="n">produce</span><span class="p">(</span><span class="n">produce_action</span><span class="p">[</span><span class="n">act</span><span class="p">])</span>
+            <span class="p">)</span>
+
+        <span class="c1"># get result unpacked</span>
+        <span class="k">def</span> <span class="nf">unpack_result</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]):</span>
+            <span class="n">Earn</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">Reward</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">Output</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">Earn</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;Earn&quot;</span><span class="p">])</span>
+                <span class="n">Reward</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;Reward&quot;</span><span class="p">])</span>
+                <span class="n">Output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;Output&quot;</span><span class="p">])</span>
+
+            <span class="k">return</span> <span class="n">Earn</span><span class="p">,</span> <span class="n">Reward</span><span class="p">,</span> <span class="n">Output</span>
+
+        <span class="n">trade_earn</span><span class="p">,</span> <span class="n">trade_reward</span><span class="p">,</span> <span class="n">trade_output</span> <span class="o">=</span> <span class="n">unpack_result</span><span class="p">(</span><span class="n">trade_result</span><span class="p">)</span>
+        <span class="n">produce_earn</span><span class="p">,</span> <span class="n">produce_reward</span><span class="p">,</span> <span class="n">produce_output</span> <span class="o">=</span> <span class="n">unpack_result</span><span class="p">(</span><span class="n">produce_result</span><span class="p">)</span>
+
+        <span class="c1"># choose return values by mode choice</span>
+
+        <span class="c1"># return when train mode</span>
+        <span class="k">def</span> <span class="nf">train_return</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">]:</span>
+            <span class="n">total_earn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">trade_earn</span> <span class="o">+</span> <span class="n">produce_earn</span><span class="p">)</span>
+            <span class="n">total_reward</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">trade_reward</span> <span class="o">+</span> <span class="n">produce_reward</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s2">&quot;total_earn&quot;</span><span class="p">:</span> <span class="n">total_earn</span><span class="p">,</span>
+                <span class="s2">&quot;total_reward&quot;</span><span class="p">:</span> <span class="n">total_reward</span>
+            <span class="p">}</span>
+
+        <span class="c1"># return when play mode</span>
+        <span class="k">def</span> <span class="nf">play_return</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">]:</span>
+            <span class="n">total_earn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">trade_earn</span> <span class="o">+</span> <span class="n">produce_earn</span><span class="p">)</span>
+            <span class="n">total_reward</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">trade_reward</span> <span class="o">+</span> <span class="n">produce_reward</span><span class="p">)</span>
+            <span class="n">total_output</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">trade_output</span> <span class="o">+</span> <span class="n">produce_output</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s2">&quot;total_earn&quot;</span><span class="p">:</span> <span class="n">total_earn</span><span class="p">,</span>
+                <span class="s2">&quot;total_reward&quot;</span><span class="p">:</span> <span class="n">total_reward</span><span class="p">,</span>
+                <span class="s2">&quot;total_output&quot;</span><span class="p">:</span> <span class="n">total_output</span>
+            <span class="p">}</span>
+
+        <span class="c1"># match dictionary</span>
+        <span class="n">switch</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="n">train_return</span><span class="p">(),</span>
+            <span class="s2">&quot;play&quot;</span><span class="p">:</span> <span class="n">play_return</span><span class="p">()</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">switch</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span></div>
 </div>
 
 
-
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-
-
+    <span class="c1"># a demo to test info and step</span>
     <span class="k">pass</span>
+
 </pre></div>
         </article>
       </div>
