@@ -5,7 +5,8 @@ from .producer import Producer
 
 
 class Objects_Initial:
-    """Initializes objects from a database.
+    """
+    Initializes objects from a database.
 
     Args:
         database (SQL | None): The database to retrieve initialization data from.
@@ -21,6 +22,21 @@ class Objects_Initial:
     """
 
     def __init__(self, database: SQL | None = None):
+        """
+        Initialize Objects_Initial with a database.
+
+        Args:
+            database (SQL | None): The database to retrieve initialization data from.
+                Defaults to None.
+
+        Raises:
+            ValueError: If `database` is None.
+
+        Attributes:
+            database (SQL | None): The database used for initialization data.
+            material_list (list[Material]): A list to store Material objects.
+            producer_list (list[Producer]): A list to store Producer objects.
+        """
         if database is None:
             raise ValueError("Do not have target server to get initialization data.")
         self.database = database
@@ -28,10 +44,15 @@ class Objects_Initial:
         self.producer_list = []
 
     def material_initialize(self) -> list[Material]:
-        """Initialize materials from the database.
+        """
+        Initialize Material objects from the database.
+
+        This method retrieves data from the database and creates Material objects
+        based on that data. Each Material object represents a material available in
+        the factory environment.
 
         Returns:
-            list[Material]: List of Material objects.
+            list[Material]: A list of Material objects representing materials initialized from the database.
         """
         for element in self.database.get_table_by_name("material"):
             self.material_list.append(
@@ -42,10 +63,15 @@ class Objects_Initial:
         return self.material_list
 
     def producer_initialize(self) -> list[Producer]:
-        """Initialize producers from the database.
+        """
+        Initialize Producer objects from the database.
+
+        This method retrieves data from the database and creates Producer objects
+        based on that data. Each Producer object represents a producer available in
+        the factory environment.
 
         Returns:
-            list[Producer]: List of Producer objects.
+            list[Producer]: A list of Producer objects representing producers initialized from the database.
         """
         raw = []
         producer_list = []

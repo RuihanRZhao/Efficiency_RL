@@ -11,6 +11,37 @@ from src.game.factory.tool_data import SQL
 
 
 class Producer(object):
+    """
+    Represents a producer within the factory environment.
+
+    Args:
+        element (Dict[str, Union[str, int, float, dict]]): Initial configuration data for the producer.
+
+    Attributes:
+        un_id (str): A unique identifier for the producer.
+        daily_low_cost (float): The daily operating cost for the producer.
+        daily_produce_cap (int): The daily production capacity of the producer.
+        material (dict): A dictionary representing the materials required by the producer for production.
+        raw_data (Dict[str, Union[str, int, float, dict]]): The raw configuration data used for initialization.
+
+    Methods:
+        __init__(self, element: Dict[str, Union[str, int, float, dict]]): Initializes a Producer object.
+        __repr__(self): Returns a string representation of the Producer object.
+        initialize(self) -> bool: Initializes the Producer object with default values.
+        reset(self) -> bool: Resets the Producer's properties to their initial values.
+        produce(self, amount: int, materials: list[Material]) -> Dict[str, Union[int, float, str]]: Produces goods
+            and returns information about the production result.
+
+    Example:
+        # Create a Producer instance
+        producer = Producer(element)
+
+        # Produce goods using the producer
+        production_result = producer.produce(100, materials)
+
+        # Reset the producer's properties to their initial values
+        producer.reset()
+    """
     def __init__(self, element: Dict[str, Union[str, int, float, dict]]):
         """Initialize a Producer object.
 
@@ -74,7 +105,7 @@ class Producer(object):
         """
         return self.initialize()
 
-    def produce(self, amount: int, materials: list[Material]) -> Dict[str, Union[int, float, str]]:
+    def produce(self, amount: float, materials: list[Material]) -> Dict[str, Union[int, float, str]]:
         """Produce goods.
 
         Args:
