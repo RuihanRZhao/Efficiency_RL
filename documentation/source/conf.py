@@ -37,3 +37,4 @@ sys.path.insert(0, os.path.abspath(os.path.join('..', '..', 'src')))
 
 extensions.append('sphinx.ext.autodoc')
 extensions.append('sphinx.ext.viewcode')
+
