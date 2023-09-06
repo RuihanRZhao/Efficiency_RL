@@ -30,16 +30,14 @@ class Factory:
         """
         Initialize a factory environment.
 
-        Args:
-            date_plus (int): The number of days to advance the factory's date.
-            date_period (int): The number of days in the factory's date period.
+        :param int date_plus: The number of days to advance the factory's date.
+        :param int date_period: The number of days in the factory's date period.
 
-        Attributes:
-            materials (list[Material]): A list of Material objects representing materials in the factory.
-            producers (list[Producer]): A list of Producer objects representing producers in the factory.
-            raw (dict): A dictionary containing raw data for materials and producers.
-            database (SQL): An SQL object for connecting to a MySQL database.
-            obj_ini (Obj_Initial): An Obj_Initial object for initializing raw data.
+        :ivar list[Material] materials: A list of Material objects representing materials in the factory.
+        :ivar list[Producer] producers: A list of Producer objects representing producers in the factory.
+        :ivar dict raw: A dictionary containing raw data for materials and producers.
+        :ivar SQL database: An SQL object for connecting to a MySQL database.
+        :ivar Obj_Initial obj_ini: An Obj_Initial object for initializing raw data.
         """
         # factory inner data in gaming
         self.materials: list[Material] = []
@@ -79,8 +77,8 @@ class Factory:
         """
         Get information about the factory's materials and producers.
 
-        Returns:
-            tuple[torch.tensor, list[int]]: A tuple containing the environment tensor and matrix size.
+        :returns: A tuple containing the environment tensor and matrix size.
+        :rtype: tuple[torch.tensor, list[int]]
         """
         mat_info = []
         pro_info = []
@@ -131,15 +129,18 @@ class Factory:
 
     def step(self, action: list[float], mode: str = "train") -> Dict[str, torch.tensor]:  # make one step forward
         """
-        Take one step forward in the factory environment.
+         Take one step forward in the factory environment.
 
-        Args:
-            action (list[float]): A list of actions to be performed.
-            mode (str, optional): The mode in which the factory is running ("train" or "play"). Default is "train".
+         :param list[float] action: A list of actions to be performed.
+         :param str mode: The mode in which the factory is running ("train" or "play"). Default is "train".
 
-        Returns:
-            Dict[str, torch.tensor]: A dictionary containing relevant information based on the chosen mode.
-        """
+         :returns: A dictionary containing relevant information based on the chosen mode.
+         :rtype: Dict[str, torch.tensor]
+
+         This method simulates one step in the factory environment based on the provided actions.
+         It takes actions for trading and producing, computes the results, and returns information
+         such as earnings, rewards, and outputs. The returned information depends on the mode specified.
+         """
         # action amount needs
         mat_act_count = len(self.materials)
         pro_act_count = len(self.producers)

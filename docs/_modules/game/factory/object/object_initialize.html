@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
-    <!-- Generated with Sphinx 7.2.4 and Furo 2023.08.19 -->
+    <!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
         <title>game.factory.object.object_initialize - Efficiency_RL 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=135e06be" />
@@ -158,7 +158,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../modules.html">src</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of src</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../../game.html">game package</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of game package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../../game.factory.html">game.factory package</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of game.factory package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../../game.factory.FacVarible.html">game.factory.FacVarible package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../game.factory.object.html">game.factory.object package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../game.factory.tool_data.html">game.factory.tool_data package</a></li>
 </ul>
@@ -211,7 +210,8 @@
 <div class="viewcode-block" id="Objects_Initial">
 <a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.object_initialize.Objects_Initial">[docs]</a>
 <span class="k">class</span> <span class="nc">Objects_Initial</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initializes objects from a database.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initializes objects from a database.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        database (SQL | None): The database to retrieve initialization data from.</span>
@@ -227,6 +227,21 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">database</span><span class="p">:</span> <span class="n">SQL</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize Objects_Initial with a database.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            database (SQL | None): The database to retrieve initialization data from.</span>
+<span class="sd">                Defaults to None.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If `database` is None.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            database (SQL | None): The database used for initialization data.</span>
+<span class="sd">            material_list (list[Material]): A list to store Material objects.</span>
+<span class="sd">            producer_list (list[Producer]): A list to store Producer objects.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">database</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Do not have target server to get initialization data.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
@@ -236,10 +251,15 @@
 <div class="viewcode-block" id="Objects_Initial.material_initialize">
 <a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.object_initialize.Objects_Initial.material_initialize">[docs]</a>
     <span class="k">def</span> <span class="nf">material_initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Material</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize materials from the database.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize Material objects from the database.</span>
+
+<span class="sd">        This method retrieves data from the database and creates Material objects</span>
+<span class="sd">        based on that data. Each Material object represents a material available in</span>
+<span class="sd">        the factory environment.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            list[Material]: List of Material objects.</span>
+<span class="sd">            list[Material]: A list of Material objects representing materials initialized from the database.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">get_table_by_name</span><span class="p">(</span><span class="s2">&quot;material&quot;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">material_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
@@ -253,10 +273,15 @@
 <div class="viewcode-block" id="Objects_Initial.producer_initialize">
 <a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.object_initialize.Objects_Initial.producer_initialize">[docs]</a>
     <span class="k">def</span> <span class="nf">producer_initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Producer</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize producers from the database.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize Producer objects from the database.</span>
+
+<span class="sd">        This method retrieves data from the database and creates Producer objects</span>
+<span class="sd">        based on that data. Each Producer object represents a producer available in</span>
+<span class="sd">        the factory environment.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            list[Producer]: List of Producer objects.</span>
+<span class="sd">            list[Producer]: A list of Producer objects representing producers initialized from the database.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">raw</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">producer_list</span> <span class="o">=</span> <span class="p">[]</span>

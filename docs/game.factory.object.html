@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="game.factory.tool_data package" href="game.factory.tool_data.html" /><link rel="prev" title="game.factory.FacVarible package" href="game.factory.FacVarible.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="game.factory.tool_data package" href="game.factory.tool_data.html" /><link rel="prev" title="game.factory package" href="game.factory.html" />
 
     <!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
         <title>game.factory.object package - Efficiency_RL 1.0.0 documentation</title>
@@ -159,7 +159,6 @@
 <li class="toctree-l1 current has-children"><a class="reference internal" href="modules.html">src</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of src</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2 current has-children"><a class="reference internal" href="game.html">game package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of game package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l3 current has-children"><a class="reference internal" href="game.factory.html">game.factory package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of game.factory package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="game.factory.FacVarible.html">game.factory.FacVarible package</a></li>
 <li class="toctree-l4 current current-page"><a class="current reference internal" href="#">game.factory.object package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="game.factory.tool_data.html">game.factory.tool_data package</a></li>
 </ul>
@@ -216,6 +215,52 @@ Author: Ryen Zhao</p>
 <dt class="sig sig-object py" id="game.factory.object.material.Material">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game.factory.object.material.</span></span><span class="sig-name descname"><span class="pre">Material</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/material.html#Material"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.material.Material" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a material within a factory environment.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>element (dict, optional): A dictionary containing initial values for the Material’s properties.</dt><dd><p>Defaults to None.</p>
+</dd>
+</dl>
+</dd>
+<dt>Attributes:</dt><dd><p>un_id (str): A unique identifier for the material.
+name (str): The name of the material.
+inventory (int): The current quantity of the material in inventory.
+inventory_cap (int): The maximum capacity of the material’s inventory.
+cache (int): The current quantity of the material in cache.
+cache_cap (int): The maximum capacity of the material’s cache.
+trade_permit (dict): A dictionary indicating whether trading (purchase/sale) of this material is permitted.
+price (dict): A dictionary containing price-related information for the material.
+raw_data (dict): The storage of the original data of the Material.</p>
+</dd>
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>__init__(element=None):</dt><dd><p>Initializes a Material object with optional initial properties.</p>
+</dd>
+<dt>__repr__():</dt><dd><p>Returns a string representation of the Material.</p>
+</dd>
+<dt>initialize() -&gt; bool:</dt><dd><p>Initializes the Material’s properties based on the raw_data dictionary.</p>
+</dd>
+<dt>reset() -&gt; bool:</dt><dd><p>Resets the Material’s properties to their initial values.</p>
+</dd>
+<dt>load_price(date: datetime, source: dict) -&gt; dict:</dt><dd><p>Loads the price data for a specific date from a source dictionary.</p>
+</dd>
+<dt>Trend_Cal(end: datetime, price_source: dict, scale: int) -&gt; float:</dt><dd><p>Calculates the trend based on start and end values and a scaling factor.</p>
+</dd>
+<dt>inventory_change(mode: str, amount: int = 0) -&gt; dict:</dt><dd><p>Changes the inventory based on the specified mode and amount.</p>
+</dd>
+<dt>trade(amount: int, date: datetime, price_source: dict) -&gt; dict:</dt><dd><p>Performs a trade action based on the given amount, date, and price data.</p>
+</dd>
+<dt>total_inventory() -&gt; dict:</dt><dd><p>Returns a dictionary containing the total inventory and cache amounts of the material.</p>
+</dd>
+</dl>
+</dd>
+<dt>Example Usage:</dt><dd><p># Create a Material instance
+material = Material(element)</p>
+<p># Change inventory in trade mode with a specified amount
+trade_result = material.inventory_change(“trade”, 100)</p>
+<p># Perform a trade action
+trade_result = material.trade(100, trade_date, trade_price_source)</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="game.factory.object.material.Material.Trend_Cal">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Trend_Cal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">datetime</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/game/factory/object/material.html#Material.Trend_Cal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.material.Material.Trend_Cal" title="Link to this definition">#</a></dt>
@@ -253,26 +298,17 @@ Author: Ryen Zhao</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="game.factory.object.material.Material.inventory_change">
-<span class="sig-name descname"><span class="pre">inventory_change</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game/factory/object/material.html#Material.inventory_change"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.material.Material.inventory_change" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">inventory_change</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game/factory/object/material.html#Material.inventory_change"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.material.Material.inventory_change" title="Link to this definition">#</a></dt>
 <dd><p>Change the inventory based on the given amount.</p>
-<p>This method allows you to perform different inventory changes depending on the specified mode.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mode</strong> (<em>str</em>) – The mode of inventory change. Valid modes are: ‘trade’, ‘produce’, and ‘refresh’.</p></li>
-<li><p><strong>amount</strong> (<em>int</em><em>, </em><em>optional</em>) – The amount by which to change the inventory. Defaults to 0.</p></li>
+<li><p><strong>mode</strong> (<em>str</em>) – The mode of inventory change (‘trade’, ‘produce’, or ‘refresh’).</p></li>
+<li><p><strong>amount</strong> (<em>int</em>) – The amount by which to change the inventory. Defaults to 0.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A dictionary indicating whether the inventory was changed. The dictionary contains the following keys:</dt><dd><ul class="simple">
-<li><p>’mode’ (str): The input mode.</p></li>
-<li><p>’if_changed’ (bool): A boolean indicating if the inventory was changed.</p></li>
-<li><p>’change_type’ (str): A string indicating the type of change performed.</p></li>
-</ul>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>A dictionary indicating whether the inventory was changed.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict</p>
@@ -280,47 +316,18 @@ Author: Ryen Zhao</p>
 </dl>
 <dl class="simple">
 <dt>Inventory Change Modes:</dt><dd><ul class="simple">
-<li><dl class="simple">
-<dt>‘trade’: Adjusts the inventory based on the trade amount. If the trade is successful, the inventory is updated,</dt><dd><p>and the ‘if_changed’ flag is set to True. Otherwise, the flag is set to False.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>‘produce’: Changes both inventory and cache based on the given amount. It first adds to the cache, and if</dt><dd><p>there’s still an amount remaining, it adds to the inventory. If cache or inventory capacities are
-reached, the remaining amount is not added.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>‘refresh’: Transfers cache to inventory if there’s enough space in the inventory. If there’s not enough space</dt><dd><p>in the inventory, the remaining cache amount is left in the cache.</p>
-</dd>
-</dl>
-</li>
+<li><p>‘trade’: Adjusts the inventory based on the trade amount.</p></li>
+<li><p>‘produce’: Changes both inventory and cache based on the given amount.</p></li>
+<li><p>‘refresh’: Transfers cache to inventory if there’s enough space in the inventory.</p></li>
 </ul>
 </dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul class="simple">
+<dt>Note:</dt><dd><ul class="simple">
 <li><p>Positive ‘amount’ values represent addition to inventory or cache.</p></li>
 <li><p>Zero ‘amount’ values indicate holding the current inventory state.</p></li>
 <li><p>Negative ‘amount’ values represent reduction from inventory or cache.</p></li>
 </ul>
-</div>
-<p>Example usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Material instance</span>
-<span class="n">material</span> <span class="o">=</span> <span class="n">Material</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
-
-<span class="c1"># Change inventory in trade mode with a specified amount</span>
-<span class="n">trade_result</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">inventory_change</span><span class="p">(</span><span class="s2">&quot;trade&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-
-<span class="c1"># Change inventory in produce mode with a specified amount</span>
-<span class="n">produce_result</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">inventory_change</span><span class="p">(</span><span class="s2">&quot;produce&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-
-<span class="c1"># Change inventory in refresh mode</span>
-<span class="n">refresh_result</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">inventory_change</span><span class="p">(</span><span class="s2">&quot;refresh&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -373,36 +380,18 @@ reached, the remaining amount is not added.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="game.factory.object.material.Material.trade">
-<span class="sig-name descname"><span class="pre">trade</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game/factory/object/material.html#Material.trade"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.material.Material.trade" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">trade</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game/factory/object/material.html#Material.trade"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.material.Material.trade" title="Link to this definition">#</a></dt>
 <dd><p>Perform a trade action based on the given amount, date, and price data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>amount</strong> (<em>int</em>) – The amount of the trade. Positive values represent buying, negative values represent selling,
-and zero represents holding.</p></li>
+<li><p><strong>amount</strong> (<em>int</em>) – The amount of the trade.</p></li>
 <li><p><strong>date</strong> (<em>datetime</em>) – The date of the trade.</p></li>
-<li><p><strong>price_source</strong> (<em>dict</em>) – A dictionary containing price data for different dates, where keys are datetime objects
-and values are corresponding price values.</p></li>
+<li><p><strong>price_source</strong> (<em>dict</em>) – A dictionary containing price data for different dates.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A dictionary containing trade-related information. The dictionary includes the following keys:</dt><dd><ul class="simple">
-<li><p>’Earn’ (float): The amount earned or lost from the trade, calculated as amount * price.</p></li>
-<li><dl class="simple">
-<dt>’Reward’ (int): The reward points earned or lost based on the success of the trade. Positive values</dt><dd><p>indicate earning rewards, and negative values indicate losing rewards.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>’Output’ (str): A descriptive string indicating the action taken in the trade, along with relevant</dt><dd><p>details such as the amount, material name, trade type (buy/sell/hold), and price.</p>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>A dictionary containing trade-related information.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict</p>
@@ -441,19 +430,6 @@ the ‘if_changed’ flag.</p></li>
 </ul>
 </dd>
 </dl>
-<p>Example usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Material instance</span>
-<span class="n">material</span> <span class="o">=</span> <span class="n">Material</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
-
-<span class="c1"># Define trade parameters</span>
-<span class="n">trade_amount</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">trade_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
-<span class="n">trade_price_source</span> <span class="o">=</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>  <span class="c1"># A dictionary containing price data</span>
-
-<span class="c1"># Perform a trade action</span>
-<span class="n">trade_result</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">trade</span><span class="p">(</span><span class="n">trade_amount</span><span class="p">,</span> <span class="n">trade_date</span><span class="p">,</span> <span class="n">trade_price_source</span><span class="p">)</span>
-</pre></div>
-</div>
 </dd></dl>
 
 </dd></dl>
@@ -466,58 +442,28 @@ the ‘if_changed’ flag.</p></li>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game.factory.object.object_initialize.</span></span><span class="sig-name descname"><span class="pre">Objects_Initial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SQL</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/object_initialize.html#Objects_Initial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.object_initialize.Objects_Initial" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Initializes objects from a database.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>database</strong> (<a class="reference internal" href="game.factory.tool_data.html#game.factory.tool_data.t_sql.SQL" title="game.factory.tool_data.t_sql.SQL"><em>SQL</em></a><em> | </em><em>None</em>) – The database to retrieve initialization data from.
-Defaults to None.</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If <cite>database</cite> is None.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>database (SQL | None): The database to retrieve initialization data from.</dt><dd><p>Defaults to None.</p>
 </dd>
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="game.factory.object.object_initialize.Objects_Initial.database">
-<span class="sig-name descname"><span class="pre">database</span></span><a class="headerlink" href="#game.factory.object.object_initialize.Objects_Initial.database" title="Link to this definition">#</a></dt>
-<dd><p>The database used for initialization data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="game.factory.tool_data.html#game.factory.tool_data.t_sql.SQL" title="game.factory.tool_data.t_sql.SQL">SQL</a> | None</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValueError: If <cite>database</cite> is None.</p>
+</dd>
+<dt>Attributes:</dt><dd><p>database (SQL | None): The database used for initialization data.
+material_list (list[Material]): List to store Material objects.
+producer_list (list[Producer]): List to store Producer objects.</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="game.factory.object.object_initialize.Objects_Initial.material_list">
-<span class="sig-name descname"><span class="pre">material_list</span></span><a class="headerlink" href="#game.factory.object.object_initialize.Objects_Initial.material_list" title="Link to this definition">#</a></dt>
-<dd><p>List to store Material objects.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list[<a class="reference internal" href="#game.factory.object.material.Material" title="game.factory.object.material.Material">Material</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="game.factory.object.object_initialize.Objects_Initial.producer_list">
-<span class="sig-name descname"><span class="pre">producer_list</span></span><a class="headerlink" href="#game.factory.object.object_initialize.Objects_Initial.producer_list" title="Link to this definition">#</a></dt>
-<dd><p>List to store Producer objects.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list[<a class="reference internal" href="#game.factory.object.producer.Producer" title="game.factory.object.producer.Producer">Producer</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="game.factory.object.object_initialize.Objects_Initial.material_initialize">
 <span class="sig-name descname"><span class="pre">material_initialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#game.factory.object.material.Material" title="game.factory.object.material.Material"><span class="pre">Material</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game/factory/object/object_initialize.html#Objects_Initial.material_initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.object_initialize.Objects_Initial.material_initialize" title="Link to this definition">#</a></dt>
-<dd><p>Initialize materials from the database.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of Material objects.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>list[<a class="reference internal" href="#game.factory.object.material.Material" title="game.factory.object.material.Material">Material</a>]</p>
+<dd><p>Initialize Material objects from the database.</p>
+<p>This method retrieves data from the database and creates Material objects
+based on that data. Each Material object represents a material available in
+the factory environment.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>list[Material]: A list of Material objects representing materials initialized from the database.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -525,13 +471,12 @@ Defaults to None.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="game.factory.object.object_initialize.Objects_Initial.producer_initialize">
 <span class="sig-name descname"><span class="pre">producer_initialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#game.factory.object.producer.Producer" title="game.factory.object.producer.Producer"><span class="pre">Producer</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game/factory/object/object_initialize.html#Objects_Initial.producer_initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.object_initialize.Objects_Initial.producer_initialize" title="Link to this definition">#</a></dt>
-<dd><p>Initialize producers from the database.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of Producer objects.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>list[<a class="reference internal" href="#game.factory.object.producer.Producer" title="game.factory.object.producer.Producer">Producer</a>]</p>
+<dd><p>Initialize Producer objects from the database.</p>
+<p>This method retrieves data from the database and creates Producer objects
+based on that data. Each Producer object represents a producer available in
+the factory environment.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>list[Producer]: A list of Producer objects representing producers initialized from the database.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -547,40 +492,55 @@ Author: Ryen Zhao</p>
 <dt class="sig sig-object py" id="game.factory.object.producer.Producer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game.factory.object.producer.</span></span><span class="sig-name descname"><span class="pre">Producer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/producer.html#Producer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.producer.Producer" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a producer within the factory environment.</p>
+<dl>
+<dt>Args:</dt><dd><p>element (Dict[str, Union[str, int, float, dict]]): Initial configuration data for the producer.</p>
+</dd>
+<dt>Attributes:</dt><dd><p>un_id (str): A unique identifier for the producer.
+daily_low_cost (float): The daily operating cost for the producer.
+daily_produce_cap (int): The daily production capacity of the producer.
+material (dict): A dictionary representing the materials required by the producer for production.
+raw_data (Dict[str, Union[str, int, float, dict]]): The raw configuration data used for initialization.</p>
+</dd>
+<dt>Methods:</dt><dd><p>__init__(self, element: Dict[str, Union[str, int, float, dict]]): Initializes a Producer object.
+__repr__(self): Returns a string representation of the Producer object.
+initialize(self) -&gt; bool: Initializes the Producer object with default values.
+reset(self) -&gt; bool: Resets the Producer’s properties to their initial values.
+produce(self, amount: int, materials: list[Material]) -&gt; Dict[str, Union[int, float, str]]: Produces goods</p>
+<blockquote>
+<div><p>and returns information about the production result.</p>
+</div></blockquote>
+</dd>
+<dt>Example:</dt><dd><p># Create a Producer instance
+producer = Producer(element)</p>
+<p># Produce goods using the producer
+production_result = producer.produce(100, materials)</p>
+<p># Reset the producer’s properties to their initial values
+producer.reset()</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="game.factory.object.producer.Producer.initialize">
 <span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/game/factory/object/producer.html#Producer.initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.producer.Producer.initialize" title="Link to this definition">#</a></dt>
 <dd><p>Initialize the Producer object with default values.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>True if initialization is successful, else False.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>bool: True if initialization is successful, else False.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="game.factory.object.producer.Producer.produce">
-<span class="sig-name descname"><span class="pre">produce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">materials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#game.factory.object.material.Material" title="game.factory.object.material.Material"><span class="pre">Material</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game/factory/object/producer.html#Producer.produce"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.producer.Producer.produce" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">produce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">materials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#game.factory.object.material.Material" title="game.factory.object.material.Material"><span class="pre">Material</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game/factory/object/producer.html#Producer.produce"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.producer.Producer.produce" title="Link to this definition">#</a></dt>
 <dd><p>Produce goods.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>amount</strong> (<em>int</em>) – The amount of goods to produce.</p></li>
-<li><p><strong>materials</strong> (<em>list</em><em>[</em><a class="reference internal" href="#game.factory.object.material.Material" title="game.factory.object.material.Material"><em>Material</em></a><em>]</em>) – List of Material objects.</p></li>
-</ul>
+<dl class="simple">
+<dt>Args:</dt><dd><p>amount (int): The amount of goods to produce.
+materials (list[Material]): List of Material objects.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A dictionary containing information about the production result.</dt><dd><p>The dictionary has keys “Earn” and “Reward” with corresponding values.</p>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>dict: A dictionary containing information about the production result.</dt><dd><p>The dictionary has keys “Earn” and “Reward” with corresponding values.</p>
 </dd>
 </dl>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -589,99 +549,11 @@ Author: Ryen Zhao</p>
 <dt class="sig sig-object py" id="game.factory.object.producer.Producer.reset">
 <span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/game/factory/object/producer.html#Producer.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.producer.Producer.reset" title="Link to this definition">#</a></dt>
 <dd><p>Reset the Producer’s properties to their initial values.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>True if reset is successful, else False.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>bool: True if reset is successful, else False.</p>
 </dd>
 </dl>
 </dd></dl>
-
-</dd></dl>
-
-</section>
-<section id="module-game.factory.object.unit_test">
-<span id="game-factory-object-unit-test-module"></span><h2>game.factory.object.unit_test module<a class="headerlink" href="#module-game.factory.object.unit_test" title="Link to this heading">#</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="game.factory.object.unit_test.TestMaterial">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game.factory.object.unit_test.</span></span><span class="sig-name descname"><span class="pre">TestMaterial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestMaterial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestMaterial" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
-<p>NEED TO BE UPDATE</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="game.factory.object.unit_test.TestMaterial.setUp">
-<span class="sig-name descname"><span class="pre">setUp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestMaterial.setUp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestMaterial.setUp" title="Link to this definition">#</a></dt>
-<dd><p>Hook method for setting up the test fixture before exercising it.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="game.factory.object.unit_test.TestMaterial.test_initialize">
-<span class="sig-name descname"><span class="pre">test_initialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestMaterial.test_initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestMaterial.test_initialize" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="game.factory.object.unit_test.TestMaterial.test_inventory_change">
-<span class="sig-name descname"><span class="pre">test_inventory_change</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestMaterial.test_inventory_change"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestMaterial.test_inventory_change" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="game.factory.object.unit_test.TestMaterial.test_load_price">
-<span class="sig-name descname"><span class="pre">test_load_price</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestMaterial.test_load_price"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestMaterial.test_load_price" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="game.factory.object.unit_test.TestMaterial.test_reset">
-<span class="sig-name descname"><span class="pre">test_reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestMaterial.test_reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestMaterial.test_reset" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="game.factory.object.unit_test.TestMaterial.test_trade_buy">
-<span class="sig-name descname"><span class="pre">test_trade_buy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestMaterial.test_trade_buy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestMaterial.test_trade_buy" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="game.factory.object.unit_test.TestMaterial.test_trade_hold">
-<span class="sig-name descname"><span class="pre">test_trade_hold</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestMaterial.test_trade_hold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestMaterial.test_trade_hold" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="game.factory.object.unit_test.TestMaterial.test_trade_sell">
-<span class="sig-name descname"><span class="pre">test_trade_sell</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestMaterial.test_trade_sell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestMaterial.test_trade_sell" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="game.factory.object.unit_test.TestMaterial.test_unit">
-<span class="sig-name descname"><span class="pre">test_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reward</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestMaterial.test_unit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestMaterial.test_unit" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="game.factory.object.unit_test.TestProducer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game.factory.object.unit_test.</span></span><span class="sig-name descname"><span class="pre">TestProducer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestProducer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestProducer" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="game.factory.object.unit_test.TestProducer.setUp">
-<span class="sig-name descname"><span class="pre">setUp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestProducer.setUp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestProducer.setUp" title="Link to this definition">#</a></dt>
-<dd><p>Hook method for setting up the test fixture before exercising it.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="game.factory.object.unit_test.TestProducer.tearDown">
-<span class="sig-name descname"><span class="pre">tearDown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestProducer.tearDown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestProducer.tearDown" title="Link to this definition">#</a></dt>
-<dd><p>Hook method for deconstructing the test fixture after testing it.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="game.factory.object.unit_test.TestProducer.test_produce_invalid">
-<span class="sig-name descname"><span class="pre">test_produce_invalid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestProducer.test_produce_invalid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestProducer.test_produce_invalid" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="game.factory.object.unit_test.TestProducer.test_produce_valid">
-<span class="sig-name descname"><span class="pre">test_produce_valid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/unit_test.html#TestProducer.test_produce_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.unit_test.TestProducer.test_produce_valid" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 
@@ -705,14 +577,14 @@ Author: Ryen Zhao</p>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="game.factory.FacVarible.html">
+          <a class="prev-page" href="game.factory.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">game.factory.FacVarible package</div>
+                <div class="title">game.factory package</div>
                 
               </div>
             </a>
@@ -763,9 +635,6 @@ Author: Ryen Zhao</p>
 </li>
 <li><a class="reference internal" href="#module-game.factory.object.object_initialize">game.factory.object.object_initialize module</a><ul>
 <li><a class="reference internal" href="#game.factory.object.object_initialize.Objects_Initial"><code class="docutils literal notranslate"><span class="pre">Objects_Initial</span></code></a><ul>
-<li><a class="reference internal" href="#game.factory.object.object_initialize.Objects_Initial.database"><code class="docutils literal notranslate"><span class="pre">Objects_Initial.database</span></code></a></li>
-<li><a class="reference internal" href="#game.factory.object.object_initialize.Objects_Initial.material_list"><code class="docutils literal notranslate"><span class="pre">Objects_Initial.material_list</span></code></a></li>
-<li><a class="reference internal" href="#game.factory.object.object_initialize.Objects_Initial.producer_list"><code class="docutils literal notranslate"><span class="pre">Objects_Initial.producer_list</span></code></a></li>
 <li><a class="reference internal" href="#game.factory.object.object_initialize.Objects_Initial.material_initialize"><code class="docutils literal notranslate"><span class="pre">Objects_Initial.material_initialize()</span></code></a></li>
 <li><a class="reference internal" href="#game.factory.object.object_initialize.Objects_Initial.producer_initialize"><code class="docutils literal notranslate"><span class="pre">Objects_Initial.producer_initialize()</span></code></a></li>
 </ul>
@@ -777,28 +646,6 @@ Author: Ryen Zhao</p>
 <li><a class="reference internal" href="#game.factory.object.producer.Producer.initialize"><code class="docutils literal notranslate"><span class="pre">Producer.initialize()</span></code></a></li>
 <li><a class="reference internal" href="#game.factory.object.producer.Producer.produce"><code class="docutils literal notranslate"><span class="pre">Producer.produce()</span></code></a></li>
 <li><a class="reference internal" href="#game.factory.object.producer.Producer.reset"><code class="docutils literal notranslate"><span class="pre">Producer.reset()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-game.factory.object.unit_test">game.factory.object.unit_test module</a><ul>
-<li><a class="reference internal" href="#game.factory.object.unit_test.TestMaterial"><code class="docutils literal notranslate"><span class="pre">TestMaterial</span></code></a><ul>
-<li><a class="reference internal" href="#game.factory.object.unit_test.TestMaterial.setUp"><code class="docutils literal notranslate"><span class="pre">TestMaterial.setUp()</span></code></a></li>
-<li><a class="reference internal" href="#game.factory.object.unit_test.TestMaterial.test_initialize"><code class="docutils literal notranslate"><span class="pre">TestMaterial.test_initialize()</span></code></a></li>
-<li><a class="reference internal" href="#game.factory.object.unit_test.TestMaterial.test_inventory_change"><code class="docutils literal notranslate"><span class="pre">TestMaterial.test_inventory_change()</span></code></a></li>
-<li><a class="reference internal" href="#game.factory.object.unit_test.TestMaterial.test_load_price"><code class="docutils literal notranslate"><span class="pre">TestMaterial.test_load_price()</span></code></a></li>
-<li><a class="reference internal" href="#game.factory.object.unit_test.TestMaterial.test_reset"><code class="docutils literal notranslate"><span class="pre">TestMaterial.test_reset()</span></code></a></li>
-<li><a class="reference internal" href="#game.factory.object.unit_test.TestMaterial.test_trade_buy"><code class="docutils literal notranslate"><span class="pre">TestMaterial.test_trade_buy()</span></code></a></li>
-<li><a class="reference internal" href="#game.factory.object.unit_test.TestMaterial.test_trade_hold"><code class="docutils literal notranslate"><span class="pre">TestMaterial.test_trade_hold()</span></code></a></li>
-<li><a class="reference internal" href="#game.factory.object.unit_test.TestMaterial.test_trade_sell"><code class="docutils literal notranslate"><span class="pre">TestMaterial.test_trade_sell()</span></code></a></li>
-<li><a class="reference internal" href="#game.factory.object.unit_test.TestMaterial.test_unit"><code class="docutils literal notranslate"><span class="pre">TestMaterial.test_unit()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#game.factory.object.unit_test.TestProducer"><code class="docutils literal notranslate"><span class="pre">TestProducer</span></code></a><ul>
-<li><a class="reference internal" href="#game.factory.object.unit_test.TestProducer.setUp"><code class="docutils literal notranslate"><span class="pre">TestProducer.setUp()</span></code></a></li>
-<li><a class="reference internal" href="#game.factory.object.unit_test.TestProducer.tearDown"><code class="docutils literal notranslate"><span class="pre">TestProducer.tearDown()</span></code></a></li>
-<li><a class="reference internal" href="#game.factory.object.unit_test.TestProducer.test_produce_invalid"><code class="docutils literal notranslate"><span class="pre">TestProducer.test_produce_invalid()</span></code></a></li>
-<li><a class="reference internal" href="#game.factory.object.unit_test.TestProducer.test_produce_valid"><code class="docutils literal notranslate"><span class="pre">TestProducer.test_produce_valid()</span></code></a></li>
 </ul>
 </li>
 </ul>

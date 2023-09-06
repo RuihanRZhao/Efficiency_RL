@@ -8,12 +8,77 @@ from typing import Dict, Union
 
 
 class Material(object):
+    """
+    Represents a material within a factory environment.
+
+    Args:
+        element (dict, optional): A dictionary containing initial values for the Material's properties.
+            Defaults to None.
+
+    Attributes:
+        un_id (str): A unique identifier for the material.
+        name (str): The name of the material.
+        inventory (int): The current quantity of the material in inventory.
+        inventory_cap (int): The maximum capacity of the material's inventory.
+        cache (int): The current quantity of the material in cache.
+        cache_cap (int): The maximum capacity of the material's cache.
+        trade_permit (dict): A dictionary indicating whether trading (purchase/sale) of this material is permitted.
+        price (dict): A dictionary containing price-related information for the material.
+        raw_data (dict): The storage of the original data of the Material.
+
+    Methods:
+        __init__(element=None):
+            Initializes a Material object with optional initial properties.
+
+        __repr__():
+            Returns a string representation of the Material.
+
+        initialize() -> bool:
+            Initializes the Material's properties based on the raw_data dictionary.
+
+        reset() -> bool:
+            Resets the Material's properties to their initial values.
+
+        load_price(date: datetime, source: dict) -> dict:
+            Loads the price data for a specific date from a source dictionary.
+
+        Trend_Cal(end: datetime, price_source: dict, scale: int) -> float:
+            Calculates the trend based on start and end values and a scaling factor.
+
+        inventory_change(mode: str, amount: int = 0) -> dict:
+            Changes the inventory based on the specified mode and amount.
+
+        trade(amount: int, date: datetime, price_source: dict) -> dict:
+            Performs a trade action based on the given amount, date, and price data.
+
+        total_inventory() -> dict:
+            Returns a dictionary containing the total inventory and cache amounts of the material.
+
+    Example Usage:
+        # Create a Material instance
+        material = Material(element)
+
+        # Change inventory in trade mode with a specified amount
+        trade_result = material.inventory_change("trade", 100)
+
+        # Perform a trade action
+        trade_result = material.trade(100, trade_date, trade_price_source)
+    """
     def __init__(self, element: Dict[str, Union[str, int, bool]]):
         """
         Initialize a Material object.
 
-        Args:
-            element (dict, optional): A dictionary containing initial values for the Material's properties.
+        :param dict element: A dictionary containing initial values for the Material's properties.
+
+        :ivar str un_id: Unique identifier for the material.
+        :ivar str name: Name of the material.
+        :ivar int inventory: Current inventory amount.
+        :ivar int inventory_cap: Inventory capacity.
+        :ivar int cache: Current cache amount.
+        :ivar int cache_cap: Cache capacity.
+        :ivar dict trade_permit: Dictionary indicating trade permits for purchase and sale.
+        :ivar dict price: Dictionary containing price-related information.
+        :ivar dict raw_data: The storage of the original data of Material.
         """
         self.un_id = ""
 
@@ -58,8 +123,8 @@ class Material(object):
         """
         Return a string representation of the Material.
 
-        Returns:
-            str: A formatted string describing the Material's properties.
+        :returns: A formatted string describing the Material's properties.
+        :rtype: str
         """
         return (
             f"{self.name}[{self.un_id}]\n"
@@ -71,8 +136,8 @@ class Material(object):
         """
         Initialize the Material's properties based on the raw_data dictionary.
 
-        Returns:
-            bool: True if initialization is successful.
+        :returns: True if initialization is successful.
+        :rtype: bool
         """
         self.un_id = self.raw_data["un_id"]
         self.name = self.raw_data["name"]
@@ -90,8 +155,8 @@ class Material(object):
         """
         Reset the Material's properties to their initial values.
 
-        Returns:
-            bool: True if reset is successful.
+        :returns: True if reset is successful.
+        :rtype: bool
         """
         return self.initialize()
 
@@ -99,12 +164,11 @@ class Material(object):
         """
         Load the price data for a specific date.
 
-        Args:
-            date (datetime): The date for which to load the price data.
-            source (dict): A dictionary containing price data for different dates.
+        :param datetime date: The date for which to load the price data.
+        :param dict source: A dictionary containing price data for different dates.
 
-        Returns:
-            dict: A dictionary containing the loaded price data.
+        :returns: A dictionary containing the loaded price data.
+        :rtype: dict
         """
         now_price = source[date]
         trend = self.Trend_Cal(date, source, 3)
@@ -120,13 +184,12 @@ class Material(object):
         """
         Calculate the trend based on start and end values and a scaling factor.
 
-        Args:
-            end (datetime): The end value.
-            price_source (dict): The table of price_data.
-            scale (int): The scaling factor.
+        :param datetime end: The end value.
+        :param dict price_source: The table of price_data.
+        :param int scale: The scaling factor.
 
-        Returns:
-            float: The calculated trend value.
+        :returns: The calculated trend value.
+        :rtype: float
         """
         trend = 0.
         if end - timedelta(days=scale) in price_source:
@@ -134,49 +197,25 @@ class Material(object):
 
         return trend
 
-    def inventory_change(self, mode: str, amount: int = 0) -> Dict[str, Union[str, bool]]:
+    def inventory_change(self, mode: str, amount: float = 0) -> Dict[str, Union[str, bool]]:
         """
         Change the inventory based on the given amount.
 
-        This method allows you to perform different inventory changes depending on the specified mode.
+        :param str mode: The mode of inventory change ('trade', 'produce', or 'refresh').
+        :param int amount: The amount by which to change the inventory. Defaults to 0.
 
-        Args:
-            mode (str): The mode of inventory change. Valid modes are: 'trade', 'produce', and 'refresh'.
-            amount (int, optional): The amount by which to change the inventory. Defaults to 0.
-
-        Returns:
-            dict: A dictionary indicating whether the inventory was changed. The dictionary contains the following keys:
-                - 'mode' (str): The input mode.
-                - 'if_changed' (bool): A boolean indicating if the inventory was changed.
-                - 'change_type' (str): A string indicating the type of change performed.
+        :returns: A dictionary indicating whether the inventory was changed.
+        :rtype: dict
 
         Inventory Change Modes:
-            - 'trade': Adjusts the inventory based on the trade amount. If the trade is successful, the inventory is updated,
-                        and the 'if_changed' flag is set to True. Otherwise, the flag is set to False.
-            - 'produce': Changes both inventory and cache based on the given amount. It first adds to the cache, and if
-                         there's still an amount remaining, it adds to the inventory. If cache or inventory capacities are
-                         reached, the remaining amount is not added.
-            - 'refresh': Transfers cache to inventory if there's enough space in the inventory. If there's not enough space
-                         in the inventory, the remaining cache amount is left in the cache.
+            - 'trade': Adjusts the inventory based on the trade amount.
+            - 'produce': Changes both inventory and cache based on the given amount.
+            - 'refresh': Transfers cache to inventory if there's enough space in the inventory.
 
         Note:
             - Positive 'amount' values represent addition to inventory or cache.
             - Zero 'amount' values indicate holding the current inventory state.
             - Negative 'amount' values represent reduction from inventory or cache.
-
-        Example usage::
-
-            # Create a Material instance
-            material = Material(element)
-
-            # Change inventory in trade mode with a specified amount
-            trade_result = material.inventory_change("trade", 100)
-
-            # Change inventory in produce mode with a specified amount
-            produce_result = material.inventory_change("produce", 50)
-
-            # Change inventory in refresh mode
-            refresh_result = material.inventory_change("refresh")
 
         """
         state = {
@@ -291,24 +330,17 @@ class Material(object):
 
         return state
 
-    def trade(self, amount: int, date: datetime, price_source: dict) -> Dict[str, Union[float, int, str]]:
+    def trade(self, amount: float, date: datetime, price_source: dict) -> Dict[str, Union[float, int, str]]:
         """
         Perform a trade action based on the given amount, date, and price data.
 
-        Args:
-            amount (int): The amount of the trade. Positive values represent buying, negative values represent selling,
-                          and zero represents holding.
-            date (datetime): The date of the trade.
-            price_source (dict): A dictionary containing price data for different dates, where keys are datetime objects
-                                and values are corresponding price values.
+        :param int amount: The amount of the trade.
+        :param datetime date: The date of the trade.
+        :param dict price_source: A dictionary containing price data for different dates.
 
-        Returns:
-            dict: A dictionary containing trade-related information. The dictionary includes the following keys:
-                - 'Earn' (float): The amount earned or lost from the trade, calculated as amount * price.
-                - 'Reward' (int): The reward points earned or lost based on the success of the trade. Positive values
-                                 indicate earning rewards, and negative values indicate losing rewards.
-                - 'Output' (str): A descriptive string indicating the action taken in the trade, along with relevant
-                                 details such as the amount, material name, trade type (buy/sell/hold), and price.
+        :returns: A dictionary containing trade-related information.
+        :rtype: dict
+
 
         Trade Decision Logic:
             - The function determines the trade decision (buy/sell/hold) based on the sign of the 'amount':
@@ -324,20 +356,6 @@ class Material(object):
             - If the inventory_change operation failed:
                 - The 'Output' string is updated to indicate the failure of the trade action.
                 - The 'Reward' is decreased by 10 points to reflect the unsuccessful trade.
-
-        Example usage::
-
-            # Create a Material instance
-            material = Material(element)
-
-            # Define trade parameters
-            trade_amount = 100
-            trade_date = datetime(2023, 8, 25)
-            trade_price_source = {...}  # A dictionary containing price data
-
-            # Perform a trade action
-            trade_result = material.trade(trade_amount, trade_date, trade_price_source)
-
         """
 
         result = {
@@ -373,8 +391,8 @@ class Material(object):
         """
         Get the total inventory of the material.
 
-        Returns:
-            dict: A dictionary containing the total inventory and cache amounts.
+        :returns: A dictionary containing the total inventory and cache amounts.
+        :rtype: dict
         """
         return {
             "inventory": self.inventory,

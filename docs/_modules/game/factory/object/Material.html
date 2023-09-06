@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
-    <!-- Generated with Sphinx 7.2.4 and Furo 2023.08.19 -->
+    <!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
         <title>game.factory.object.material - Efficiency_RL 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=135e06be" />
@@ -158,7 +158,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../modules.html">src</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of src</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../../game.html">game package</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of game package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../../game.factory.html">game.factory package</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of game.factory package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../../game.factory.FacVarible.html">game.factory.FacVarible package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../game.factory.object.html">game.factory.object package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../game.factory.tool_data.html">game.factory.tool_data package</a></li>
 </ul>
@@ -214,12 +213,77 @@
 <div class="viewcode-block" id="Material">
 <a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.material.Material">[docs]</a>
 <span class="k">class</span> <span class="nc">Material</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a material within a factory environment.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        element (dict, optional): A dictionary containing initial values for the Material&#39;s properties.</span>
+<span class="sd">            Defaults to None.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        un_id (str): A unique identifier for the material.</span>
+<span class="sd">        name (str): The name of the material.</span>
+<span class="sd">        inventory (int): The current quantity of the material in inventory.</span>
+<span class="sd">        inventory_cap (int): The maximum capacity of the material&#39;s inventory.</span>
+<span class="sd">        cache (int): The current quantity of the material in cache.</span>
+<span class="sd">        cache_cap (int): The maximum capacity of the material&#39;s cache.</span>
+<span class="sd">        trade_permit (dict): A dictionary indicating whether trading (purchase/sale) of this material is permitted.</span>
+<span class="sd">        price (dict): A dictionary containing price-related information for the material.</span>
+<span class="sd">        raw_data (dict): The storage of the original data of the Material.</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">        __init__(element=None):</span>
+<span class="sd">            Initializes a Material object with optional initial properties.</span>
+
+<span class="sd">        __repr__():</span>
+<span class="sd">            Returns a string representation of the Material.</span>
+
+<span class="sd">        initialize() -&gt; bool:</span>
+<span class="sd">            Initializes the Material&#39;s properties based on the raw_data dictionary.</span>
+
+<span class="sd">        reset() -&gt; bool:</span>
+<span class="sd">            Resets the Material&#39;s properties to their initial values.</span>
+
+<span class="sd">        load_price(date: datetime, source: dict) -&gt; dict:</span>
+<span class="sd">            Loads the price data for a specific date from a source dictionary.</span>
+
+<span class="sd">        Trend_Cal(end: datetime, price_source: dict, scale: int) -&gt; float:</span>
+<span class="sd">            Calculates the trend based on start and end values and a scaling factor.</span>
+
+<span class="sd">        inventory_change(mode: str, amount: int = 0) -&gt; dict:</span>
+<span class="sd">            Changes the inventory based on the specified mode and amount.</span>
+
+<span class="sd">        trade(amount: int, date: datetime, price_source: dict) -&gt; dict:</span>
+<span class="sd">            Performs a trade action based on the given amount, date, and price data.</span>
+
+<span class="sd">        total_inventory() -&gt; dict:</span>
+<span class="sd">            Returns a dictionary containing the total inventory and cache amounts of the material.</span>
+
+<span class="sd">    Example Usage:</span>
+<span class="sd">        # Create a Material instance</span>
+<span class="sd">        material = Material(element)</span>
+
+<span class="sd">        # Change inventory in trade mode with a specified amount</span>
+<span class="sd">        trade_result = material.inventory_change(&quot;trade&quot;, 100)</span>
+
+<span class="sd">        # Perform a trade action</span>
+<span class="sd">        trade_result = material.trade(100, trade_date, trade_price_source)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize a Material object.</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            element (dict, optional): A dictionary containing initial values for the Material&#39;s properties.</span>
+<span class="sd">        :param dict element: A dictionary containing initial values for the Material&#39;s properties.</span>
+
+<span class="sd">        :ivar str un_id: Unique identifier for the material.</span>
+<span class="sd">        :ivar str name: Name of the material.</span>
+<span class="sd">        :ivar int inventory: Current inventory amount.</span>
+<span class="sd">        :ivar int inventory_cap: Inventory capacity.</span>
+<span class="sd">        :ivar int cache: Current cache amount.</span>
+<span class="sd">        :ivar int cache_cap: Cache capacity.</span>
+<span class="sd">        :ivar dict trade_permit: Dictionary indicating trade permits for purchase and sale.</span>
+<span class="sd">        :ivar dict price: Dictionary containing price-related information.</span>
+<span class="sd">        :ivar dict raw_data: The storage of the original data of Material.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">un_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
@@ -264,8 +328,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a string representation of the Material.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            str: A formatted string describing the Material&#39;s properties.</span>
+<span class="sd">        :returns: A formatted string describing the Material&#39;s properties.</span>
+<span class="sd">        :rtype: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">un_id</span><span class="si">}</span><span class="s2">]</span><span class="se">\n</span><span class="s2">&quot;</span>
@@ -279,8 +343,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the Material&#39;s properties based on the raw_data dictionary.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            bool: True if initialization is successful.</span>
+<span class="sd">        :returns: True if initialization is successful.</span>
+<span class="sd">        :rtype: bool</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">un_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;un_id&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
@@ -301,8 +365,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reset the Material&#39;s properties to their initial values.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            bool: True if reset is successful.</span>
+<span class="sd">        :returns: True if reset is successful.</span>
+<span class="sd">        :rtype: bool</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span></div>
 
@@ -313,12 +377,11 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load the price data for a specific date.</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            date (datetime): The date for which to load the price data.</span>
-<span class="sd">            source (dict): A dictionary containing price data for different dates.</span>
+<span class="sd">        :param datetime date: The date for which to load the price data.</span>
+<span class="sd">        :param dict source: A dictionary containing price data for different dates.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: A dictionary containing the loaded price data.</span>
+<span class="sd">        :returns: A dictionary containing the loaded price data.</span>
+<span class="sd">        :rtype: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">now_price</span> <span class="o">=</span> <span class="n">source</span><span class="p">[</span><span class="n">date</span><span class="p">]</span>
         <span class="n">trend</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Trend_Cal</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -337,13 +400,12 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the trend based on start and end values and a scaling factor.</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            end (datetime): The end value.</span>
-<span class="sd">            price_source (dict): The table of price_data.</span>
-<span class="sd">            scale (int): The scaling factor.</span>
+<span class="sd">        :param datetime end: The end value.</span>
+<span class="sd">        :param dict price_source: The table of price_data.</span>
+<span class="sd">        :param int scale: The scaling factor.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            float: The calculated trend value.</span>
+<span class="sd">        :returns: The calculated trend value.</span>
+<span class="sd">        :rtype: float</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">trend</span> <span class="o">=</span> <span class="mf">0.</span>
         <span class="k">if</span> <span class="n">end</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">scale</span><span class="p">)</span> <span class="ow">in</span> <span class="n">price_source</span><span class="p">:</span>
@@ -354,49 +416,25 @@
 
 <div class="viewcode-block" id="Material.inventory_change">
 <a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.material.Material.inventory_change">[docs]</a>
-    <span class="k">def</span> <span class="nf">inventory_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]:</span>
+    <span class="k">def</span> <span class="nf">inventory_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Change the inventory based on the given amount.</span>
 
-<span class="sd">        This method allows you to perform different inventory changes depending on the specified mode.</span>
+<span class="sd">        :param str mode: The mode of inventory change (&#39;trade&#39;, &#39;produce&#39;, or &#39;refresh&#39;).</span>
+<span class="sd">        :param int amount: The amount by which to change the inventory. Defaults to 0.</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            mode (str): The mode of inventory change. Valid modes are: &#39;trade&#39;, &#39;produce&#39;, and &#39;refresh&#39;.</span>
-<span class="sd">            amount (int, optional): The amount by which to change the inventory. Defaults to 0.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: A dictionary indicating whether the inventory was changed. The dictionary contains the following keys:</span>
-<span class="sd">                - &#39;mode&#39; (str): The input mode.</span>
-<span class="sd">                - &#39;if_changed&#39; (bool): A boolean indicating if the inventory was changed.</span>
-<span class="sd">                - &#39;change_type&#39; (str): A string indicating the type of change performed.</span>
+<span class="sd">        :returns: A dictionary indicating whether the inventory was changed.</span>
+<span class="sd">        :rtype: dict</span>
 
 <span class="sd">        Inventory Change Modes:</span>
-<span class="sd">            - &#39;trade&#39;: Adjusts the inventory based on the trade amount. If the trade is successful, the inventory is updated,</span>
-<span class="sd">                        and the &#39;if_changed&#39; flag is set to True. Otherwise, the flag is set to False.</span>
-<span class="sd">            - &#39;produce&#39;: Changes both inventory and cache based on the given amount. It first adds to the cache, and if</span>
-<span class="sd">                         there&#39;s still an amount remaining, it adds to the inventory. If cache or inventory capacities are</span>
-<span class="sd">                         reached, the remaining amount is not added.</span>
-<span class="sd">            - &#39;refresh&#39;: Transfers cache to inventory if there&#39;s enough space in the inventory. If there&#39;s not enough space</span>
-<span class="sd">                         in the inventory, the remaining cache amount is left in the cache.</span>
+<span class="sd">            - &#39;trade&#39;: Adjusts the inventory based on the trade amount.</span>
+<span class="sd">            - &#39;produce&#39;: Changes both inventory and cache based on the given amount.</span>
+<span class="sd">            - &#39;refresh&#39;: Transfers cache to inventory if there&#39;s enough space in the inventory.</span>
 
 <span class="sd">        Note:</span>
 <span class="sd">            - Positive &#39;amount&#39; values represent addition to inventory or cache.</span>
 <span class="sd">            - Zero &#39;amount&#39; values indicate holding the current inventory state.</span>
 <span class="sd">            - Negative &#39;amount&#39; values represent reduction from inventory or cache.</span>
-
-<span class="sd">        Example usage::</span>
-
-<span class="sd">            # Create a Material instance</span>
-<span class="sd">            material = Material(element)</span>
-
-<span class="sd">            # Change inventory in trade mode with a specified amount</span>
-<span class="sd">            trade_result = material.inventory_change(&quot;trade&quot;, 100)</span>
-
-<span class="sd">            # Change inventory in produce mode with a specified amount</span>
-<span class="sd">            produce_result = material.inventory_change(&quot;produce&quot;, 50)</span>
-
-<span class="sd">            # Change inventory in refresh mode</span>
-<span class="sd">            refresh_result = material.inventory_change(&quot;refresh&quot;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state</span> <span class="o">=</span> <span class="p">{</span>
@@ -514,24 +552,17 @@
 
 <div class="viewcode-block" id="Material.trade">
 <a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.material.Material.trade">[docs]</a>
-    <span class="k">def</span> <span class="nf">trade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">price_source</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+    <span class="k">def</span> <span class="nf">trade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">price_source</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform a trade action based on the given amount, date, and price data.</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            amount (int): The amount of the trade. Positive values represent buying, negative values represent selling,</span>
-<span class="sd">                          and zero represents holding.</span>
-<span class="sd">            date (datetime): The date of the trade.</span>
-<span class="sd">            price_source (dict): A dictionary containing price data for different dates, where keys are datetime objects</span>
-<span class="sd">                                and values are corresponding price values.</span>
+<span class="sd">        :param int amount: The amount of the trade.</span>
+<span class="sd">        :param datetime date: The date of the trade.</span>
+<span class="sd">        :param dict price_source: A dictionary containing price data for different dates.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: A dictionary containing trade-related information. The dictionary includes the following keys:</span>
-<span class="sd">                - &#39;Earn&#39; (float): The amount earned or lost from the trade, calculated as amount * price.</span>
-<span class="sd">                - &#39;Reward&#39; (int): The reward points earned or lost based on the success of the trade. Positive values</span>
-<span class="sd">                                 indicate earning rewards, and negative values indicate losing rewards.</span>
-<span class="sd">                - &#39;Output&#39; (str): A descriptive string indicating the action taken in the trade, along with relevant</span>
-<span class="sd">                                 details such as the amount, material name, trade type (buy/sell/hold), and price.</span>
+<span class="sd">        :returns: A dictionary containing trade-related information.</span>
+<span class="sd">        :rtype: dict</span>
+
 
 <span class="sd">        Trade Decision Logic:</span>
 <span class="sd">            - The function determines the trade decision (buy/sell/hold) based on the sign of the &#39;amount&#39;:</span>
@@ -547,20 +578,6 @@
 <span class="sd">            - If the inventory_change operation failed:</span>
 <span class="sd">                - The &#39;Output&#39; string is updated to indicate the failure of the trade action.</span>
 <span class="sd">                - The &#39;Reward&#39; is decreased by 10 points to reflect the unsuccessful trade.</span>
-
-<span class="sd">        Example usage::</span>
-
-<span class="sd">            # Create a Material instance</span>
-<span class="sd">            material = Material(element)</span>
-
-<span class="sd">            # Define trade parameters</span>
-<span class="sd">            trade_amount = 100</span>
-<span class="sd">            trade_date = datetime(2023, 8, 25)</span>
-<span class="sd">            trade_price_source = {...}  # A dictionary containing price data</span>
-
-<span class="sd">            # Perform a trade action</span>
-<span class="sd">            trade_result = material.trade(trade_amount, trade_date, trade_price_source)</span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
@@ -599,8 +616,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the total inventory of the material.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: A dictionary containing the total inventory and cache amounts.</span>
+<span class="sd">        :returns: A dictionary containing the total inventory and cache amounts.</span>
+<span class="sd">        :rtype: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;inventory&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span><span class="p">,</span>
