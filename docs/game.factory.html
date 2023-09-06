@@ -229,11 +229,71 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
-<section id="game-factory-environment-module">
-<h2>game.factory.environment module<a class="headerlink" href="#game-factory-environment-module" title="Link to this heading">#</a></h2>
+<section id="module-game.factory.environment">
+<span id="game-factory-environment-module"></span><h2>game.factory.environment module<a class="headerlink" href="#module-game.factory.environment" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="game.factory.environment.Factory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game.factory.environment.</span></span><span class="sig-name descname"><span class="pre">Factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date_plus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_period</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/environment.html#Factory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.environment.Factory" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.environment.Factory.info">
+<span class="sig-name descname"><span class="pre">info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game/factory/environment.html#Factory.info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.environment.Factory.info" title="Link to this definition">#</a></dt>
+<dd><p>Get information about the factory’s materials and producers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tuple containing the environment tensor and matrix size.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[torch.tensor, list[int]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.environment.Factory.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/game/factory/environment.html#Factory.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.environment.Factory.reset" title="Link to this definition">#</a></dt>
+<dd><p>Reset the factory by restoring materials and producers to their initial state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.environment.Factory.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'train'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game/factory/environment.html#Factory.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.environment.Factory.step" title="Link to this definition">#</a></dt>
+<dd><p>Take one step forward in the factory environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>action</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – A list of actions to be performed.</p></li>
+<li><p><strong>mode</strong> (<em>str</em>) – The mode in which the factory is running (“train” or “play”). Default is “train”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing relevant information based on the chosen mode.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[str, torch.tensor]</p>
+</dd>
+</dl>
+<p>This method simulates one step in the factory environment based on the provided actions.
+It takes actions for trading and producing, computes the results, and returns information
+such as earnings, rewards, and outputs. The returned information depends on the mode specified.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="game.factory.environment.torch">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game.factory.environment.</span></span><span class="sig-name descname"><span class="pre">torch</span></span><a class="reference internal" href="_modules/game/factory/environment.html#torch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.environment.torch" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.environment.torch.tensor">
+<span class="sig-name descname"><span class="pre">tensor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/environment.html#torch.tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.environment.torch.tensor" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
+<section id="module-game.factory">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-game.factory" title="Link to this heading">#</a></h2>
 </section>
 </section>
 
@@ -295,8 +355,20 @@
 <li><a class="reference internal" href="#">game.factory package</a><ul>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#game-factory-environment-module">game.factory.environment module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-game.factory.environment">game.factory.environment module</a><ul>
+<li><a class="reference internal" href="#game.factory.environment.Factory"><code class="docutils literal notranslate"><span class="pre">Factory</span></code></a><ul>
+<li><a class="reference internal" href="#game.factory.environment.Factory.info"><code class="docutils literal notranslate"><span class="pre">Factory.info()</span></code></a></li>
+<li><a class="reference internal" href="#game.factory.environment.Factory.reset"><code class="docutils literal notranslate"><span class="pre">Factory.reset()</span></code></a></li>
+<li><a class="reference internal" href="#game.factory.environment.Factory.step"><code class="docutils literal notranslate"><span class="pre">Factory.step()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#game.factory.environment.torch"><code class="docutils literal notranslate"><span class="pre">torch</span></code></a><ul>
+<li><a class="reference internal" href="#game.factory.environment.torch.tensor"><code class="docutils literal notranslate"><span class="pre">torch.tensor()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-game.factory">Module contents</a></li>
 </ul>
 </li>
 </ul>
