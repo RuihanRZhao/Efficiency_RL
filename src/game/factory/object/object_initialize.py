@@ -1,7 +1,9 @@
 # utilities
-from src.game.factory.tool_data import SQL
-from .material import Material
-from .producer import Producer
+from datetime import datetime
+from typing import Dict, Union
+
+from .tool_data import SQL
+from .producer import Producer, Material
 
 
 class Objects_Initial:
@@ -40,8 +42,9 @@ class Objects_Initial:
         if database is None:
             raise ValueError("Do not have target server to get initialization data.")
         self.database = database
-        self.material_list = []
-        self.producer_list = []
+        self.material_list: list[Material] = []
+        self.producer_list: list[Producer] = []
+        self.price_dict: Dict[str, Dict[datetime, Union[float]]] = {}
 
     def material_initialize(self) -> list[Material]:
         """
@@ -74,7 +77,6 @@ class Objects_Initial:
             list[Producer]: A list of Producer objects representing producers initialized from the database.
         """
         raw = []
-        producer_list = []
         for element in self.database.get_table_by_name("producer"):
             _if_change = False
             for item in raw:
@@ -97,9 +99,20 @@ class Objects_Initial:
 
         return self.producer_list
 
+    def price_initialize(self) -> Dict[str, Dict[datetime, Union[float]]]:
+        price_dict: Dict[str, Dict[datetime, Union[float]]] = {}
+        for element in self.database.get_table_by_name("Price"):
+            if element["un_id"] in price_dict:
+                price_dict[element["un_id"]][element["date"]] = element["price"]
+            else:
+                price_dict[element["un_id"]] = {}
+                price_dict[element["un_id"]][element["date"]] = element["price"]
+
+        return price_dict
+
 
 if __name__ == '__main__':  # for individual test
-    A = SQL(host="localhost", user="root", password="1919810", port=114, database="Factory")
+    A = SQL(host="localhost", user="root", password="114514", port=114, database="Factory")
     B = Objects_Initial(A)
-    result = B.producer_initialize()
-    print(B.producer_list)
+    result = B.price_initialize()
+    print(result)

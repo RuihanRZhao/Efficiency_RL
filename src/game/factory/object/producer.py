@@ -7,8 +7,6 @@ from typing import Dict, Union
 
 from .material import Material
 
-from src.game.factory.tool_data import SQL
-
 
 class Producer(object):
     """

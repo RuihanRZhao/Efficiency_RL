@@ -1,37 +1,33 @@
 # python standard
 # JSON support to load the database info
-import json
 from typing import Dict, Union
+from datetime import datetime, timedelta
 
 # components of the factory
-from .object import Material, Producer, Obj_Initial
-from .tool_data import SQL
+from object import Material, Producer, Obj_Initial
+from src.game.factory.object.tool_data import SQL
 
 # pytorch
 import torch
 
+
 # load database information
 def _load_database_info():
-    with open('.database', 'r') as json_file:
-        # Load the JSON data into a Python dictionary
-        # {
-        #     "host": "localhost",
-        #     "port": 666,
-        #     "user": "username",
-        #     "password": "password"，
-        #     "database": "DB"
-        # }
-
-        return json.load(json_file)
+    return{
+        "host": "localhost",
+        "port": 114,
+        "user": "reader",
+        "password": "666666",
+        "database": "Factory"
+    }
 
 
 class Factory:
-    def __init__(self, date_plus, date_period):
+    def __init__(self):
         """
         Initialize a factory environment.
 
-        :param int date_plus: The number of days to advance the factory's date.
-        :param int date_period: The number of days in the factory's date period.
+        :param int day_plus: The number of days to advance the factory's date.
 
         :ivar list[Material] materials: A list of Material objects representing materials in the factory.
         :ivar list[Producer] producers: A list of Producer objects representing producers in the factory.
@@ -39,9 +35,11 @@ class Factory:
         :ivar SQL database: An SQL object for connecting to a MySQL database.
         :ivar Obj_Initial obj_ini: An Obj_Initial object for initializing raw data.
         """
+
         # factory inner data in gaming
         self.materials: list[Material] = []
         self.producers: list[Producer] = []
+        self.price_source: Dict[datetime, Union[float]] = {}
 
         # origin data
         self.raw = {
@@ -58,22 +56,29 @@ class Factory:
             password=_database_info["password"],
             database=_database_info["database"]
         )
+
+        # database start date
+        self.date_start: datetime = datetime(2022, 2, 1)
+        self.date: datetime = self.date_start
+
         # pass database to obj_initial get the raw data of material and producer
         self.obj_ini = Obj_Initial(self.database)
         # get the raw data
         self.raw["material"] = self.obj_ini.material_initialize()
         self.raw["producer"] = self.obj_ini.producer_initialize()
+        self.price_source = self.obj_ini.price_initialize()
         # initialize
-        self.reset()
+        self.reset(0)
 
-    def reset(self) -> None:
+    def reset(self, day_plus: int = 0) -> None:
         """
         Reset the factory by restoring materials and producers to their initial state.
         """
         self.materials = self.raw["material"]
         self.producers = self.raw["producer"]
+        self.date = self.date_start + timedelta(day_plus)
 
-    def info(self) -> tuple[torch.tensor, list[int]]:
+    def info(self) -> (torch.Tensor, list, int):
         """
         Get information about the factory's materials and producers.
 
@@ -84,6 +89,10 @@ class Factory:
         pro_info = []
         # generate the material data matrix
         for item in self.materials:
+            print(self.price_source)
+
+            item.update_price(self.date, self.price_source[item.un_id])
+
             mat_info.append([
                 int(item.un_id),
                 item.inventory,
@@ -106,12 +115,11 @@ class Factory:
                     mat_value,
                 ])
 
-        print(mat_info, "\n", pro_info)
 
         mat_count = len(mat_info)
         pro_count = len(pro_info)
-        mat_colum = len(mat_info[0])
-        pro_colum = len(pro_info[0])
+        mat_colum = len(mat_info[-1])
+        pro_colum = len(pro_info[-1])
         matrix_size = [mat_colum + pro_colum, mat_count if mat_count > pro_count else pro_count]
 
         # transfer list matrix into tensor
@@ -121,11 +129,11 @@ class Factory:
                 for m_l in range(m_colum):
                     target[m_l + start[0], m_c + start[1]] = matrix[m_c][m_l]
 
-        env_tensor = torch.zeros(matrix_size)
+        env_tensor = torch.zeros(matrix_size, dtype=torch.float32)
         write_tensor(env_tensor, mat_info, mat_count, mat_colum, [0, 0])
         write_tensor(env_tensor, pro_info, pro_count, pro_colum, [mat_colum + 1, 0])
 
-        return env_tensor, matrix_size
+        return env_tensor, matrix_size, mat_count+pro_count
 
     def step(self, action: list[float], mode: str = "train") -> Dict[str, torch.tensor]:  # make one step forward
         """
@@ -208,10 +216,13 @@ class Factory:
             "train": train_return(),
             "play": play_return()
         }
-
+        self.date += 1
         return switch[mode]
+
 
 if __name__ == '__main__':
     # a demo to test info and step
-    pass
+    example = Factory()
+    example.reset(6)
+    example.info()
 
