@@ -160,7 +160,7 @@ class Material(object):
         """
         return self.initialize()
 
-    def update_price(self, date: datetime, source: Dict[datetime, float]) -> Dict[str, Union[datetime, float]]:
+    def update_price(self, date: datetime, source: Dict[datetime, float]) -> None:
         """
         Load the price data for a specific date.
 
@@ -171,11 +171,13 @@ class Material(object):
         :rtype: dict
         """
         now_price = source[date]
+        if self.trade_permit["purchase"] and self.trade_permit["sale"]:
+            return
         trend = self.Trend_Cal(date, source, 3)
         self.price = {
             "date": date,
             "price_now": now_price,
-            "price_trend": trend,
+            "price_trend": trend
         }
 
     @staticmethod

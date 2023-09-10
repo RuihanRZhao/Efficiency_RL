@@ -40,7 +40,6 @@ if __name__ == '__main__':
     num_processes = mp.cpu_count()
 
     processes = []
-    result_queue = mp.Queue()
     try:
         for episode in range(pth_code + 1, num_episodes):
             processes = []

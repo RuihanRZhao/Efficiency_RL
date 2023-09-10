@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-
+import torch.nn.functional as F
 
 class Information_Processing(nn.Module):
     """
@@ -72,17 +72,16 @@ class Action_Probability(nn.Module):
         action_generation_output_size (int): The size of the action generation output.
         information_processing_output_size (int): The size of the information processing output.
         hidden_size (int): The size of the hidden layer in the DNN.
-        num_actions (int): The number of actions.
 
     """
-    def __init__(self, action_generation_output_size, information_processing_output_size, hidden_size, num_actions):
+    def __init__(self, action_generation_output_size, num_actions,information_processing_output_size, information_seq_size, hidden_size):
         super(Action_Probability, self).__init__()
 
         # Create DNN structure for action generation output
         self.dnn_action_generation = nn.Sequential(
             nn.Linear(action_generation_output_size, hidden_size),
             nn.ReLU(),
-            nn.Linear(hidden_size, num_actions),
+            nn.Linear(hidden_size, action_generation_output_size),
             nn.Softmax(dim=-1)
         )
 
@@ -90,7 +89,8 @@ class Action_Probability(nn.Module):
         self.dnn_information_processing = nn.Sequential(
             nn.Linear(information_processing_output_size, hidden_size),
             nn.ReLU(),
-            nn.Linear(hidden_size, num_actions),
+            nn.Linear(hidden_size, action_generation_output_size),
+            nn.Conv1d(information_seq_size, num_actions, 1),
             nn.Softmax(dim=-1)
         )
 
@@ -111,6 +111,8 @@ class Action_Probability(nn.Module):
         # Pass information processing output through its DNN
         information_processing_probabilities = self.dnn_information_processing(information_processing_output)
 
+        print(information_processing_probabilities.shape)
+
         # Combine the probabilities (e.g., take an element-wise product)
         combined_probabilities = action_generation_probabilities * information_processing_probabilities
 
@@ -121,12 +123,6 @@ class Action_Probability(nn.Module):
 
 
 class Action_Output(nn.Module):
-    """
-    A module for calculating action scores based on action generation and action probability outputs.
-
-    Args:
-        num_actions (int): The number of actions.
-    """
     def __init__(self, num_actions):
         super(Action_Output, self).__init__()
         self.num_actions = num_actions
@@ -140,11 +136,18 @@ class Action_Output(nn.Module):
             action_probability_output (torch.Tensor): Action probability output.
 
         Returns:
-            torch.Tensor: Action scores.
+            torch.Tensor: Selected actions.
         """
-        # Calculate action scores for each action
-        action_scores = torch.sum(action_generation_output * action_probability_output, dim=1)
-        return action_scores
+        # Sample actions based on the action probabilities
+        batch_size, seq_len, _ = action_probability_output.shape
+
+        _v = action_probability_output.view(seq_len, -1)
+        action_indices = torch.multinomial(_v, 1)
+        action_indices = action_indices.view(batch_size, -1, 1)
+
+        # Gather the corresponding actions from the action generation output
+        selected_actions = torch.gather(action_generation_output, 2, action_indices)
+        return selected_actions.squeeze(2)
 
 
 if __name__ == '__main__':
@@ -197,8 +200,6 @@ if __name__ == '__main__':
         # Pass the input through Information Processing
         information_output = info_processing_net(original_input_matrix)
 
-        print(information_output.shape)
-        print(original_input_matrix.shape)
 
         # Pass both matrices through Action Generation
         action_matrix = action_generation_net(information_output, original_input_matrix)
@@ -211,7 +212,7 @@ if __name__ == '__main__':
         input_H_size = 5
         input_V_size = 8
         input_size_info_processing = 16
-        output_size_action_generation = 5
+        output_size_action_generation = 10
         num_actions = 5
 
         # Create instances of the networks
@@ -230,8 +231,7 @@ if __name__ == '__main__':
         action_probability_net = Action_Probability(
             action_generation_output_size=output_size_action_generation,
             information_processing_output_size=input_size_info_processing,
-            hidden_size=64,  # Adjust the hidden size as needed
-            num_actions=num_actions
+            hidden_size=64  # Adjust the hidden size as needed
         )
 
         # Create a sample input matrix (original data)
@@ -255,7 +255,7 @@ if __name__ == '__main__':
         input_H_size = 5
         input_V_size = 8
         input_size_info_processing = 16
-        output_size_action_generation = 5
+        output_size_action_generation = 7
         num_actions = 5
 
         # Create instances of the networks
@@ -275,7 +275,6 @@ if __name__ == '__main__':
             action_generation_output_size=output_size_action_generation,
             information_processing_output_size=input_size_info_processing,
             hidden_size=64,  # Adjust the hidden size as needed
-            num_actions=num_actions
         )
 
         action_output_net = Action_Output(
@@ -284,16 +283,12 @@ if __name__ == '__main__':
 
         # Create a sample input matrix (original data)
         original_input_matrix = torch.randn(1, input_H_size, input_V_size)  # Batch size is 1
-
         # Pass the input through Information Processing
         information_output = info_processing_net(original_input_matrix)
-
         # Pass both matrices through Action Generation
         action_matrix = action_generation_net(information_output, original_input_matrix)
-
         # Pass both matrices through Action Probability
         action_probabilities = action_probability_net(action_matrix, information_output)
-
         # Pass Action Generation output and Action Probability output through Action Output
         action_scores = action_output_net(action_matrix, action_probabilities)
 

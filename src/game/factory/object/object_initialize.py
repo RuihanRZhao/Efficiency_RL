@@ -2,9 +2,8 @@
 from datetime import datetime
 from typing import Dict, Union
 
-from src.game.factory.tool_data import SQL
-from material import Material as Material
-from producer import Producer
+from .tool_data import SQL
+from .producer import Producer, Material
 
 
 class Objects_Initial:
@@ -78,7 +77,6 @@ class Objects_Initial:
             list[Producer]: A list of Producer objects representing producers initialized from the database.
         """
         raw = []
-        producer_list = []
         for element in self.database.get_table_by_name("producer"):
             _if_change = False
             for item in raw:

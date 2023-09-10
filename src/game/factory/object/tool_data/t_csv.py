@@ -66,38 +66,3 @@ class CSV:
             print(f"Not Found File: {self.filename}")
             return []
 
-    def OverWrite(self, head: list | None, content: list | None) -> None:
-        """
-        Overwrite the target file with new head and content.
-
-        :param list head: The header for the new table.
-        :param list content: The content to be written.
-        """
-        # Open the file in write mode, which will overwrite existing content
-        with open(self.filename, 'w', newline="") as file:
-            writer = csv.writer(file)
-            # Write the header row
-            if head is not None:
-                writer.writerow(head)
-            # Write the content rows
-            if content is not None:
-                for i in content:
-                    writer.writerow(i)
-            # Print a success message
-            print(f"Overwrite {self.filename} succeed.")
-
-    def Append(self, content: list | None) -> None:
-        """
-        Append content to the CSV file.
-
-        :param content: A list containing data to append to the CSV file. Can be None.
-        :type content: list or None
-        """
-        # Open the file in append mode
-        with open(self.filename, 'a', newline="") as file:
-            writer = csv.writer(file)
-            # Iterate through the content and write each row
-            for i in content:
-                writer.writerow(i)
-            # Print a success message
-            print(f"Append {self.filename} succeed.")
