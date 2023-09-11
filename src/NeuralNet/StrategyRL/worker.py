@@ -11,7 +11,7 @@ from torch import optim as optim
 class Strategy_Worker(mp.Process):
     def __init__(self, episode: int, process: int,
                  Central_Net, device, optimizers, environment: Factory, start_day: int = 0,
-                 step_end: int = 30):
+                 step_end: int = 30, Net_structure: dict = None):
         super(Strategy_Worker, self).__init__()
         self.episode = episode
         self.process = process
@@ -23,23 +23,28 @@ class Strategy_Worker(mp.Process):
         self.step_end = step_end
         self.device = device
         self.Optimizer: Dict[str, Union[optim.Optimizer]] = optimizers
+        self.brain_structure = Net_structure
 
     def run(self):
         self.work(self.environment)
 
     def work(self, environment):
-        brain = StrategyRL_Network().to(self.device)
-        brain.load_state_dict(self.Central_Net)
+        brain = StrategyRL_Network(
+            input_H_size=self.brain_structure["_input_H_size"], input_V_size=self.brain_structure["_input_V_size"],
+            num_actions=self.brain_structure["_num_actions"],
+            num_action_choice=self.brain_structure["_num_action_choice"],
+            IP_hidden_size=self.brain_structure["_IP_hidden_size"], AG_hidden_size=self.brain_structure["_AG_hidden_size"], AP_hidden_size=self.brain_structure["_AP_hidden_size"],
+            IP_num_layers=self.brain_structure["_IP_num_layers"], AG_num_layers=self.brain_structure["_AG_num_layers"]
+    ).to(self.device)
+        # brain.load_state_dict(self.Central_Net)
 
         # initialize the environment to the date of start
         environment.reset(self.start_delta + self.step_now)
-        state: torch.tensor = torch.tensor([]).to(self.device)
-        input_size: list = []
-        num_actions: int = 0
+        state: torch.tensor
         state, input_size, num_actions = environment.info()
         state.to(self.device)
-        state = state.unsqueeze(0).unsqueeze(0)
 
+        # summary variables
         total_Reward: float = 0
         total_Earn: float = 0
         total_Loss: float = 0
@@ -47,24 +52,26 @@ class Strategy_Worker(mp.Process):
         while self.step_now < self.step_end:
             # get and unpack network output
             out_Brain = brain(state)
+
             action_Out = out_Brain["AO"].to(self.device)
             action_Prb = out_Brain["AP"].to(self.device)
             action_Gen = out_Brain["AG"].to(self.device)
             info_Procs = out_Brain["IP"].to(self.device)
 
             # make a step forward, unpack returned rewards
-            step_earn: torch.tensor = torch.tensor([]).to(self.device)
-            step_reward: torch.tensor = torch.tensor([]).to(self.device)
-            self.environment.step(
-                action=action_Out.tolist(),
+
+            step_result = self.environment.step(
+                action=action_Out.tolist()[0],
                 mode="train"
             )
+            step_earn: torch.tensor = step_result["total_earn"].to(self.device)
+            step_reward: torch.tensor = step_result["total_reward"].to(self.device)
 
             # Get next state
             next_state: torch.tensor = torch.tensor([]).to(self.device)
             next_state, _, _ = environment.info()
             next_state.to(self.device)
-            next_state = next_state.unsqueeze(0).unsqueeze(0)
+            next_state = next_state
 
             # record total reward and earn for one game
             total_Reward += float(torch.sum(step_reward).item())
@@ -73,23 +80,26 @@ class Strategy_Worker(mp.Process):
             # identify loss functions and optimize
             # Information Processing
 
-            # Action Generation
+            # loss function
+            loss_AG = (-torch.log(action_Out) * step_reward).sum()
+            loss_AP = (-torch.log(action_Out) * step_earn).sum()
+
+            # zero grad
             self.Optimizer["AG"].zero_grad()
-            loss_AG = -torch.log(action_Out) * step_reward
-            loss_AG.backward()
-            self.Optimizer["AG"].step()
-            # Action Probability
             self.Optimizer["AP"].zero_grad()
-            loss_AP = -torch.log(action_Out) * step_earn
+
+            # backward
+            loss_AG.backward(retain_graph=True)
+            self.Optimizer["AG"].step()
+
             loss_AP.backward()
             self.Optimizer["AP"].step()
-            # Action Output
 
             # step end
             state = next_state
             self.step_now += 1
 
-        os.system("cls")
+        os.system("clear")
         print(
 
             f"EP: {self.episode:10d}-{self.process:1d}\t| total earn: {total_Earn:15.5f}\t| total reward{total_Reward:10.3f}"

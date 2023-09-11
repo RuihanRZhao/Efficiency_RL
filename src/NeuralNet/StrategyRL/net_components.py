@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+
 class Information_Processing(nn.Module):
     """
     A module for processing information using an LSTM.
@@ -110,8 +111,6 @@ class Action_Probability(nn.Module):
 
         # Pass information processing output through its DNN
         information_processing_probabilities = self.dnn_information_processing(information_processing_output)
-
-        print(information_processing_probabilities.shape)
 
         # Combine the probabilities (e.g., take an element-wise product)
         combined_probabilities = action_generation_probabilities * information_processing_probabilities
@@ -275,6 +274,9 @@ if __name__ == '__main__':
             action_generation_output_size=output_size_action_generation,
             information_processing_output_size=input_size_info_processing,
             hidden_size=64,  # Adjust the hidden size as needed
+            num_actions=num_actions,
+            information_seq_size=input_H_size
+
         )
 
         action_output_net = Action_Output(
@@ -293,6 +295,8 @@ if __name__ == '__main__':
         action_scores = action_output_net(action_matrix, action_probabilities)
 
         # Print the action scores
+        print("input: ", original_input_matrix)
+        print("in: ", original_input_matrix.shape)
         print("IP:", information_output.shape)
         print("AG:", action_matrix.shape)
         print("AP:", action_probabilities.shape)

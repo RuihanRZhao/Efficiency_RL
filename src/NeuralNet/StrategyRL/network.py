@@ -28,10 +28,9 @@ class StrategyRL_Network(nn.Module):
 
     ):
         super(StrategyRL_Network, self).__init__()
-        IP_input_size = input_V_size
 
         self.information_processing = Information_Processing(
-            input_size=IP_input_size,
+            input_size=input_V_size,
             hidden_size=IP_hidden_size,
             num_layers=IP_num_layers
         )
@@ -59,15 +58,6 @@ class StrategyRL_Network(nn.Module):
             self,
             input_matrix,
     ) -> (torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor):
-        """
-        Forward pass of the StrategyRL module.
-
-        Args:
-            input_matrix (torch.Tensor): Input matrix.
-
-        Returns:
-            torch.Tensor: Action output.
-        """
         IP_output = self.information_processing(input_matrix)
         AG_output = self.action_generation(IP_output, input_matrix)
         AP_output = self.action_probability(AG_output, IP_output)

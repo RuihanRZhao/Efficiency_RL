@@ -51,7 +51,6 @@ class Data:
 
         def _sql(source: str = ""):
             return
-        print(os.getcwd())
         modes = {
             "csv": _csv(),
             "sql": _sql(),

@@ -112,7 +112,7 @@ class Factory:
         pro_count = len(pro_info)
         mat_colum = len(mat_info[-1])
         pro_colum = len(pro_info[-1])
-        matrix_size = [mat_colum + pro_colum+1, mat_count if mat_count > pro_count else pro_count]
+        matrix_size = [1, mat_colum + pro_colum+1, mat_count if mat_count > pro_count else pro_count]
 
         # transfer list matrix into tensor
 
@@ -122,10 +122,8 @@ class Factory:
                     target[m_l + start[0], m_c + start[1]] = matrix[m_c][m_l]
 
         env_tensor = torch.zeros(matrix_size, dtype=torch.float32)
-        write_tensor(env_tensor, mat_info, mat_count, mat_colum, [0, 0])
-        write_tensor(env_tensor, pro_info, pro_count, pro_colum, [mat_colum + 1, 0])
-
-        print(mat_info, "\n", pro_info)
+        write_tensor(env_tensor[0], mat_info, mat_count, mat_colum, [0, 0])
+        write_tensor(env_tensor[0], pro_info, pro_count, pro_colum, [mat_colum + 1, 0])
 
         num_actions = len(self.materials)+len(self.producers)
         return env_tensor, matrix_size, num_actions

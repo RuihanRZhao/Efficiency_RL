@@ -28,17 +28,29 @@ if __name__ == "__main__":
     checkpoint_interval = 100_000
 
     _, matrix_size, num_actions = environment.info()
-    input_H_size = matrix_size[0]
-    input_V_size = matrix_size[1]
+    input_H_size = matrix_size[1]
+    input_V_size = matrix_size[2]
+
+    # Network settings
+    Net_setting = {
+        "_input_H_size": input_H_size,
+        "_input_V_size": input_V_size,
+        "_num_actions": num_actions,
+        "_num_action_choice": 4,
+        "_IP_hidden_size": 16,
+        "_AG_hidden_size": 16,
+        "_AP_hidden_size": 16,
+        "_IP_num_layers": 2,
+        "_AG_num_layers": 2,
+    }
 
     central_network = Network_Structure(
-        input_H_size=input_H_size, input_V_size=input_V_size,
-        num_actions=num_actions,
-        num_action_choice=4,
-        IP_hidden_size=16, AG_hidden_size=16, AP_hidden_size=16,
-        IP_num_layers=2, AG_num_layers=2
+        input_H_size=Net_setting["_input_H_size"], input_V_size=Net_setting["_input_V_size"],
+        num_actions=Net_setting["_num_actions"],
+        num_action_choice=Net_setting["_num_action_choice"],
+        IP_hidden_size=Net_setting["_IP_hidden_size"], AG_hidden_size=Net_setting["_AG_hidden_size"], AP_hidden_size=Net_setting["_AP_hidden_size"],
+        IP_num_layers=Net_setting["_IP_num_layers"], AG_num_layers=Net_setting["_AG_num_layers"]
     )
-
     central_network.share_memory()
     optimizer = {
         "AG": optim.Adam(central_network.action_generation.parameters(), lr=learning_rate),
@@ -67,7 +79,8 @@ if __name__ == "__main__":
                     optimizers=optimizer,
                     environment=environment,
                     start_day=random.randint(30, 200),
-                    step_end=30
+                    step_end=30,
+                    Net_structure=Net_setting,
                 )
                 process.run()
 
