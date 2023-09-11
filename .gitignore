@@ -13,4 +13,4 @@ __pycache__
 /data
 # password
 src/game/factory/.database
-/src/game/Demo_data/Nanjing/
+/src/game/factory/Demo_data/Nanjing/

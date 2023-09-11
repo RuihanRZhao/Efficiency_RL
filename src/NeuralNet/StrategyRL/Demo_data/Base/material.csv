@@ -1,4 +1,4 @@
-un_id,name,inventory,inventory_cap,cache,purchase_permit,sell_permit
+un_id,name,inventory,inventory_cap,cache_cap,purchase_permit,sale_permit
 1001,A,0,1050,20,1,0
 2001,B,0,850,20,1,0
 3001,C,0,325,20,1,0

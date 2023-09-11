@@ -143,7 +143,7 @@ class Material(object):
         self.name = self.raw_data["name"]
         self.inventory = self.raw_data["inventory"]
         self.inventory_cap = self.raw_data["inventory_cap"]
-        self.cache = self.raw_data["cache"]
+        self.cache = 0
         self.cache_cap = self.raw_data["cache_cap"]
         self.trade_permit ={
             "purchase": self.raw_data["purchase_permit"],
@@ -160,7 +160,7 @@ class Material(object):
         """
         return self.initialize()
 
-    def update_price(self, date: datetime, source: Dict[datetime, float]) -> None:
+    def update_price(self, date: datetime, source: Dict[datetime, float]) -> dict | float:
         """
         Load the price Nanjing for a specific date.
 
@@ -170,15 +170,15 @@ class Material(object):
         :returns: A dictionary containing the loaded price Nanjing.
         :rtype: dict
         """
+        if not self.trade_permit["purchase"] and self.trade_permit["sale"]: return 0
         now_price = source[date]
-        if self.trade_permit["purchase"] and self.trade_permit["sale"]:
-            return
         trend = self.Trend_Cal(date, source, 3)
         self.price = {
             "date": date,
             "price_now": now_price,
             "price_trend": trend
         }
+        return self.price
 
     @staticmethod
     def Trend_Cal(end: datetime, price_source: Dict[datetime, float], scale: int) -> float:
@@ -227,7 +227,7 @@ class Material(object):
 
         def cache_to_inventory() -> dict:
             change_state = {
-                "if_changed": False,
+                "if_changed": True,
                 "change_type": "refresh"
             }
             space = self.inventory_cap - self.inventory
@@ -251,22 +251,22 @@ class Material(object):
                 if space >= _amount:
                     self.inventory += _amount
                     _amount = 0
-                    change_state["if_change"] = True
+                    change_state["if_changed"] = True
                 else:
-                    change_state["if_change"] = False
+                    change_state["if_changed"] = False
 
             elif _amount == 0:
                 change_state["change_type"] = "hold"
-                change_state["if_change"] = True
+                change_state["if_changed"] = True
 
             elif _amount < 0:
                 change_state["change_type"] = "reduce"
                 if self.inventory >= _amount:
                     self.inventory -= _amount
                     _amount = 0
-                    change_state["if_change"] = True
+                    change_state["if_changed"] = True
                 else:
-                    change_state["if_change"] = False
+                    change_state["if_changed"] = False
 
             return change_state
 
@@ -282,7 +282,7 @@ class Material(object):
                 if cache_space >= _amount:
                     self.cache += _amount
                     _amount = 0
-                    change_state["if_change"] = True
+                    change_state["if_changed"] = True
                 else:
                     self.cache = self.cache_cap
                     _amount -= cache_space
@@ -291,15 +291,15 @@ class Material(object):
                 if inventory_space >= _amount:
                     self.inventory += _amount
                     _amount = 0
-                    change_state["if_change"] = True
+                    change_state["if_changed"] = True
                 else:
                     self.inventory = self.inventory_cap
                     _amount -= inventory_space
-                    change_state["if_change"] = True
+                    change_state["if_changed"] = True
 
             elif _amount == 0:
                 change_state["change_type"] = "hold"
-                change_state["if_change"] = True
+                change_state["if_changed"] = True
 
             elif _amount < 0:
                 change_state["change_type"] = "reduce"
@@ -308,24 +308,28 @@ class Material(object):
                     if self.inventory >= abs(_amount):
                         self.inventory += _amount
                         _amount = 0
-                        change_state["if_change"] = True
+                        change_state["if_changed"] = True
                     else:
                         _amount += self.inventory
                         self.inventory = 0
                         self.cache += _amount
                         _amount = 0
-                        change_state["if_change"] = True
+                        change_state["if_changed"] = True
 
             return change_state
 
         mode_list = {
-            "trade": change_only_in_inventory(),
-            "produce": change_in_both(),
-            "refresh": cache_to_inventory()
+            "trade": change_only_in_inventory,
+            "produce": change_in_both,
+            "refresh": cache_to_inventory,
         }
 
         if mode in mode_list:
-            result = mode_list[mode](amount)
+            if mode != "refresh":
+                result = mode_list[mode](amount)
+            else:
+                result = mode_list[mode]()
+
             state["if_changed"] = result["if_changed"]
             state["change_type"] = result["change_type"]
 
@@ -366,7 +370,7 @@ class Material(object):
         }
         permit = False
 
-        price = self.load_price(date, price_source)["price_now"]
+        price = self.update_price(date, price_source[self.un_id])["price_now"]
         if amount > 0:
             permit = self.trade_permit["purchase"]
             result["Output"] = f"Buy {amount} of {self.name}-{self.un_id} when price = {price}"
@@ -385,6 +389,8 @@ class Material(object):
             else:
                 result["Output"] += " failed. "
                 result["Reward"] -= 10
+        else:
+            result["Output"] += " not allowed. "
 
         return result
 

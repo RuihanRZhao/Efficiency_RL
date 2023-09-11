@@ -49,7 +49,7 @@ class Producer(object):
         self.un_id = ""
         self.daily_low_cost = 0
         self.daily_produce_cap = 0
-        self.material = {}
+        self.material: dict = {}
         # raw Nanjing for reset the factory
         self.raw_data = element
         # '''
@@ -89,7 +89,7 @@ class Producer(object):
         Returns:
             bool: True if initialization is successful, else False.
         """
-        self.un_id = self.raw_data["un_id"]
+        self.un_id = self.raw_data["producer_id"]
         self.material = self.raw_data["material"]
         self.daily_low_cost = self.raw_data["daily_low_cost"]
         self.daily_produce_cap = self.raw_data["daily_produce_cap"]
@@ -123,6 +123,12 @@ class Producer(object):
         if amount > self.daily_produce_cap:
             result["Reward"] -= 10
             result["Output"] += f"Exceed Production Capability: input = {amount}, cap for [{self.un_id}] = {self.daily_produce_cap}\n"
+        elif amount == 0:
+            result["Reward"] = 0
+            result["Output"] += f"Stop Product: [{self.un_id}]"
+        elif amount < 0:
+            result["Reward"] -= 100
+            result["Output"] += f"Cannot take negative value for Product"
         else:
             for element in materials:
                 if element.un_id in self.material:

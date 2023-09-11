@@ -50,7 +50,7 @@ class CSV:
                 # If the file doesn't exist, print an error message
                 print(f"Not Found File: {self.filename}")
 
-    def Read(self) -> list:
+    def Read(self) -> list[dict]:
         """
         Read the contents of the target file.
         :return: A 2D list with the same Nanjing and structure of the origin file.
@@ -60,9 +60,20 @@ class CSV:
             # Open the file in read mode
             with open(self.filename, 'r', newline="") as file:
                 # Use csv.reader to read the Nanjing and create a 2D list
-                return list(csv.reader(file, delimiter=self.separator))
+                cursor = csv.reader(file, delimiter=self.separator)
+                header = next(cursor)
+                data = []
+                for row in cursor:
+                    row_dict = {}
+                    for i, colum in enumerate(header):
+                        row_dict[colum] = row[i]
+
+                    data.append(row_dict)
+                return data
+
         except FileNotFoundError:
-            # If the file doesn't exist, print an error message and return an empty list
-            print(f"Not Found File: {self.filename}")
-            return []
+            print(f"The file '{self.filename}' was not found.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
 

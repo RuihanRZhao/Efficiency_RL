@@ -4,7 +4,7 @@ from typing import Dict, Union
 from datetime import datetime, timedelta
 
 # components of the factory
-from object import Material, Producer, Obj_Initial
+from .object import Material, Producer, Obj_Initial
 from src.game.factory.object.tool_data import SQL
 
 # pytorch
@@ -49,20 +49,13 @@ class Factory:
         # other Nanjing that will be used in the environment
         # connect mySQL database
         _database_info = _load_database_info()
-        self.database = SQL(
-            host=_database_info["host"],
-            port=_database_info["port"],
-            user=_database_info["user"],
-            password=_database_info["password"],
-            database=_database_info["database"]
-        )
 
         # database start date
         self.date_start: datetime = datetime(2022, 2, 1)
         self.date: datetime = self.date_start
 
         # pass database to obj_initial get the raw Nanjing of material and producer
-        self.obj_ini = Obj_Initial(self.database)
+        self.obj_ini = Obj_Initial(DB_type="CSV")
         # get the raw Nanjing
         self.raw["material"] = self.obj_ini.material_initialize()
         self.raw["producer"] = self.obj_ini.producer_initialize()
@@ -89,7 +82,6 @@ class Factory:
         pro_info = []
         # generate the material Nanjing matrix
         for item in self.materials:
-            print(self.price_source)
 
             item.update_price(self.date, self.price_source[item.un_id])
 
@@ -106,6 +98,7 @@ class Factory:
 
         # generate the producer Nanjing matrix
         for item in self.producers:
+
             for mat_key, mat_value in item.material.items():
                 pro_info.append([
                     int(item.un_id),
@@ -115,12 +108,11 @@ class Factory:
                     mat_value,
                 ])
 
-
         mat_count = len(mat_info)
         pro_count = len(pro_info)
         mat_colum = len(mat_info[-1])
         pro_colum = len(pro_info[-1])
-        matrix_size = [mat_colum + pro_colum, mat_count if mat_count > pro_count else pro_count]
+        matrix_size = [1, mat_colum + pro_colum+1, mat_count if mat_count > pro_count else pro_count]
 
         # transfer list matrix into tensor
 
@@ -130,10 +122,11 @@ class Factory:
                     target[m_l + start[0], m_c + start[1]] = matrix[m_c][m_l]
 
         env_tensor = torch.zeros(matrix_size, dtype=torch.float32)
-        write_tensor(env_tensor, mat_info, mat_count, mat_colum, [0, 0])
-        write_tensor(env_tensor, pro_info, pro_count, pro_colum, [mat_colum + 1, 0])
+        write_tensor(env_tensor[0], mat_info, mat_count, mat_colum, [0, 0])
+        write_tensor(env_tensor[0], pro_info, pro_count, pro_colum, [mat_colum + 1, 0])
 
-        return env_tensor, matrix_size, mat_count+pro_count
+        num_actions = len(self.materials)+len(self.producers)
+        return env_tensor, matrix_size, num_actions
 
     def step(self, action: list[float], mode: str = "train") -> Dict[str, torch.tensor]:  # make one step forward
         """
@@ -164,13 +157,13 @@ class Factory:
         # trade
         for act in range(mat_act_count):
             trade_result.append(
-                self.materials[act].trade(trade_action[act])
+                self.materials[act].trade(trade_action[act], self.date, self.price_source)
             )
 
         # produce
         for act in range(pro_act_count):
             produce_result.append(
-                self.producers[act].produce(produce_action[act])
+                self.producers[act].produce(produce_action[act], self.materials)
             )
 
         # get result unpacked
@@ -204,7 +197,7 @@ class Factory:
         def play_return() -> Dict[str, torch.tensor]:
             total_earn = torch.tensor(trade_earn + produce_earn)
             total_reward = torch.tensor(trade_reward + produce_reward)
-            total_output = torch.tensor(trade_output + produce_output)
+            total_output = trade_output + produce_output
             return {
                 "total_earn": total_earn,
                 "total_reward": total_reward,
@@ -212,17 +205,27 @@ class Factory:
             }
 
         # match dictionary
-        switch = {
-            "train": train_return(),
-            "play": play_return()
-        }
-        self.date += 1
-        return switch[mode]
+
+        if mode == "train":
+            _result = train_return()
+        elif mode == "play":
+            _result = play_return()
+        else:
+            _result = {}
+        self.date += timedelta(days=1)
+        for i in self.materials:
+            i.inventory_change("refresh")
+        return _result
 
 
 if __name__ == '__main__':
     # a demo to test info and step
     example = Factory()
     example.reset(6)
-    example.info()
+    _, _, act = example.info()
+    print(act)
+
+    print(
+        example.step([66,0,0,0,0,0,0,0,0,0,0,0,0], "train")
+    )
 
