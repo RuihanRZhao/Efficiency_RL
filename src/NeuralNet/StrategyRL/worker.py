@@ -30,7 +30,6 @@ class Strategy_Worker(mp.Process):
     def work(self, environment):
         brain = StrategyRL_Network().to(self.device)
         brain.load_state_dict(self.Central_Net)
-        # brain.eval()
 
         # initialize the environment to the date of start
         environment.reset(self.start_delta + self.step_now)
