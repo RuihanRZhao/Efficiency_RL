@@ -158,7 +158,7 @@ if __name__ == '__main__':
 
         network = Information_Processing(input_size, hidden_size, num_layers)
 
-        # Generate some sample input data
+        # Generate some sample input Nanjing
         m = 5
         n = 8
         input_data = torch.randn(m, 1 , n)
@@ -194,7 +194,7 @@ if __name__ == '__main__':
             num_actions=num_actions
         )
 
-        # Create a sample input matrix (original data)
+        # Create a sample input matrix (original Nanjing)
         original_input_matrix = torch.randn(1, input_H_size, input_V_size)  # Batch size is 1
 
         # Pass the input through Information Processing
@@ -234,7 +234,7 @@ if __name__ == '__main__':
             hidden_size=64  # Adjust the hidden size as needed
         )
 
-        # Create a sample input matrix (original data)
+        # Create a sample input matrix (original Nanjing)
         original_input_matrix = torch.randn(1, input_H_size, input_V_size)  # Batch size is 1
 
         # Pass the input through Information Processing
@@ -281,7 +281,7 @@ if __name__ == '__main__':
             num_actions=num_actions
         )  # Create an instance of Action_Output
 
-        # Create a sample input matrix (original data)
+        # Create a sample input matrix (original Nanjing)
         original_input_matrix = torch.randn(1, input_H_size, input_V_size)  # Batch size is 1
         # Pass the input through Information Processing
         information_output = info_processing_net(original_input_matrix)

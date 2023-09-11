@@ -13,14 +13,14 @@ class Producer(object):
     Represents a producer within the factory environment.
 
     Args:
-        element (Dict[str, Union[str, int, float, dict]]): Initial configuration data for the producer.
+        element (Dict[str, Union[str, int, float, dict]]): Initial configuration Nanjing for the producer.
 
     Attributes:
         un_id (str): A unique identifier for the producer.
         daily_low_cost (float): The daily operating cost for the producer.
         daily_produce_cap (int): The daily production capacity of the producer.
         material (dict): A dictionary representing the materials required by the producer for production.
-        raw_data (Dict[str, Union[str, int, float, dict]]): The raw configuration data used for initialization.
+        raw_data (Dict[str, Union[str, int, float, dict]]): The raw configuration Nanjing used for initialization.
 
     Methods:
         __init__(self, element: Dict[str, Union[str, int, float, dict]]): Initializes a Producer object.
@@ -44,13 +44,13 @@ class Producer(object):
         """Initialize a Producer object.
 
         Args:
-            element (Dict[str, Union[str, int, float, dict]]): Initial configuration data for the producer.
+            element (Dict[str, Union[str, int, float, dict]]): Initial configuration Nanjing for the producer.
         """
         self.un_id = ""
         self.daily_low_cost = 0
         self.daily_produce_cap = 0
         self.material = {}
-        # raw data for reset the factory
+        # raw Nanjing for reset the factory
         self.raw_data = element
         # '''
         # Structure of raw_data

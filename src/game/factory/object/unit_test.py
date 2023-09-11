@@ -92,7 +92,7 @@ class TestProducer(unittest.TestCase):
         pass
 
     def test_produce_valid(self):
-        # Test producing goods with valid data.
+        # Test producing goods with valid Nanjing.
         element = {
             "un_id": "123",
             "material": {
@@ -117,7 +117,7 @@ class TestProducer(unittest.TestCase):
         self.assertEqual(result, expected_result)
 
     def test_produce_invalid(self):
-        # Test producing goods with invalid data.
+        # Test producing goods with invalid Nanjing.
         element = {
             "un_id": "456",
             "material": {

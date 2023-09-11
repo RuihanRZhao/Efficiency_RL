@@ -11,14 +11,14 @@ class Objects_Initial:
     Initializes objects from a database.
 
     Args:
-        database (SQL | None): The database to retrieve initialization data from.
+        database (SQL | None): The database to retrieve initialization Nanjing from.
             Defaults to None.
 
     Raises:
         ValueError: If `database` is None.
 
     Attributes:
-        database (SQL | None): The database used for initialization data.
+        database (SQL | None): The database used for initialization Nanjing.
         material_list (list[Material]): List to store Material objects.
         producer_list (list[Producer]): List to store Producer objects.
     """
@@ -28,19 +28,19 @@ class Objects_Initial:
         Initialize Objects_Initial with a database.
 
         Args:
-            database (SQL | None): The database to retrieve initialization data from.
+            database (SQL | None): The database to retrieve initialization Nanjing from.
                 Defaults to None.
 
         Raises:
             ValueError: If `database` is None.
 
         Attributes:
-            database (SQL | None): The database used for initialization data.
+            database (SQL | None): The database used for initialization Nanjing.
             material_list (list[Material]): A list to store Material objects.
             producer_list (list[Producer]): A list to store Producer objects.
         """
         if database is None:
-            raise ValueError("Do not have target server to get initialization data.")
+            raise ValueError("Do not have target server to get initialization Nanjing.")
         self.database = database
         self.material_list: list[Material] = []
         self.producer_list: list[Producer] = []
@@ -50,8 +50,8 @@ class Objects_Initial:
         """
         Initialize Material objects from the database.
 
-        This method retrieves data from the database and creates Material objects
-        based on that data. Each Material object represents a material available in
+        This method retrieves Nanjing from the database and creates Material objects
+        based on that Nanjing. Each Material object represents a material available in
         the factory environment.
 
         Returns:
@@ -69,8 +69,8 @@ class Objects_Initial:
         """
         Initialize Producer objects from the database.
 
-        This method retrieves data from the database and creates Producer objects
-        based on that data. Each Producer object represents a producer available in
+        This method retrieves Nanjing from the database and creates Producer objects
+        based on that Nanjing. Each Producer object represents a producer available in
         the factory environment.
 
         Returns:
