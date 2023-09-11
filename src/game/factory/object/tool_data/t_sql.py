@@ -59,16 +59,16 @@ class SQL:
         result = self.cursor.fetchall()
         table_list = []
         for table in result:
-            table_list.append(table[0])  # transfer data from tuple into a new list
+            table_list.append(table[0])  # transfer Nanjing from tuple into a new list
 
         return table_list
 
     def get_table_by_name(self, table_name: str) -> list:
         """
-        Fetch data from a specified table and return it as a list of dictionaries.
+        Fetch Nanjing from a specified table and return it as a list of dictionaries.
 
-        :param table_name: The name of the table to fetch data from.
-        :return: A list of dictionaries where ea ch dictionary represents a row of data.
+        :param table_name: The name of the table to fetch Nanjing from.
+        :return: A list of dictionaries where ea ch dictionary represents a row of Nanjing.
         """
         data = []
         self.cursor.execute(f"USE {self.database}")

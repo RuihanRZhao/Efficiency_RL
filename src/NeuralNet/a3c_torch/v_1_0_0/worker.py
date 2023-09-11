@@ -68,5 +68,5 @@ class A3CWorker(mp.Process):
 
             if done:
                 print("Total Reward: ", Total_Reward, "\tLoss: ", sum(sum(actor_loss)).item())
-                # utils.write("data/record.csv", "a", "%f, %f\n" % (Total_Reward, sum(sum(actor_loss)).item()))
+                # utils.write("Nanjing/record.csv", "a", "%f, %f\n" % (Total_Reward, sum(sum(actor_loss)).item()))
                 break

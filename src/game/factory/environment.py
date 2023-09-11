@@ -31,22 +31,22 @@ class Factory:
 
         :ivar list[Material] materials: A list of Material objects representing materials in the factory.
         :ivar list[Producer] producers: A list of Producer objects representing producers in the factory.
-        :ivar dict raw: A dictionary containing raw data for materials and producers.
+        :ivar dict raw: A dictionary containing raw Nanjing for materials and producers.
         :ivar SQL database: An SQL object for connecting to a MySQL database.
-        :ivar Obj_Initial obj_ini: An Obj_Initial object for initializing raw data.
+        :ivar Obj_Initial obj_ini: An Obj_Initial object for initializing raw Nanjing.
         """
 
-        # factory inner data in gaming
+        # factory inner Nanjing in gaming
         self.materials: list[Material] = []
         self.producers: list[Producer] = []
         self.price_source: Dict[datetime, Union[float]] = {}
 
-        # origin data
+        # origin Nanjing
         self.raw = {
             "material": list[Material],
             "producer": list[Producer],
         }
-        # other data that will be used in the environment
+        # other Nanjing that will be used in the environment
         # connect mySQL database
         _database_info = _load_database_info()
         self.database = SQL(
@@ -61,9 +61,9 @@ class Factory:
         self.date_start: datetime = datetime(2022, 2, 1)
         self.date: datetime = self.date_start
 
-        # pass database to obj_initial get the raw data of material and producer
+        # pass database to obj_initial get the raw Nanjing of material and producer
         self.obj_ini = Obj_Initial(self.database)
-        # get the raw data
+        # get the raw Nanjing
         self.raw["material"] = self.obj_ini.material_initialize()
         self.raw["producer"] = self.obj_ini.producer_initialize()
         self.price_source = self.obj_ini.price_initialize()
@@ -87,7 +87,7 @@ class Factory:
         """
         mat_info = []
         pro_info = []
-        # generate the material data matrix
+        # generate the material Nanjing matrix
         for item in self.materials:
             print(self.price_source)
 
@@ -104,7 +104,7 @@ class Factory:
                 item.price["price_now"],
             ])
 
-        # generate the producer data matrix
+        # generate the producer Nanjing matrix
         for item in self.producers:
             for mat_key, mat_value in item.material.items():
                 pro_info.append([

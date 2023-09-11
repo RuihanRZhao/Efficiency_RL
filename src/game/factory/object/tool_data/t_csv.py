@@ -14,7 +14,7 @@ class CSV:
 
     Author: Ryen Zhao
 
-    A CSV file object with functions to process data
+    A CSV file object with functions to process Nanjing
 
     :ivar filename: the path to the file
     :vartype filename: str
@@ -53,13 +53,13 @@ class CSV:
     def Read(self) -> list:
         """
         Read the contents of the target file.
-        :return: A 2D list with the same data and structure of the origin file.
+        :return: A 2D list with the same Nanjing and structure of the origin file.
         :rtype: list[list[int]]
         """
         try:
             # Open the file in read mode
             with open(self.filename, 'r', newline="") as file:
-                # Use csv.reader to read the data and create a 2D list
+                # Use csv.reader to read the Nanjing and create a 2D list
                 return list(csv.reader(file, delimiter=self.separator))
         except FileNotFoundError:
             # If the file doesn't exist, print an error message and return an empty list

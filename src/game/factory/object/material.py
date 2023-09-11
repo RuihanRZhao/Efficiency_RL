@@ -24,7 +24,7 @@ class Material(object):
         cache_cap (int): The maximum capacity of the material's cache.
         trade_permit (dict): A dictionary indicating whether trading (purchase/sale) of this material is permitted.
         price (dict): A dictionary containing price-related information for the material.
-        raw_data (dict): The storage of the original data of the Material.
+        raw_data (dict): The storage of the original Nanjing of the Material.
 
     Methods:
         __init__(element=None):
@@ -40,7 +40,7 @@ class Material(object):
             Resets the Material's properties to their initial values.
 
         load_price(date: datetime, source: dict) -> dict:
-            Loads the price data for a specific date from a source dictionary.
+            Loads the price Nanjing for a specific date from a source dictionary.
 
         Trend_Cal(end: datetime, price_source: dict, scale: int) -> float:
             Calculates the trend based on start and end values and a scaling factor.
@@ -49,7 +49,7 @@ class Material(object):
             Changes the inventory based on the specified mode and amount.
 
         trade(amount: int, date: datetime, price_source: dict) -> dict:
-            Performs a trade action based on the given amount, date, and price data.
+            Performs a trade action based on the given amount, date, and price Nanjing.
 
         total_inventory() -> dict:
             Returns a dictionary containing the total inventory and cache amounts of the material.
@@ -78,7 +78,7 @@ class Material(object):
         :ivar int cache_cap: Cache capacity.
         :ivar dict trade_permit: Dictionary indicating trade permits for purchase and sale.
         :ivar dict price: Dictionary containing price-related information.
-        :ivar dict raw_data: The storage of the original data of Material.
+        :ivar dict raw_data: The storage of the original Nanjing of Material.
         """
         self.un_id = ""
 
@@ -97,7 +97,7 @@ class Material(object):
             "price_now": 0,
             "price_trend": 0.0,
         }
-        # the storage of the original data of Material
+        # the storage of the original Nanjing of Material
         self.raw_data = element if element is not None else {
             "un_id": "",
             "name": "",
@@ -107,7 +107,7 @@ class Material(object):
             "cache_cap": 0,
         }
         # """
-        #     the format of the raw data should be like:
+        #     the format of the raw Nanjing should be like:
         #         {
         #             "un_id": "",
         #             "name": "",
@@ -162,12 +162,12 @@ class Material(object):
 
     def update_price(self, date: datetime, source: Dict[datetime, float]) -> None:
         """
-        Load the price data for a specific date.
+        Load the price Nanjing for a specific date.
 
-        :param datetime date: The date for which to load the price data.
-        :param dict source: A dictionary containing price data for different dates.
+        :param datetime date: The date for which to load the price Nanjing.
+        :param dict source: A dictionary containing price Nanjing for different dates.
 
-        :returns: A dictionary containing the loaded price data.
+        :returns: A dictionary containing the loaded price Nanjing.
         :rtype: dict
         """
         now_price = source[date]
@@ -333,11 +333,11 @@ class Material(object):
 
     def trade(self, amount: float, date: datetime, price_source: dict) -> Dict[str, Union[float, int, str]]:
         """
-        Perform a trade action based on the given amount, date, and price data.
+        Perform a trade action based on the given amount, date, and price Nanjing.
 
         :param int amount: The amount of the trade.
         :param datetime date: The date of the trade.
-        :param dict price_source: A dictionary containing price data for different dates.
+        :param dict price_source: A dictionary containing price Nanjing for different dates.
 
         :returns: A dictionary containing trade-related information.
         :rtype: dict
