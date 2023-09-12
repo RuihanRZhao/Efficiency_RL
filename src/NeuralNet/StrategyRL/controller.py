@@ -50,7 +50,7 @@ if __name__ == "__main__":
         num_action_choice=Net_setting["_num_action_choice"],
         IP_hidden_size=Net_setting["_IP_hidden_size"], AG_hidden_size=Net_setting["_AG_hidden_size"], AP_hidden_size=Net_setting["_AP_hidden_size"],
         IP_num_layers=Net_setting["_IP_num_layers"], AG_num_layers=Net_setting["_AG_num_layers"]
-    )
+    ).to(device)
     central_network.share_memory()
     optimizer = {
         "AG": optim.Adam(central_network.action_generation.parameters(), lr=learning_rate),
