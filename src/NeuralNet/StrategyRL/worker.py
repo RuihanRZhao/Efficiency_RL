@@ -43,7 +43,7 @@ class Strategy_Worker(mp.Process):
         state: torch.tensor
         state, input_size, num_actions = environment.info()
         state.to(self.device)
-
+        print(state.get_device())
         # summary variables
         total_Reward: float = 0
         total_Earn: float = 0
@@ -68,8 +68,8 @@ class Strategy_Worker(mp.Process):
             step_reward: torch.tensor = step_result["total_reward"].to(self.device)
 
             # Get next state
-            next_state: torch.tensor = torch.tensor([]).to(self.device)
             next_state, _, _ = environment.info()
+            next_state.to(self.device)
             next_state.to(self.device)
             next_state = next_state
 
@@ -81,8 +81,8 @@ class Strategy_Worker(mp.Process):
             # Information Processing
 
             # loss function
-            loss_AG = (-step_reward*torch.pow(0.99,action_Out)).sum()
-            loss_AP = (-step_earn*torch.pow(0.99,action_Out)).sum()
+            loss_AG = (-step_reward*torch.pow(0.99, action_Out)).sum()
+            loss_AP = (-step_earn*torch.pow(0.99, action_Out)).sum()
 
             # zero grad
             self.Optimizer["AG"].zero_grad()
