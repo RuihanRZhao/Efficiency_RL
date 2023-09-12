@@ -36,14 +36,14 @@ class Strategy_Worker(mp.Process):
             IP_hidden_size=self.brain_structure["_IP_hidden_size"], AG_hidden_size=self.brain_structure["_AG_hidden_size"], AP_hidden_size=self.brain_structure["_AP_hidden_size"],
             IP_num_layers=self.brain_structure["_IP_num_layers"], AG_num_layers=self.brain_structure["_AG_num_layers"]
     ).to(self.device)
-        # brain.load_state_dict(self.Central_Net)
+        brain.load_state_dict(self.Central_Net.state_dict())
 
         # initialize the environment to the date of start
         environment.reset(self.start_delta + self.step_now)
         state: torch.tensor
         state, input_size, num_actions = environment.info()
         state.to(self.device)
-
+        print(state.get_device())
         # summary variables
         total_Reward: float = 0
         total_Earn: float = 0
@@ -68,8 +68,8 @@ class Strategy_Worker(mp.Process):
             step_reward: torch.tensor = step_result["total_reward"].to(self.device)
 
             # Get next state
-            next_state: torch.tensor = torch.tensor([]).to(self.device)
             next_state, _, _ = environment.info()
+            next_state.to(self.device)
             next_state.to(self.device)
             next_state = next_state
 
@@ -81,8 +81,8 @@ class Strategy_Worker(mp.Process):
             # Information Processing
 
             # loss function
-            loss_AG = (-torch.log(action_Out) * step_reward).sum()
-            loss_AP = (-torch.log(action_Out) * step_earn).sum()
+            loss_AG = (-step_reward*torch.pow(0.99, action_Out)).sum()
+            loss_AP = (-step_earn*torch.pow(0.99, action_Out)).sum()
 
             # zero grad
             self.Optimizer["AG"].zero_grad()
@@ -99,9 +99,9 @@ class Strategy_Worker(mp.Process):
             state = next_state
             self.step_now += 1
 
-        os.system("clear")
         print(
 
-            f"EP: {self.episode:10d}-{self.process:1d}\t| total earn: {total_Earn:15.5f}\t| total reward{total_Reward:10.3f}"
+            f"EP: {self.episode:10d}-{self.process:1d}\t| total earn: {total_Earn:15.3f}\t| total reward{total_Reward:20.3f}\t"
+            f"Out: {action_Out.tolist()[0]}"
     
         )
