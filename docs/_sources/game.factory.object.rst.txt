@@ -1,6 +1,14 @@
 game.factory.object package
 ===========================
 
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   game.factory.object.tool_data
+
 Submodules
 ----------
 
@@ -28,6 +36,13 @@ game.factory.object.producer module
    :undoc-members:
    :show-inheritance:
 
+game.factory.object.unit\_test module
+-------------------------------------
+
+.. automodule:: game.factory.object.unit_test
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Module contents
 ---------------

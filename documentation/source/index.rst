@@ -8,16 +8,13 @@ Welcome to Efficiency_RL documentation!
 
 .. toctree::
    :maxdepth: 2
-   :hidden:
    :caption: Contents:
+      modules
+
 
    modules
 
 **Efficiency_RL** is a deep reinforcement learning system for factory production. The project can be found on `GitHub <https://github.com/RuihanRZhao/Efficiency_RL/>`_
-
-
-
-
 
 
 

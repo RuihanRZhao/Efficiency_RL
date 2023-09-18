@@ -12,8 +12,8 @@ import random
 
 # environment
 from src.game.factory.environment import Factory
-from network import StrategyRL_Network as Network_Structure
-from worker import Strategy_Worker
+from .network import StrategyRL_Network as Network_Structure
+from .worker import Strategy_Worker
 
 if __name__ == "__main__":
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
