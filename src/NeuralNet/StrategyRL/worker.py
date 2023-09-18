@@ -34,9 +34,11 @@ class Strategy_Worker(mp.Process):
             input_H_size=self.brain_structure["_input_H_size"], input_V_size=self.brain_structure["_input_V_size"],
             num_actions=self.brain_structure["_num_actions"],
             num_action_choice=self.brain_structure["_num_action_choice"],
-            IP_hidden_size=self.brain_structure["_IP_hidden_size"], AG_hidden_size=self.brain_structure["_AG_hidden_size"], AP_hidden_size=self.brain_structure["_AP_hidden_size"],
+            IP_hidden_size=self.brain_structure["_IP_hidden_size"],
+            AG_hidden_size=self.brain_structure["_AG_hidden_size"],
+            AP_hidden_size=self.brain_structure["_AP_hidden_size"],
             IP_num_layers=self.brain_structure["_IP_num_layers"], AG_num_layers=self.brain_structure["_AG_num_layers"]
-    ).to(self.device)
+        ).to(self.device)
         brain.load_state_dict(self.Central_Net.state_dict())
 
         # initialize the environment to the date of start
@@ -77,9 +79,12 @@ class Strategy_Worker(mp.Process):
             # identify loss functions and optimize
             # Information Processing
 
-            # loss function
-            # loss_AG = (step_reward+torch.log(action_Out)).sum()
-            loss_AP = (step_earn+torch.pow(action_Out,step_earn)).sum()
+            # loss functions
+            mock_AG_earn, mock_AG_reward = self.environment.action_mock(action_Gen[0])
+
+            loss_AG = (-torch.mul(mock_AG_earn, mock_AG_reward)).sum()
+
+            loss_AP = (step_earn + torch.pow(action_Out, step_earn)).sum()
 
             # zero grad
             self.Optimizer["All"].zero_grad()
@@ -101,5 +106,5 @@ class Strategy_Worker(mp.Process):
 
             f"EP: {self.episode:10d}-{self.process:1d}\t| total earn: {total_Earn:15.3f}\t| total reward{total_Reward:20.3f}\t"
             f"Out: {action_Out.tolist()[0]}"
-    
+
         )
