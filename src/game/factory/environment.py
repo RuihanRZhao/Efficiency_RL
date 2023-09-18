@@ -5,8 +5,8 @@ from datetime import datetime, timedelta
 
 # components of the factory
 from .object import Material, Producer, Obj_Initial
-from src.game.factory.object.tool_data import SQL
-
+from .object.tool_data import SQL
+from graphviz import Digraph
 # pytorch
 import torch
 
@@ -62,6 +62,24 @@ class Factory:
         self.price_source = self.obj_ini.price_initialize()
         # initialize
         self.reset(0)
+
+        # Generate product relationship
+        graph_product = Digraph(comment='Product Relation')
+        # get dots
+        for material in self.materials:
+            graph_product.node(material.un_id, label=material.name)
+        # get edges
+        for producer in self.producers:
+            graph_product.node(producer.un_id, label=f"Pro: {producer.un_id}", shape="house")
+            for id, amount in producer.material.items():
+                if amount > 0:
+                    graph_product.edge(producer.un_id, id)
+                else:
+                    graph_product.edge(id, producer.un_id)
+
+        with open('./Demo_data/Base/product_structure.dot', 'w') as f:
+            f.write(graph_product.source)
+        graph_product.render('./Demo_data/Base/product_structure', format='png', view=True)
 
     def reset(self, day_plus: int = 0) -> None:
         """
@@ -142,6 +160,11 @@ class Factory:
          It takes actions for trading and producing, computes the results, and returns information
          such as earnings, rewards, and outputs. The returned information depends on the mode specified.
          """
+        action_mode = {
+            "train": "normal",
+            "play": "normal",
+            "mock": "mock",
+        }[mode]
         # action amount needs
         mat_act_count = len(self.materials)
         pro_act_count = len(self.producers)
@@ -157,13 +180,13 @@ class Factory:
         # trade
         for act in range(mat_act_count):
             trade_result.append(
-                self.materials[act].trade(trade_action[act], self.date, self.price_source)
+                self.materials[act].trade(amount=trade_action[act], date=self.date, price_source=self.price_source, mode=action_mode)
             )
 
         # produce
         for act in range(pro_act_count):
             produce_result.append(
-                self.producers[act].produce(produce_action[act], self.materials)
+                self.producers[act].produce(amount=produce_action[act], materials=self.materials, mode=action_mode)
             )
 
         # get result unpacked
@@ -194,7 +217,7 @@ class Factory:
             }
 
         # return when play mode
-        def play_return() -> Dict[str, torch.tensor]:
+        def play_return() -> Dict[str, torch.Tensor]:
             total_earn = torch.tensor(trade_earn + produce_earn)
             total_reward = torch.tensor(trade_reward + produce_reward)
             total_output = trade_output + produce_output
@@ -205,17 +228,22 @@ class Factory:
             }
 
         # match dictionary
-
         if mode == "train":
             _result = train_return()
         elif mode == "play":
             _result = play_return()
+        elif mode == "mock":
+            _return = train_return()
         else:
             _result = {}
         self.date += timedelta(days=1)
         for i in self.materials:
             i.inventory_change("refresh")
+
         return _result
+
+    def forward(self):
+        self.date += timedelta(days=1)
 
 
 if __name__ == '__main__':
