@@ -62,6 +62,13 @@ class StrategyRL_Network(nn.Module):
         AG_output = self.action_generation(IP_output, input_matrix)
         AP_output = self.action_probability(AG_output, IP_output)
         AO_output = self.action_output(AG_output, AP_output)
+
+        print(
+            f"size_IP: {IP_output.shape}"
+            f"size_AG: {AG_output.shape}"
+            f"size_AP: {AP_output.shape}"
+            f"size_AO: {AO_output.shape}"
+        )
         return {
             "IP": IP_output,
             "AG": AG_output,

@@ -5,8 +5,8 @@ from datetime import datetime, timedelta
 
 # components of the factory
 from .object import Material, Producer, Obj_Initial
-from src.game.factory.object.tool_data import SQL
-
+from .object.tool_data import SQL
+from graphviz import Digraph
 # pytorch
 import torch
 
@@ -62,6 +62,24 @@ class Factory:
         self.price_source = self.obj_ini.price_initialize()
         # initialize
         self.reset(0)
+
+        # Generate product relationship
+        graph_product = Digraph(comment='Product Relation')
+        # get dots
+        for material in self.materials:
+            graph_product.node(material.un_id, label=material.name)
+        # get edges
+        for producer in self.producers:
+            graph_product.node(producer.un_id, label=f"Pro: {producer.un_id}", shape="house")
+            for id, amount in producer.material.items():
+                if amount > 0:
+                    graph_product.edge(producer.un_id, id)
+                else:
+                    graph_product.edge(id, producer.un_id)
+
+        with open('./Demo_data/Base/product_structure.dot', 'w') as f:
+            f.write(graph_product.source)
+        graph_product.render('./Demo_data/Base/product_structure', format='png', view=True)
 
     def reset(self, day_plus: int = 0) -> None:
         """
@@ -142,6 +160,11 @@ class Factory:
          It takes actions for trading and producing, computes the results, and returns information
          such as earnings, rewards, and outputs. The returned information depends on the mode specified.
          """
+        action_mode = {
+            "train": "normal",
+            "play": "normal",
+            "mock": "mock",
+        }[mode]
         # action amount needs
         mat_act_count = len(self.materials)
         pro_act_count = len(self.producers)
@@ -157,13 +180,13 @@ class Factory:
         # trade
         for act in range(mat_act_count):
             trade_result.append(
-                self.materials[act].trade(trade_action[act], self.date, self.price_source)
+                self.materials[act].trade(amount=trade_action[act], date=self.date, price_source=self.price_source, mode=action_mode)
             )
 
         # produce
         for act in range(pro_act_count):
             produce_result.append(
-                self.producers[act].produce(produce_action[act], self.materials)
+                self.producers[act].produce(amount=produce_action[act], materials=self.materials, mode=action_mode)
             )
 
         # get result unpacked
@@ -194,7 +217,7 @@ class Factory:
             }
 
         # return when play mode
-        def play_return() -> Dict[str, torch.tensor]:
+        def play_return() -> Dict[str, torch.Tensor]:
             total_earn = torch.tensor(trade_earn + produce_earn)
             total_reward = torch.tensor(trade_reward + produce_reward)
             total_output = trade_output + produce_output
@@ -205,17 +228,40 @@ class Factory:
             }
 
         # match dictionary
-
         if mode == "train":
             _result = train_return()
         elif mode == "play":
             _result = play_return()
+        elif mode == "mock":
+            _return = train_return()
         else:
             _result = {}
         self.date += timedelta(days=1)
         for i in self.materials:
             i.inventory_change("refresh")
+
         return _result
+
+    def action_mock(self, action_genes: torch.Tensor) -> (torch.Tensor, torch.Tensor):
+        shape = action_genes.shape
+        num_actions = shape[1]
+        num_choices = shape[2]
+
+        mock_earn = torch.zeros(shape)
+        mock_reward = torch.zeros(shape)
+
+        for NO_choice in range(num_choices):
+            result = self.step(action_genes.t()[NO_choice], mode="mock")
+            temp_earn = result["total_earn"]
+            temp_reward = result["total_reward"]
+            for NO_action in range(num_actions):
+                mock_earn[NO_action, NO_choice] = temp_earn[NO_action]
+                mock_reward[NO_action, NO_choice] = temp_reward[NO_action]
+
+        return mock_earn, mock_reward
+
+    def forward(self):
+        self.date += timedelta(days=1)
 
 
 if __name__ == '__main__':
@@ -226,6 +272,6 @@ if __name__ == '__main__':
     print(act)
 
     print(
-        example.step([66,0,0,0,0,0,0,0,0,0,0,0,0], "train")
+        example.step([66, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "train")
     )
 

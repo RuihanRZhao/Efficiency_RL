@@ -64,6 +64,7 @@ class Material(object):
         # Perform a trade action
         trade_result = material.trade(100, trade_date, trade_price_source)
     """
+
     def __init__(self, element: Dict[str, Union[str, int, bool]]):
         """
         Initialize a Material object.
@@ -145,7 +146,7 @@ class Material(object):
         self.inventory_cap = self.raw_data["inventory_cap"]
         self.cache = 0
         self.cache_cap = self.raw_data["cache_cap"]
-        self.trade_permit ={
+        self.trade_permit = {
             "purchase": self.raw_data["purchase_permit"],
             "sale": self.raw_data["sale_permit"],
         }
@@ -318,10 +319,65 @@ class Material(object):
 
             return change_state
 
+        def mock_trade_only_check_COII(_amount: int = 0) -> dict:
+            change_state = {
+                "if_changed": False,
+                "change_type": ""
+            }
+
+            if _amount > 0:
+                change_state["change_type"] = "add"
+                space = self.inventory_cap - self.inventory
+                if space >= _amount:
+                    change_state["if_changed"] = True
+                else:
+                    change_state["if_changed"] = False
+            elif _amount == 0:
+                change_state["change_type"] = "hold"
+                change_state["if_changed"] = True
+            elif _amount < 0:
+                change_state["change_type"] = "reduce"
+                if self.inventory >= _amount:
+                    change_state["if_changed"] = True
+                else:
+                    change_state["if_changed"] = False
+            return change_state
+
+        def mock_produce_only_check_CIB(_amount: int = 0) -> dict:
+            change_state = {
+                "if_changed": False,
+                "change_type": ""
+            }
+            if _amount > 0:
+                change_state["change_type"] = "add"
+                space = self.cache_cap - self.cache + self.inventory_cap - self.inventory
+                if space >= _amount:
+                    _amount = 0
+                    change_state["if_changed"] = True
+                else:
+                    _amount -= space
+                    change_state["if_changed"] = True
+            elif _amount == 0:
+                change_state["change_type"] = "hold"
+                change_state["if_changed"] = True
+
+            elif _amount < 0:
+                change_state["change_type"] = "reduce"
+
+                if abs(_amount) < self.inventory + self.cache:
+                    change_state["if_changed"] = True
+                else:
+                    change_state["if_changed"] = False
+
+            return change_state
+
+
         mode_list = {
             "trade": change_only_in_inventory,
             "produce": change_in_both,
             "refresh": cache_to_inventory,
+            "mock-trade": mock_trade_only_check_COII,
+            "mock-produce": mock_produce_only_check_CIB,
         }
 
         if mode in mode_list:
@@ -335,7 +391,8 @@ class Material(object):
 
         return state
 
-    def trade(self, amount: float, date: datetime, price_source: dict) -> Dict[str, Union[float, int, str]]:
+    def trade(self, amount: float, date: datetime, price_source: dict, mode: str = "normal") -> Dict[
+        str, Union[float, int, str]]:
         """
         Perform a trade action based on the given amount, date, and price Nanjing.
 
@@ -369,8 +426,8 @@ class Material(object):
             "Output": ""
         }
         permit = False
-
         price = self.update_price(date, price_source[self.un_id])["price_now"]
+        # Check permition
         if amount > 0:
             permit = self.trade_permit["purchase"]
             result["Output"] = f"Buy {amount} of {self.name}-{self.un_id} when price = {price}"
@@ -381,17 +438,27 @@ class Material(object):
             permit = self.trade_permit["sale"]
             result["Output"] = f"Sell {amount} of {self.name}-{self.un_id} when price = {price}"
 
-        if permit:
-            if self.inventory_change("trade", amount)["if_changed"]:
-                result["Earn"] += amount * price
-                result["Output"] += " succeed. "
-                result["Reward"] += 10
+        if mode == "normal":
+            if permit:
+                if self.inventory_change("trade", amount)["if_changed"]:
+                    result["Earn"] += amount * price
+                    result["Output"] += " succeed. "
+                    result["Reward"] += 10
+                else:
+                    result["Output"] += " failed. "
+                    result["Reward"] -= 10
             else:
-                result["Output"] += " failed. "
+                result["Output"] += " not allowed. "
                 result["Reward"] -= 10
-        else:
-            result["Output"] += " not allowed. "
-
+        elif mode == "mock":
+            if permit:
+                if self.inventory_change("mock-trade", amount)["if_changed"]:
+                    result["Earn"] += amount * price
+                    result["Reward"] += 10
+                else:
+                    result["Reward"] -= 10
+            else:
+                result["Reward"] -= 10
         return result
 
     def total_inventory(self):
