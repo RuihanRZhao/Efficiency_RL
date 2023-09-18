@@ -3,9 +3,10 @@ from typing import Dict, Union
 
 import torch
 from torch import multiprocessing as mp
-from network import StrategyRL_Network
-from src.game.factory import Factory
 from torch import optim as optim
+
+from .network import StrategyRL_Network
+from src.game.factory import Factory
 
 
 class Strategy_Worker(mp.Process):

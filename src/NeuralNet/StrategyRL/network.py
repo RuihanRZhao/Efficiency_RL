@@ -1,6 +1,6 @@
 import torch
 
-from net_components import *
+from .net_components import *
 
 
 class StrategyRL_Network(nn.Module):
