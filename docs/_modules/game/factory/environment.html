@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
     <!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
-        <title>game.factory.environment - Efficiency_RL 1.0.0 documentation</title>
+        <title>game.factory.environment - Efficiency_RL 2.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=36a5483c" />
@@ -122,7 +122,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">Efficiency_RL 1.0.0 documentation</div></a>
+      <a href="../../../index.html"><div class="brand">Efficiency_RL 2.0.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -145,7 +145,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
   
   
-  <span class="sidebar-brand-text">Efficiency_RL 1.0.0 documentation</span>
+  <span class="sidebar-brand-text">Efficiency_RL 2.0.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -153,18 +153,21 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+  <p class="caption" role="heading"><span class="caption-text">Contents:
+modules</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../modules.html">src</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of src</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../game.html">game package</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of game package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../../../game.factory.html">game.factory package</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of game.factory package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../game.factory.object.html">game.factory.object package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../game.factory.tool_data.html">game.factory.tool_data package</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../game.html">game package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of game package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../game.factory.html">game.factory package</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of game.factory package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../game.factory.object.html">game.factory.object package</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of game.factory.object package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../game.factory.object.tool_data.html">game.factory.object.tool_data package</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../main_MP.html">main_MP module</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../NeuralNet.html">NeuralNet package</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of NeuralNet package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../NeuralNet.StrategyRL.html">NeuralNet.StrategyRL package</a></li>
 </ul>
 </li>
 </ul>
@@ -203,97 +206,103 @@
           <h1>Source code for game.factory.environment</h1><div class="highlight"><pre>
 <span></span><span class="c1"># python standard</span>
 <span class="c1"># JSON support to load the database info</span>
-<span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 
 <span class="c1"># components of the factory</span>
 <span class="kn">from</span> <span class="nn">.object</span> <span class="kn">import</span> <span class="n">Material</span><span class="p">,</span> <span class="n">Producer</span><span class="p">,</span> <span class="n">Obj_Initial</span>
-<span class="kn">from</span> <span class="nn">.tool_data</span> <span class="kn">import</span> <span class="n">SQL</span>
-
+<span class="kn">from</span> <span class="nn">.object.tool_data</span> <span class="kn">import</span> <span class="n">SQL</span>
+<span class="kn">from</span> <span class="nn">graphviz</span> <span class="kn">import</span> <span class="n">Digraph</span>
 <span class="c1"># pytorch</span>
-<span class="c1"># import torch</span>
+<span class="kn">import</span> <span class="nn">torch</span>
 
-<div class="viewcode-block" id="torch">
-<a class="viewcode-back" href="../../../game.factory.html#game.factory.environment.torch">[docs]</a>
-<span class="k">class</span> <span class="nc">torch</span><span class="p">:</span>
-<div class="viewcode-block" id="torch.tensor">
-<a class="viewcode-back" href="../../../game.factory.html#game.factory.environment.torch.tensor">[docs]</a>
-    <span class="k">def</span> <span class="nf">tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">pass</span></div>
-</div>
-
-    
 
 <span class="c1"># load database information</span>
 <span class="k">def</span> <span class="nf">_load_database_info</span><span class="p">():</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;.database&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
-        <span class="c1"># Load the JSON data into a Python dictionary</span>
-        <span class="c1"># {</span>
-        <span class="c1">#     &quot;host&quot;: &quot;localhost&quot;,</span>
-        <span class="c1">#     &quot;port&quot;: 666,</span>
-        <span class="c1">#     &quot;user&quot;: &quot;username&quot;,</span>
-        <span class="c1">#     &quot;password&quot;: &quot;password&quot;，</span>
-        <span class="c1">#     &quot;database&quot;: &quot;DB&quot;</span>
-        <span class="c1"># }</span>
-
-        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">{</span>
+        <span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">114</span><span class="p">,</span>
+        <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;reader&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;666666&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;database&quot;</span><span class="p">:</span> <span class="s2">&quot;Factory&quot;</span>
+    <span class="p">}</span>
 
 
 <div class="viewcode-block" id="Factory">
 <a class="viewcode-back" href="../../../game.factory.html#game.factory.environment.Factory">[docs]</a>
 <span class="k">class</span> <span class="nc">Factory</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date_plus</span><span class="p">,</span> <span class="n">date_period</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize a factory environment.</span>
 
-<span class="sd">        :param int date_plus: The number of days to advance the factory&#39;s date.</span>
-<span class="sd">        :param int date_period: The number of days in the factory&#39;s date period.</span>
+<span class="sd">        :param int day_plus: The number of days to advance the factory&#39;s date.</span>
 
 <span class="sd">        :ivar list[Material] materials: A list of Material objects representing materials in the factory.</span>
 <span class="sd">        :ivar list[Producer] producers: A list of Producer objects representing producers in the factory.</span>
-<span class="sd">        :ivar dict raw: A dictionary containing raw data for materials and producers.</span>
+<span class="sd">        :ivar dict raw: A dictionary containing raw Nanjing for materials and producers.</span>
 <span class="sd">        :ivar SQL database: An SQL object for connecting to a MySQL database.</span>
-<span class="sd">        :ivar Obj_Initial obj_ini: An Obj_Initial object for initializing raw data.</span>
+<span class="sd">        :ivar Obj_Initial obj_ini: An Obj_Initial object for initializing raw Nanjing.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># factory inner data in gaming</span>
+
+        <span class="c1"># factory inner Nanjing in gaming</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">materials</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Material</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">producers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Producer</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">price_source</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
 
-        <span class="c1"># origin data</span>
+        <span class="c1"># origin Nanjing</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">raw</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;material&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Material</span><span class="p">],</span>
             <span class="s2">&quot;producer&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Producer</span><span class="p">],</span>
         <span class="p">}</span>
-        <span class="c1"># other data that will be used in the environment</span>
+        <span class="c1"># other Nanjing that will be used in the environment</span>
         <span class="c1"># connect mySQL database</span>
         <span class="n">_database_info</span> <span class="o">=</span> <span class="n">_load_database_info</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">SQL</span><span class="p">(</span>
-            <span class="n">host</span><span class="o">=</span><span class="n">_database_info</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">],</span>
-            <span class="n">port</span><span class="o">=</span><span class="n">_database_info</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">],</span>
-            <span class="n">user</span><span class="o">=</span><span class="n">_database_info</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">],</span>
-            <span class="n">password</span><span class="o">=</span><span class="n">_database_info</span><span class="p">[</span><span class="s2">&quot;password&quot;</span><span class="p">],</span>
-            <span class="n">database</span><span class="o">=</span><span class="n">_database_info</span><span class="p">[</span><span class="s2">&quot;database&quot;</span><span class="p">]</span>
-        <span class="p">)</span>
-        <span class="c1"># pass database to obj_initial get the raw data of material and producer</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">obj_ini</span> <span class="o">=</span> <span class="n">Obj_Initial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">)</span>
-        <span class="c1"># get the raw data</span>
+
+        <span class="c1"># database start date</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">date_start</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">date_start</span>
+
+        <span class="c1"># pass database to obj_initial get the raw Nanjing of material and producer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obj_ini</span> <span class="o">=</span> <span class="n">Obj_Initial</span><span class="p">(</span><span class="n">DB_type</span><span class="o">=</span><span class="s2">&quot;CSV&quot;</span><span class="p">)</span>
+        <span class="c1"># get the raw Nanjing</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="p">[</span><span class="s2">&quot;material&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_ini</span><span class="o">.</span><span class="n">material_initialize</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="p">[</span><span class="s2">&quot;producer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_ini</span><span class="o">.</span><span class="n">producer_initialize</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">price_source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_ini</span><span class="o">.</span><span class="n">price_initialize</span><span class="p">()</span>
         <span class="c1"># initialize</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Generate product relationship</span>
+        <span class="n">graph_product</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">(</span><span class="n">comment</span><span class="o">=</span><span class="s1">&#39;Product Relation&#39;</span><span class="p">)</span>
+        <span class="c1"># get dots</span>
+        <span class="k">for</span> <span class="n">material</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">materials</span><span class="p">:</span>
+            <span class="n">graph_product</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="n">material</span><span class="o">.</span><span class="n">un_id</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">material</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="c1"># get edges</span>
+        <span class="k">for</span> <span class="n">producer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">producers</span><span class="p">:</span>
+            <span class="n">graph_product</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="n">producer</span><span class="o">.</span><span class="n">un_id</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Pro: </span><span class="si">{</span><span class="n">producer</span><span class="o">.</span><span class="n">un_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s2">&quot;house&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">amount</span> <span class="ow">in</span> <span class="n">producer</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">graph_product</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="n">producer</span><span class="o">.</span><span class="n">un_id</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">graph_product</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">producer</span><span class="o">.</span><span class="n">un_id</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./Demo_data/Base/product_structure.dot&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">graph_product</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+        <span class="n">graph_product</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;./Demo_data/Base/product_structure&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Factory.reset">
 <a class="viewcode-back" href="../../../game.factory.html#game.factory.environment.Factory.reset">[docs]</a>
-    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">day_plus</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reset the factory by restoring materials and producers to their initial state.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">materials</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="p">[</span><span class="s2">&quot;material&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">producers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="p">[</span><span class="s2">&quot;producer&quot;</span><span class="p">]</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">producers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw</span><span class="p">[</span><span class="s2">&quot;producer&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">date_start</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">day_plus</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Factory.info">
 <a class="viewcode-back" href="../../../game.factory.html#game.factory.environment.Factory.info">[docs]</a>
-    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get information about the factory&#39;s materials and producers.</span>
 
@@ -302,8 +311,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">mat_info</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">pro_info</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="c1"># generate the material data matrix</span>
+        <span class="c1"># generate the material Nanjing matrix</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">materials</span><span class="p">:</span>
+
+            <span class="n">item</span><span class="o">.</span><span class="n">update_price</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">price_source</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">un_id</span><span class="p">])</span>
+
             <span class="n">mat_info</span><span class="o">.</span><span class="n">append</span><span class="p">([</span>
                 <span class="nb">int</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">un_id</span><span class="p">),</span>
                 <span class="n">item</span><span class="o">.</span><span class="n">inventory</span><span class="p">,</span>
@@ -315,8 +327,9 @@
                 <span class="n">item</span><span class="o">.</span><span class="n">price</span><span class="p">[</span><span class="s2">&quot;price_now&quot;</span><span class="p">],</span>
             <span class="p">])</span>
 
-        <span class="c1"># generate the producer data matrix</span>
+        <span class="c1"># generate the producer Nanjing matrix</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">producers</span><span class="p">:</span>
+
             <span class="k">for</span> <span class="n">mat_key</span><span class="p">,</span> <span class="n">mat_value</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">pro_info</span><span class="o">.</span><span class="n">append</span><span class="p">([</span>
                     <span class="nb">int</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">un_id</span><span class="p">),</span>
@@ -326,13 +339,11 @@
                     <span class="n">mat_value</span><span class="p">,</span>
                 <span class="p">])</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="n">mat_info</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">pro_info</span><span class="p">)</span>
-
         <span class="n">mat_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mat_info</span><span class="p">)</span>
         <span class="n">pro_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pro_info</span><span class="p">)</span>
-        <span class="n">mat_colum</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mat_info</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">pro_colum</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pro_info</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">matrix_size</span> <span class="o">=</span> <span class="p">[</span><span class="n">mat_colum</span> <span class="o">+</span> <span class="n">pro_colum</span><span class="p">,</span> <span class="n">mat_count</span> <span class="k">if</span> <span class="n">mat_count</span> <span class="o">&gt;</span> <span class="n">pro_count</span> <span class="k">else</span> <span class="n">pro_count</span><span class="p">]</span>
+        <span class="n">mat_colum</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mat_info</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">pro_colum</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pro_info</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">matrix_size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">mat_colum</span> <span class="o">+</span> <span class="n">pro_colum</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">mat_count</span> <span class="k">if</span> <span class="n">mat_count</span> <span class="o">&gt;</span> <span class="n">pro_count</span> <span class="k">else</span> <span class="n">pro_count</span><span class="p">]</span>
 
         <span class="c1"># transfer list matrix into tensor</span>
 
@@ -341,11 +352,12 @@
                 <span class="k">for</span> <span class="n">m_l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m_colum</span><span class="p">):</span>
                     <span class="n">target</span><span class="p">[</span><span class="n">m_l</span> <span class="o">+</span> <span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">m_c</span> <span class="o">+</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="n">m_c</span><span class="p">][</span><span class="n">m_l</span><span class="p">]</span>
 
-        <span class="n">env_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">matrix_size</span><span class="p">)</span>
-        <span class="n">write_tensor</span><span class="p">(</span><span class="n">env_tensor</span><span class="p">,</span> <span class="n">mat_info</span><span class="p">,</span> <span class="n">mat_count</span><span class="p">,</span> <span class="n">mat_colum</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-        <span class="n">write_tensor</span><span class="p">(</span><span class="n">env_tensor</span><span class="p">,</span> <span class="n">pro_info</span><span class="p">,</span> <span class="n">pro_count</span><span class="p">,</span> <span class="n">pro_colum</span><span class="p">,</span> <span class="p">[</span><span class="n">mat_colum</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">env_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">matrix_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">write_tensor</span><span class="p">(</span><span class="n">env_tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mat_info</span><span class="p">,</span> <span class="n">mat_count</span><span class="p">,</span> <span class="n">mat_colum</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">write_tensor</span><span class="p">(</span><span class="n">env_tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pro_info</span><span class="p">,</span> <span class="n">pro_count</span><span class="p">,</span> <span class="n">pro_colum</span><span class="p">,</span> <span class="p">[</span><span class="n">mat_colum</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 
-        <span class="k">return</span> <span class="n">env_tensor</span><span class="p">,</span> <span class="n">matrix_size</span></div>
+        <span class="n">num_actions</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">materials</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">producers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">env_tensor</span><span class="p">,</span> <span class="n">matrix_size</span><span class="p">,</span> <span class="n">num_actions</span></div>
 
 
 <div class="viewcode-block" id="Factory.step">
@@ -364,6 +376,11 @@
 <span class="sd">         It takes actions for trading and producing, computes the results, and returns information</span>
 <span class="sd">         such as earnings, rewards, and outputs. The returned information depends on the mode specified.</span>
 <span class="sd">         &quot;&quot;&quot;</span>
+        <span class="n">action_mode</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;play&quot;</span><span class="p">:</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;mock&quot;</span><span class="p">:</span> <span class="s2">&quot;mock&quot;</span><span class="p">,</span>
+        <span class="p">}[</span><span class="n">mode</span><span class="p">]</span>
         <span class="c1"># action amount needs</span>
         <span class="n">mat_act_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">materials</span><span class="p">)</span>
         <span class="n">pro_act_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">producers</span><span class="p">)</span>
@@ -379,13 +396,13 @@
         <span class="c1"># trade</span>
         <span class="k">for</span> <span class="n">act</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">mat_act_count</span><span class="p">):</span>
             <span class="n">trade_result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">materials</span><span class="p">[</span><span class="n">act</span><span class="p">]</span><span class="o">.</span><span class="n">trade</span><span class="p">(</span><span class="n">trade_action</span><span class="p">[</span><span class="n">act</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">materials</span><span class="p">[</span><span class="n">act</span><span class="p">]</span><span class="o">.</span><span class="n">trade</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="n">trade_action</span><span class="p">[</span><span class="n">act</span><span class="p">],</span> <span class="n">date</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">price_source</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">price_source</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">action_mode</span><span class="p">)</span>
             <span class="p">)</span>
 
         <span class="c1"># produce</span>
         <span class="k">for</span> <span class="n">act</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pro_act_count</span><span class="p">):</span>
             <span class="n">produce_result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">producers</span><span class="p">[</span><span class="n">act</span><span class="p">]</span><span class="o">.</span><span class="n">produce</span><span class="p">(</span><span class="n">produce_action</span><span class="p">[</span><span class="n">act</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">producers</span><span class="p">[</span><span class="n">act</span><span class="p">]</span><span class="o">.</span><span class="n">produce</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="n">produce_action</span><span class="p">[</span><span class="n">act</span><span class="p">],</span> <span class="n">materials</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">materials</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">action_mode</span><span class="p">)</span>
             <span class="p">)</span>
 
         <span class="c1"># get result unpacked</span>
@@ -416,10 +433,10 @@
             <span class="p">}</span>
 
         <span class="c1"># return when play mode</span>
-        <span class="k">def</span> <span class="nf">play_return</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">]:</span>
+        <span class="k">def</span> <span class="nf">play_return</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
             <span class="n">total_earn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">trade_earn</span> <span class="o">+</span> <span class="n">produce_earn</span><span class="p">)</span>
             <span class="n">total_reward</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">trade_reward</span> <span class="o">+</span> <span class="n">produce_reward</span><span class="p">)</span>
-            <span class="n">total_output</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">trade_output</span> <span class="o">+</span> <span class="n">produce_output</span><span class="p">)</span>
+            <span class="n">total_output</span> <span class="o">=</span> <span class="n">trade_output</span> <span class="o">+</span> <span class="n">produce_output</span>
             <span class="k">return</span> <span class="p">{</span>
                 <span class="s2">&quot;total_earn&quot;</span><span class="p">:</span> <span class="n">total_earn</span><span class="p">,</span>
                 <span class="s2">&quot;total_reward&quot;</span><span class="p">:</span> <span class="n">total_reward</span><span class="p">,</span>
@@ -427,18 +444,60 @@
             <span class="p">}</span>
 
         <span class="c1"># match dictionary</span>
-        <span class="n">switch</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="n">train_return</span><span class="p">(),</span>
-            <span class="s2">&quot;play&quot;</span><span class="p">:</span> <span class="n">play_return</span><span class="p">()</span>
-        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+            <span class="n">_result</span> <span class="o">=</span> <span class="n">train_return</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;play&quot;</span><span class="p">:</span>
+            <span class="n">_result</span> <span class="o">=</span> <span class="n">play_return</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;mock&quot;</span><span class="p">:</span>
+            <span class="n">_return</span> <span class="o">=</span> <span class="n">train_return</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_result</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">+=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">materials</span><span class="p">:</span>
+            <span class="n">i</span><span class="o">.</span><span class="n">inventory_change</span><span class="p">(</span><span class="s2">&quot;refresh&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">switch</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="n">_result</span></div>
+
+
+<div class="viewcode-block" id="Factory.action_mock">
+<a class="viewcode-back" href="../../../game.factory.html#game.factory.environment.Factory.action_mock">[docs]</a>
+    <span class="k">def</span> <span class="nf">action_mock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_genes</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">action_genes</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">num_actions</span> <span class="o">=</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">num_choices</span> <span class="o">=</span> <span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="n">mock_earn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">mock_reward</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">NO_choice</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_choices</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action_genes</span><span class="o">.</span><span class="n">t</span><span class="p">()[</span><span class="n">NO_choice</span><span class="p">],</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;mock&quot;</span><span class="p">)</span>
+            <span class="n">temp_earn</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;total_earn&quot;</span><span class="p">]</span>
+            <span class="n">temp_reward</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;total_reward&quot;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">NO_action</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_actions</span><span class="p">):</span>
+                <span class="n">mock_earn</span><span class="p">[</span><span class="n">NO_action</span><span class="p">,</span> <span class="n">NO_choice</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_earn</span><span class="p">[</span><span class="n">NO_action</span><span class="p">]</span>
+                <span class="n">mock_reward</span><span class="p">[</span><span class="n">NO_action</span><span class="p">,</span> <span class="n">NO_choice</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_reward</span><span class="p">[</span><span class="n">NO_action</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">mock_earn</span><span class="p">,</span> <span class="n">mock_reward</span></div>
+
+
+<div class="viewcode-block" id="Factory.forward">
+<a class="viewcode-back" href="../../../game.factory.html#game.factory.environment.Factory.forward">[docs]</a>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">+=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
 </div>
+
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="c1"># a demo to test info and step</span>
-    <span class="k">pass</span>
+    <span class="n">example</span> <span class="o">=</span> <span class="n">Factory</span><span class="p">()</span>
+    <span class="n">example</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">act</span> <span class="o">=</span> <span class="n">example</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">act</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="n">example</span><span class="o">.</span><span class="n">step</span><span class="p">([</span><span class="mi">66</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
 
 </pre></div>
         </article>
@@ -472,7 +531,7 @@
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=8d563738"></script>
+</div><script src="../../../_static/documentation_options.js?v=51b770b3"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/furo.js?v=32e29ea5"></script>

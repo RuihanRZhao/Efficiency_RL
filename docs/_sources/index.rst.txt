@@ -8,8 +8,9 @@ Welcome to Efficiency_RL documentation!
 
 .. toctree::
    :maxdepth: 2
-   :hidden:
    :caption: Contents:
+      modules
+
 
    modules
 

@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
     <!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
-        <title>game.factory.object.material - Efficiency_RL 1.0.0 documentation</title>
+        <title>game.factory.object.material - Efficiency_RL 2.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?v=36a5483c" />
@@ -122,7 +122,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../../index.html"><div class="brand">Efficiency_RL 1.0.0 documentation</div></a>
+      <a href="../../../../index.html"><div class="brand">Efficiency_RL 2.0.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -145,7 +145,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../index.html">
   
   
-  <span class="sidebar-brand-text">Efficiency_RL 1.0.0 documentation</span>
+  <span class="sidebar-brand-text">Efficiency_RL 2.0.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -229,7 +229,7 @@
 <span class="sd">        cache_cap (int): The maximum capacity of the material&#39;s cache.</span>
 <span class="sd">        trade_permit (dict): A dictionary indicating whether trading (purchase/sale) of this material is permitted.</span>
 <span class="sd">        price (dict): A dictionary containing price-related information for the material.</span>
-<span class="sd">        raw_data (dict): The storage of the original data of the Material.</span>
+<span class="sd">        raw_data (dict): The storage of the original Nanjing of the Material.</span>
 
 <span class="sd">    Methods:</span>
 <span class="sd">        __init__(element=None):</span>
@@ -245,7 +245,7 @@
 <span class="sd">            Resets the Material&#39;s properties to their initial values.</span>
 
 <span class="sd">        load_price(date: datetime, source: dict) -&gt; dict:</span>
-<span class="sd">            Loads the price data for a specific date from a source dictionary.</span>
+<span class="sd">            Loads the price Nanjing for a specific date from a source dictionary.</span>
 
 <span class="sd">        Trend_Cal(end: datetime, price_source: dict, scale: int) -&gt; float:</span>
 <span class="sd">            Calculates the trend based on start and end values and a scaling factor.</span>
@@ -254,7 +254,7 @@
 <span class="sd">            Changes the inventory based on the specified mode and amount.</span>
 
 <span class="sd">        trade(amount: int, date: datetime, price_source: dict) -&gt; dict:</span>
-<span class="sd">            Performs a trade action based on the given amount, date, and price data.</span>
+<span class="sd">            Performs a trade action based on the given amount, date, and price Nanjing.</span>
 
 <span class="sd">        total_inventory() -&gt; dict:</span>
 <span class="sd">            Returns a dictionary containing the total inventory and cache amounts of the material.</span>
@@ -269,6 +269,7 @@
 <span class="sd">        # Perform a trade action</span>
 <span class="sd">        trade_result = material.trade(100, trade_date, trade_price_source)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize a Material object.</span>
@@ -283,7 +284,7 @@
 <span class="sd">        :ivar int cache_cap: Cache capacity.</span>
 <span class="sd">        :ivar dict trade_permit: Dictionary indicating trade permits for purchase and sale.</span>
 <span class="sd">        :ivar dict price: Dictionary containing price-related information.</span>
-<span class="sd">        :ivar dict raw_data: The storage of the original data of Material.</span>
+<span class="sd">        :ivar dict raw_data: The storage of the original Nanjing of Material.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">un_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
@@ -302,7 +303,7 @@
             <span class="s2">&quot;price_now&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
             <span class="s2">&quot;price_trend&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
         <span class="p">}</span>
-        <span class="c1"># the storage of the original data of Material</span>
+        <span class="c1"># the storage of the original Nanjing of Material</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span> <span class="o">=</span> <span class="n">element</span> <span class="k">if</span> <span class="n">element</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{</span>
             <span class="s2">&quot;un_id&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
             <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
@@ -312,7 +313,7 @@
             <span class="s2">&quot;cache_cap&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="c1"># &quot;&quot;&quot;</span>
-        <span class="c1">#     the format of the raw data should be like:</span>
+        <span class="c1">#     the format of the raw Nanjing should be like:</span>
         <span class="c1">#         {</span>
         <span class="c1">#             &quot;un_id&quot;: &quot;&quot;,</span>
         <span class="c1">#             &quot;name&quot;: &quot;&quot;,</span>
@@ -350,9 +351,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;inventory&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;inventory_cap&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;cache&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cache_cap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;cache_cap&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">trade_permit</span> <span class="o">=</span><span class="p">{</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trade_permit</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;purchase&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;purchase_permit&quot;</span><span class="p">],</span>
             <span class="s2">&quot;sale&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s2">&quot;sale_permit&quot;</span><span class="p">],</span>
         <span class="p">}</span>
@@ -371,24 +372,25 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="Material.load_price">
-<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.material.Material.load_price">[docs]</a>
-    <span class="k">def</span> <span class="nf">load_price</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+<div class="viewcode-block" id="Material.update_price">
+<a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.material.Material.update_price">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_price</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span> <span class="o">|</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Load the price data for a specific date.</span>
+<span class="sd">        Load the price Nanjing for a specific date.</span>
 
-<span class="sd">        :param datetime date: The date for which to load the price data.</span>
-<span class="sd">        :param dict source: A dictionary containing price data for different dates.</span>
+<span class="sd">        :param datetime date: The date for which to load the price Nanjing.</span>
+<span class="sd">        :param dict source: A dictionary containing price Nanjing for different dates.</span>
 
-<span class="sd">        :returns: A dictionary containing the loaded price data.</span>
+<span class="sd">        :returns: A dictionary containing the loaded price Nanjing.</span>
 <span class="sd">        :rtype: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">trade_permit</span><span class="p">[</span><span class="s2">&quot;purchase&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">trade_permit</span><span class="p">[</span><span class="s2">&quot;sale&quot;</span><span class="p">]:</span> <span class="k">return</span> <span class="mi">0</span>
         <span class="n">now_price</span> <span class="o">=</span> <span class="n">source</span><span class="p">[</span><span class="n">date</span><span class="p">]</span>
         <span class="n">trend</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Trend_Cal</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">price</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="n">date</span><span class="p">,</span>
             <span class="s2">&quot;price_now&quot;</span><span class="p">:</span> <span class="n">now_price</span><span class="p">,</span>
-            <span class="s2">&quot;price_trend&quot;</span><span class="p">:</span> <span class="n">trend</span><span class="p">,</span>
+            <span class="s2">&quot;price_trend&quot;</span><span class="p">:</span> <span class="n">trend</span>
         <span class="p">}</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">price</span></div>
 
@@ -445,7 +447,7 @@
 
         <span class="k">def</span> <span class="nf">cache_to_inventory</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
             <span class="n">change_state</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">&quot;if_changed&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;if_changed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
                 <span class="s2">&quot;change_type&quot;</span><span class="p">:</span> <span class="s2">&quot;refresh&quot;</span>
             <span class="p">}</span>
             <span class="n">space</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cap</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span>
@@ -469,22 +471,22 @@
                 <span class="k">if</span> <span class="n">space</span> <span class="o">&gt;=</span> <span class="n">_amount</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">+=</span> <span class="n">_amount</span>
                     <span class="n">_amount</span> <span class="o">=</span> <span class="mi">0</span>
-                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
             <span class="k">elif</span> <span class="n">_amount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;hold&quot;</span>
-                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
             <span class="k">elif</span> <span class="n">_amount</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;reduce&quot;</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">&gt;=</span> <span class="n">_amount</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">-=</span> <span class="n">_amount</span>
                     <span class="n">_amount</span> <span class="o">=</span> <span class="mi">0</span>
-                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
             <span class="k">return</span> <span class="n">change_state</span>
 
@@ -500,7 +502,7 @@
                 <span class="k">if</span> <span class="n">cache_space</span> <span class="o">&gt;=</span> <span class="n">_amount</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">+=</span> <span class="n">_amount</span>
                     <span class="n">_amount</span> <span class="o">=</span> <span class="mi">0</span>
-                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_cap</span>
                     <span class="n">_amount</span> <span class="o">-=</span> <span class="n">cache_space</span>
@@ -509,15 +511,15 @@
                 <span class="k">if</span> <span class="n">inventory_space</span> <span class="o">&gt;=</span> <span class="n">_amount</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">+=</span> <span class="n">_amount</span>
                     <span class="n">_amount</span> <span class="o">=</span> <span class="mi">0</span>
-                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cap</span>
                     <span class="n">_amount</span> <span class="o">-=</span> <span class="n">inventory_space</span>
-                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
             <span class="k">elif</span> <span class="n">_amount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;hold&quot;</span>
-                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
             <span class="k">elif</span> <span class="n">_amount</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;reduce&quot;</span>
@@ -526,24 +528,83 @@
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">&gt;=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">_amount</span><span class="p">):</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">+=</span> <span class="n">_amount</span>
                         <span class="n">_amount</span> <span class="o">=</span> <span class="mi">0</span>
-                        <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">_amount</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">=</span> <span class="mi">0</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">+=</span> <span class="n">_amount</span>
                         <span class="n">_amount</span> <span class="o">=</span> <span class="mi">0</span>
-                        <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_change&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
             <span class="k">return</span> <span class="n">change_state</span>
 
+        <span class="k">def</span> <span class="nf">mock_trade_only_check_COII</span><span class="p">(</span><span class="n">_amount</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+            <span class="n">change_state</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;if_changed&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;change_type&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span> <span class="n">_amount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;add&quot;</span>
+                <span class="n">space</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cap</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span>
+                <span class="k">if</span> <span class="n">space</span> <span class="o">&gt;=</span> <span class="n">_amount</span><span class="p">:</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">elif</span> <span class="n">_amount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;hold&quot;</span>
+                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">_amount</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;reduce&quot;</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">&gt;=</span> <span class="n">_amount</span><span class="p">:</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="n">change_state</span>
+
+        <span class="k">def</span> <span class="nf">mock_produce_only_check_CIB</span><span class="p">(</span><span class="n">_amount</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+            <span class="n">change_state</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;if_changed&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;change_type&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="n">_amount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;add&quot;</span>
+                <span class="n">space</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_cap</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cap</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span>
+                <span class="k">if</span> <span class="n">space</span> <span class="o">&gt;=</span> <span class="n">_amount</span><span class="p">:</span>
+                    <span class="n">_amount</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">_amount</span> <span class="o">-=</span> <span class="n">space</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">_amount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;hold&quot;</span>
+                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">elif</span> <span class="n">_amount</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;reduce&quot;</span>
+
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">_amount</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">:</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">change_state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="k">return</span> <span class="n">change_state</span>
+
+
         <span class="n">mode_list</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;trade&quot;</span><span class="p">:</span> <span class="n">change_only_in_inventory</span><span class="p">(),</span>
-            <span class="s2">&quot;produce&quot;</span><span class="p">:</span> <span class="n">change_in_both</span><span class="p">(),</span>
-            <span class="s2">&quot;refresh&quot;</span><span class="p">:</span> <span class="n">cache_to_inventory</span><span class="p">()</span>
+            <span class="s2">&quot;trade&quot;</span><span class="p">:</span> <span class="n">change_only_in_inventory</span><span class="p">,</span>
+            <span class="s2">&quot;produce&quot;</span><span class="p">:</span> <span class="n">change_in_both</span><span class="p">,</span>
+            <span class="s2">&quot;refresh&quot;</span><span class="p">:</span> <span class="n">cache_to_inventory</span><span class="p">,</span>
+            <span class="s2">&quot;mock-trade&quot;</span><span class="p">:</span> <span class="n">mock_trade_only_check_COII</span><span class="p">,</span>
+            <span class="s2">&quot;mock-produce&quot;</span><span class="p">:</span> <span class="n">mock_produce_only_check_CIB</span><span class="p">,</span>
         <span class="p">}</span>
 
         <span class="k">if</span> <span class="n">mode</span> <span class="ow">in</span> <span class="n">mode_list</span><span class="p">:</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="n">mode_list</span><span class="p">[</span><span class="n">mode</span><span class="p">](</span><span class="n">amount</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">!=</span> <span class="s2">&quot;refresh&quot;</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">mode_list</span><span class="p">[</span><span class="n">mode</span><span class="p">](</span><span class="n">amount</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">mode_list</span><span class="p">[</span><span class="n">mode</span><span class="p">]()</span>
+
             <span class="n">state</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]</span>
             <span class="n">state</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;change_type&quot;</span><span class="p">]</span>
 
@@ -552,13 +613,14 @@
 
 <div class="viewcode-block" id="Material.trade">
 <a class="viewcode-back" href="../../../../game.factory.object.html#game.factory.object.material.Material.trade">[docs]</a>
-    <span class="k">def</span> <span class="nf">trade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">price_source</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+    <span class="k">def</span> <span class="nf">trade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">price_source</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;normal&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span>
+        <span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Perform a trade action based on the given amount, date, and price data.</span>
+<span class="sd">        Perform a trade action based on the given amount, date, and price Nanjing.</span>
 
 <span class="sd">        :param int amount: The amount of the trade.</span>
 <span class="sd">        :param datetime date: The date of the trade.</span>
-<span class="sd">        :param dict price_source: A dictionary containing price data for different dates.</span>
+<span class="sd">        :param dict price_source: A dictionary containing price Nanjing for different dates.</span>
 
 <span class="sd">        :returns: A dictionary containing trade-related information.</span>
 <span class="sd">        :rtype: dict</span>
@@ -586,8 +648,8 @@
             <span class="s2">&quot;Output&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
         <span class="p">}</span>
         <span class="n">permit</span> <span class="o">=</span> <span class="kc">False</span>
-
-        <span class="n">price</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_price</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">price_source</span><span class="p">)[</span><span class="s2">&quot;price_now&quot;</span><span class="p">]</span>
+        <span class="n">price</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_price</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">price_source</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">un_id</span><span class="p">])[</span><span class="s2">&quot;price_now&quot;</span><span class="p">]</span>
+        <span class="c1"># Check permition</span>
         <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">permit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trade_permit</span><span class="p">[</span><span class="s2">&quot;purchase&quot;</span><span class="p">]</span>
             <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Output&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Buy </span><span class="si">{</span><span class="n">amount</span><span class="si">}</span><span class="s2"> of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">un_id</span><span class="si">}</span><span class="s2"> when price = </span><span class="si">{</span><span class="n">price</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -598,15 +660,27 @@
             <span class="n">permit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trade_permit</span><span class="p">[</span><span class="s2">&quot;sale&quot;</span><span class="p">]</span>
             <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Output&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Sell </span><span class="si">{</span><span class="n">amount</span><span class="si">}</span><span class="s2"> of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">un_id</span><span class="si">}</span><span class="s2"> when price = </span><span class="si">{</span><span class="n">price</span><span class="si">}</span><span class="s2">&quot;</span>
 
-        <span class="k">if</span> <span class="n">permit</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory_change</span><span class="p">(</span><span class="s2">&quot;trade&quot;</span><span class="p">,</span> <span class="n">amount</span><span class="p">)[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]:</span>
-                <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Earn&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">price</span>
-                <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Output&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="s2">&quot; succeed. &quot;</span>
-                <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Reward&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">10</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;normal&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">permit</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory_change</span><span class="p">(</span><span class="s2">&quot;trade&quot;</span><span class="p">,</span> <span class="n">amount</span><span class="p">)[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]:</span>
+                    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Earn&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">price</span>
+                    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Output&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="s2">&quot; succeed. &quot;</span>
+                    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Reward&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">10</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Output&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="s2">&quot; failed. &quot;</span>
+                    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Reward&quot;</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">10</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Output&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="s2">&quot; failed. &quot;</span>
+                <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Output&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="s2">&quot; not allowed. &quot;</span>
                 <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Reward&quot;</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">10</span>
-
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;mock&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">permit</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inventory_change</span><span class="p">(</span><span class="s2">&quot;mock-trade&quot;</span><span class="p">,</span> <span class="n">amount</span><span class="p">)[</span><span class="s2">&quot;if_changed&quot;</span><span class="p">]:</span>
+                    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Earn&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">price</span>
+                    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Reward&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">10</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Reward&quot;</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">10</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="s2">&quot;Reward&quot;</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">10</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
 
@@ -657,7 +731,7 @@
       
     </aside>
   </div>
-</div><script src="../../../../_static/documentation_options.js?v=8d563738"></script>
+</div><script src="../../../../_static/documentation_options.js?v=51b770b3"></script>
     <script src="../../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/scripts/furo.js?v=32e29ea5"></script>

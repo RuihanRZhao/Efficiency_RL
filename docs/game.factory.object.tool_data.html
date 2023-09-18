@@ -1,0 +1,494 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="NeuralNet package" href="NeuralNet.html" /><link rel="prev" title="game.factory.object package" href="game.factory.object.html" />
+
+    <!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
+        <title>game.factory.object.tool_data package - Efficiency_RL 2.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Efficiency_RL 2.0.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">Efficiency_RL 2.0.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:
+modules</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="game.html">game package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of game package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="game.factory.html">game.factory package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of game.factory package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3 current has-children"><a class="reference internal" href="game.factory.object.html">game.factory.object package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of game.factory.object package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l4 current current-page"><a class="current reference internal" href="#">game.factory.object.tool_data package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="NeuralNet.html">NeuralNet package</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of NeuralNet package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="NeuralNet.StrategyRL.html">NeuralNet.StrategyRL package</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="game-factory-object-tool-data-package">
+<h1>game.factory.object.tool_data package<a class="headerlink" href="#game-factory-object-tool-data-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-game.factory.object.tool_data.data">
+<span id="game-factory-object-tool-data-data-module"></span><h2>game.factory.object.tool_data.data module<a class="headerlink" href="#module-game.factory.object.tool_data.data" title="Link to this heading">#</a></h2>
+<p>Object Class: Data</p>
+<p>Data 2023/Sept/10</p>
+<p>Author: Ryen Zhao</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="game.factory.object.tool_data.data.Data">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game.factory.object.tool_data.data.</span></span><span class="sig-name descname"><span class="pre">Data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/tool_data/data.html#Data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.tool_data.data.Data" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.object.tool_data.data.Data.get_table_by_name">
+<span class="sig-name descname"><span class="pre">get_table_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="_modules/game/factory/object/tool_data/data.html#Data.get_table_by_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.tool_data.data.Data.get_table_by_name" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-game.factory.object.tool_data.t_csv">
+<span id="game-factory-object-tool-data-t-csv-module"></span><h2>game.factory.object.tool_data.t_csv module<a class="headerlink" href="#module-game.factory.object.tool_data.t_csv" title="Link to this heading">#</a></h2>
+<p>Last Change: 2023/aug/16 11:28
+Author: Ryen Zhao</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="game.factory.object.tool_data.t_csv.CSV">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game.factory.object.tool_data.t_csv.</span></span><span class="sig-name descname"><span class="pre">CSV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/tool_data/t_csv.html#CSV"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.tool_data.t_csv.CSV" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Object Class: CSV</p>
+<p>Date: 2023/Aug/16</p>
+<p>Author: Ryen Zhao</p>
+<p>A CSV file object with functions to process Nanjing</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – the path to the file</p></li>
+<li><p><strong>separator</strong> (<em>str</em>) – the delimiter for CSV file</p></li>
+<li><p><strong>mode</strong> (<em>str</em>) – to identify if the file is new or already exist</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.object.tool_data.t_csv.CSV.Read">
+<span class="sig-name descname"><span class="pre">Read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game/factory/object/tool_data/t_csv.html#CSV.Read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.tool_data.t_csv.CSV.Read" title="Link to this definition">#</a></dt>
+<dd><p>Read the contents of the target file.
+:return: A 2D list with the same Nanjing and structure of the origin file.
+:rtype: list[list[int]]</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-game.factory.object.tool_data.t_sql">
+<span id="game-factory-object-tool-data-t-sql-module"></span><h2>game.factory.object.tool_data.t_sql module<a class="headerlink" href="#module-game.factory.object.tool_data.t_sql" title="Link to this heading">#</a></h2>
+<p>Last Change: 2023/aug/23 11:28
+Author: Ryen Zhao</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="game.factory.object.tool_data.t_sql.SQL">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game.factory.object.tool_data.t_sql.</span></span><span class="sig-name descname"><span class="pre">SQL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/tool_data/t_sql.html#SQL"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.tool_data.t_sql.SQL" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A utility class for managing SQL database connections and operations.</p>
+<p>This class provides a convenient way to establish a connection to an SQL database,
+retrieve a list of tables within a specified database, and execute various SQL queries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> – The hostname or IP address of the database server.</p></li>
+<li><p><strong>user</strong> – The username for authenticating the database connection.</p></li>
+<li><p><strong>password</strong> – The password for authenticating the database connection.</p></li>
+<li><p><strong>port</strong> – The port number to use for the database connection.</p></li>
+<li><p><strong>database</strong> – The name of the database to operate on.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>database</strong> – The database connection object.</p></li>
+<li><p><strong>cursor</strong> – The cursor object for executing SQL queries.</p></li>
+<li><p><strong>table_list</strong> – A list of table names within the specified database.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.object.tool_data.t_sql.SQL.get_table_by_name">
+<span class="sig-name descname"><span class="pre">get_table_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="_modules/game/factory/object/tool_data/t_sql.html#SQL.get_table_by_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.tool_data.t_sql.SQL.get_table_by_name" title="Link to this definition">#</a></dt>
+<dd><p>Fetch Nanjing from a specified table and return it as a list of dictionaries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>table_name</strong> – The name of the table to fetch Nanjing from.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of dictionaries where ea ch dictionary represents a row of Nanjing.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.object.tool_data.t_sql.SQL.get_tables">
+<span class="sig-name descname"><span class="pre">get_tables</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="_modules/game/factory/object/tool_data/t_sql.html#SQL.get_tables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.tool_data.t_sql.SQL.get_tables" title="Link to this definition">#</a></dt>
+<dd><p>Retrieve a list of table names in the specified database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of table names present in the specified database.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-game.factory.object.tool_data.unit_test">
+<span id="game-factory-object-tool-data-unit-test-module"></span><h2>game.factory.object.tool_data.unit_test module<a class="headerlink" href="#module-game.factory.object.tool_data.unit_test" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="game.factory.object.tool_data.unit_test.csv_test">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game.factory.object.tool_data.unit_test.</span></span><span class="sig-name descname"><span class="pre">csv_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/tool_data/unit_test.html#csv_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.tool_data.unit_test.csv_test" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.object.tool_data.unit_test.csv_test.setUp">
+<span class="sig-name descname"><span class="pre">setUp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/tool_data/unit_test.html#csv_test.setUp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.tool_data.unit_test.csv_test.setUp" title="Link to this definition">#</a></dt>
+<dd><p>Hook method for setting up the test fixture before exercising it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.object.tool_data.unit_test.csv_test.tearDown">
+<span class="sig-name descname"><span class="pre">tearDown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/tool_data/unit_test.html#csv_test.tearDown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.tool_data.unit_test.csv_test.tearDown" title="Link to this definition">#</a></dt>
+<dd><p>Hook method for deconstructing the test fixture after testing it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.object.tool_data.unit_test.csv_test.test_append_content">
+<span class="sig-name descname"><span class="pre">test_append_content</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/tool_data/unit_test.html#csv_test.test_append_content"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.tool_data.unit_test.csv_test.test_append_content" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.object.tool_data.unit_test.csv_test.test_overwrite_file">
+<span class="sig-name descname"><span class="pre">test_overwrite_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/tool_data/unit_test.html#csv_test.test_overwrite_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.tool_data.unit_test.csv_test.test_overwrite_file" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.object.tool_data.unit_test.csv_test.test_read_existing_file">
+<span class="sig-name descname"><span class="pre">test_read_existing_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/tool_data/unit_test.html#csv_test.test_read_existing_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.tool_data.unit_test.csv_test.test_read_existing_file" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.object.tool_data.unit_test.csv_test.test_read_nonexistent_file">
+<span class="sig-name descname"><span class="pre">test_read_nonexistent_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/tool_data/unit_test.html#csv_test.test_read_nonexistent_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.tool_data.unit_test.csv_test.test_read_nonexistent_file" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="game.factory.object.tool_data.unit_test.sql_test">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game.factory.object.tool_data.unit_test.</span></span><span class="sig-name descname"><span class="pre">sql_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/tool_data/unit_test.html#sql_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.tool_data.unit_test.sql_test" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.object.tool_data.unit_test.sql_test.test_get_table_by_name">
+<span class="sig-name descname"><span class="pre">test_get_table_by_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/tool_data/unit_test.html#sql_test.test_get_table_by_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.tool_data.unit_test.sql_test.test_get_table_by_name" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="game.factory.object.tool_data.unit_test.sql_test.test_get_tables">
+<span class="sig-name descname"><span class="pre">test_get_tables</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/game/factory/object/tool_data/unit_test.html#sql_test.test_get_tables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.factory.object.tool_data.unit_test.sql_test.test_get_tables" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-game.factory.object.tool_data">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-game.factory.object.tool_data" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="NeuralNet.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">NeuralNet package</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="game.factory.object.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">game.factory.object package</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023, Ruihan Zhao
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">game.factory.object.tool_data package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-game.factory.object.tool_data.data">game.factory.object.tool_data.data module</a><ul>
+<li><a class="reference internal" href="#game.factory.object.tool_data.data.Data"><code class="docutils literal notranslate"><span class="pre">Data</span></code></a><ul>
+<li><a class="reference internal" href="#game.factory.object.tool_data.data.Data.get_table_by_name"><code class="docutils literal notranslate"><span class="pre">Data.get_table_by_name()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-game.factory.object.tool_data.t_csv">game.factory.object.tool_data.t_csv module</a><ul>
+<li><a class="reference internal" href="#game.factory.object.tool_data.t_csv.CSV"><code class="docutils literal notranslate"><span class="pre">CSV</span></code></a><ul>
+<li><a class="reference internal" href="#game.factory.object.tool_data.t_csv.CSV.Read"><code class="docutils literal notranslate"><span class="pre">CSV.Read()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-game.factory.object.tool_data.t_sql">game.factory.object.tool_data.t_sql module</a><ul>
+<li><a class="reference internal" href="#game.factory.object.tool_data.t_sql.SQL"><code class="docutils literal notranslate"><span class="pre">SQL</span></code></a><ul>
+<li><a class="reference internal" href="#game.factory.object.tool_data.t_sql.SQL.get_table_by_name"><code class="docutils literal notranslate"><span class="pre">SQL.get_table_by_name()</span></code></a></li>
+<li><a class="reference internal" href="#game.factory.object.tool_data.t_sql.SQL.get_tables"><code class="docutils literal notranslate"><span class="pre">SQL.get_tables()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-game.factory.object.tool_data.unit_test">game.factory.object.tool_data.unit_test module</a><ul>
+<li><a class="reference internal" href="#game.factory.object.tool_data.unit_test.csv_test"><code class="docutils literal notranslate"><span class="pre">csv_test</span></code></a><ul>
+<li><a class="reference internal" href="#game.factory.object.tool_data.unit_test.csv_test.setUp"><code class="docutils literal notranslate"><span class="pre">csv_test.setUp()</span></code></a></li>
+<li><a class="reference internal" href="#game.factory.object.tool_data.unit_test.csv_test.tearDown"><code class="docutils literal notranslate"><span class="pre">csv_test.tearDown()</span></code></a></li>
+<li><a class="reference internal" href="#game.factory.object.tool_data.unit_test.csv_test.test_append_content"><code class="docutils literal notranslate"><span class="pre">csv_test.test_append_content()</span></code></a></li>
+<li><a class="reference internal" href="#game.factory.object.tool_data.unit_test.csv_test.test_overwrite_file"><code class="docutils literal notranslate"><span class="pre">csv_test.test_overwrite_file()</span></code></a></li>
+<li><a class="reference internal" href="#game.factory.object.tool_data.unit_test.csv_test.test_read_existing_file"><code class="docutils literal notranslate"><span class="pre">csv_test.test_read_existing_file()</span></code></a></li>
+<li><a class="reference internal" href="#game.factory.object.tool_data.unit_test.csv_test.test_read_nonexistent_file"><code class="docutils literal notranslate"><span class="pre">csv_test.test_read_nonexistent_file()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#game.factory.object.tool_data.unit_test.sql_test"><code class="docutils literal notranslate"><span class="pre">sql_test</span></code></a><ul>
+<li><a class="reference internal" href="#game.factory.object.tool_data.unit_test.sql_test.test_get_table_by_name"><code class="docutils literal notranslate"><span class="pre">sql_test.test_get_table_by_name()</span></code></a></li>
+<li><a class="reference internal" href="#game.factory.object.tool_data.unit_test.sql_test.test_get_tables"><code class="docutils literal notranslate"><span class="pre">sql_test.test_get_tables()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-game.factory.object.tool_data">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=51b770b3"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=32e29ea5"></script>
+    </body>
+</html>

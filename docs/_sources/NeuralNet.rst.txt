@@ -1,5 +1,5 @@
-game package
-============
+NeuralNet package
+=================
 
 Subpackages
 -----------
@@ -7,12 +7,12 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   game.factory
+   NeuralNet.StrategyRL
 
 Module contents
 ---------------
 
-.. automodule:: game
+.. automodule:: NeuralNet
    :members:
    :undoc-members:
    :show-inheritance:
