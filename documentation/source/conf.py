@@ -11,7 +11,7 @@ import os, sys
 project = 'Efficiency_RL'
 copyright = '2023, Ruihan Zhao'
 author = 'Ruihan Zhao'
-release = '1.0.0'
+release = '2.0.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -35,5 +35,9 @@ sys.path.insert(0, os.path.abspath(os.path.join('..', '..', 'src')))
 
 
 extensions.append('sphinx.ext.autodoc')
+autodoc_mock_imports = ["torch"]
+
+
 extensions.append('sphinx.ext.viewcode')
+
 
