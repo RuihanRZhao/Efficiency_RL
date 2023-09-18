@@ -40,10 +40,8 @@ class Strategy_Worker(mp.Process):
 
         # initialize the environment to the date of start
         environment.reset(self.start_delta + self.step_now)
-        state: torch.tensor
         state, input_size, num_actions = environment.info()
-        state.to(self.device)
-        print(state.get_device())
+        state = state.to(self.device)
         # summary variables
         total_Reward: float = 0
         total_Earn: float = 0
@@ -69,9 +67,7 @@ class Strategy_Worker(mp.Process):
 
             # Get next state
             next_state, _, _ = environment.info()
-            next_state.to(self.device)
-            next_state.to(self.device)
-            next_state = next_state
+            next_state = next_state.to(self.device)
 
             # record total reward and earn for one game
             total_Reward += float(torch.sum(step_reward).item())
@@ -81,19 +77,20 @@ class Strategy_Worker(mp.Process):
             # Information Processing
 
             # loss function
-            loss_AG = (-step_reward*torch.pow(0.99, action_Out)).sum()
-            loss_AP = (-step_earn*torch.pow(0.99, action_Out)).sum()
+            # loss_AG = (step_reward+torch.log(action_Out)).sum()
+            loss_AP = (step_earn+torch.pow(action_Out,step_earn)).sum()
 
             # zero grad
-            self.Optimizer["AG"].zero_grad()
-            self.Optimizer["AP"].zero_grad()
+            self.Optimizer["All"].zero_grad()
+            # self.Optimizer["AP"].zero_grad()
 
             # backward
-            loss_AG.backward(retain_graph=True)
-            self.Optimizer["AG"].step()
-
+            # loss_AG.backward(retain_graph=True)
             loss_AP.backward()
-            self.Optimizer["AP"].step()
+
+            self.Optimizer["All"].step()
+
+            # self.Optimizer["AP"].step()
 
             # step end
             state = next_state
