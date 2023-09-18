@@ -242,6 +242,24 @@ class Factory:
 
         return _result
 
+    def action_mock(self, action_genes: torch.Tensor) -> (torch.Tensor, torch.Tensor):
+        shape = action_genes.shape
+        num_actions = shape[1]
+        num_choices = shape[2]
+
+        mock_earn = torch.zeros(shape)
+        mock_reward = torch.zeros(shape)
+
+        for NO_choice in range(num_choices):
+            result = self.step(action_genes.t()[NO_choice], mode="mock")
+            temp_earn = result["total_earn"]
+            temp_reward = result["total_reward"]
+            for NO_action in range(num_actions):
+                mock_earn[NO_action, NO_choice] = temp_earn[NO_action]
+                mock_reward[NO_action, NO_choice] = temp_reward[NO_action]
+
+        return mock_earn, mock_reward
+
     def forward(self):
         self.date += timedelta(days=1)
 
@@ -254,6 +272,6 @@ if __name__ == '__main__':
     print(act)
 
     print(
-        example.step([66,0,0,0,0,0,0,0,0,0,0,0,0], "train")
+        example.step([66, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "train")
     )
 

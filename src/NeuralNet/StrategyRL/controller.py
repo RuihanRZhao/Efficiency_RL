@@ -52,7 +52,7 @@ if __name__ == "__main__":
         IP_num_layers=Net_setting["_IP_num_layers"], AG_num_layers=Net_setting["_AG_num_layers"]
     ).to(device)
 
-    central_network.load_state_dict(torch.load(f"model/checkpoint_32559_Interrupt.pth")["State_Dict"])
+    # central_network.load_state_dict(torch.load(f"model/checkpoint_32559_Interrupt.pth")["State_Dict"])
 
     central_network.share_memory()
     optimizer = {

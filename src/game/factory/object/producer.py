@@ -103,7 +103,7 @@ class Producer(object):
         """
         return self.initialize()
 
-    def produce(self, amount: float, materials: list[Material]) -> Dict[str, Union[int, float, str]]:
+    def produce(self, amount: float, materials: list[Material], mode: str = "normal") -> Dict[str, Union[int, float, str]]:
         """Produce goods.
 
         Args:
@@ -143,10 +143,18 @@ class Producer(object):
                             result["Reward"] -= 10
                             result["Output"] += f"Exceed Inventory Capability: Material: [{element.un_id}] | input = {amount}, space = {element.inventory_cap + element.cache_cap - (element.inventory + element.cache)}\n"
 
+        if mode == "normal":
             if result["Reward"] > 0:
                 for element in materials:
                     if element.un_id in self.material:
                         element.inventory_change("produce", amount)
                 result["Output"] += f"Produce {amount} in [{self.un_id}] succeed."
+        if mode == "mock":
+            if result["Reward"] > 0:
+                for element in materials:
+                    if element.un_id in self.material:
+                        element.inventory_change("mock-produce", amount)
+                result["Output"] += f"Produce {amount} in [{self.un_id}] succeed."
+
 
         return result
