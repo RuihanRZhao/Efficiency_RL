@@ -51,8 +51,12 @@ if __name__ == "__main__":
         IP_hidden_size=Net_setting["_IP_hidden_size"], AG_hidden_size=Net_setting["_AG_hidden_size"], AP_hidden_size=Net_setting["_AP_hidden_size"],
         IP_num_layers=Net_setting["_IP_num_layers"], AG_num_layers=Net_setting["_AG_num_layers"]
     ).to(device)
+
+    central_network.load_state_dict(torch.load(f"model/checkpoint_32559_Interrupt.pth")["State_Dict"])
+
     central_network.share_memory()
     optimizer = {
+        "All": optim.Adam(central_network.parameters(), lr=learning_rate),
         "AG": optim.Adam(central_network.action_generation.parameters(), lr=learning_rate),
         "AP": optim.Adam(central_network.action_probability.parameters(), lr=learning_rate),
     }
@@ -70,7 +74,7 @@ if __name__ == "__main__":
         return package
 
     try:
-        for episode in range(0, num_episode):
+        for episode in range(32559, num_episode):
             processes = []
             for rank in range(num_processes):
                 process = Strategy_Worker(
@@ -78,7 +82,8 @@ if __name__ == "__main__":
                     Central_Net=central_network, device=device,
                     optimizers=optimizer,
                     environment=environment,
-                    start_day=random.randint(30, 200),
+                    # start_day=random.randint(30, 200),
+                    start_day=30,
                     step_end=30,
                     Net_structure=Net_setting,
                 )
