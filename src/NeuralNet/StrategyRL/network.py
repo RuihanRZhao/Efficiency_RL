@@ -1,6 +1,6 @@
 import torch
 
-from .net_components import *
+from net_components import *
 
 
 class StrategyRL_Network(nn.Module):
@@ -63,12 +63,12 @@ class StrategyRL_Network(nn.Module):
         AP_output = self.action_probability(AG_output, IP_output)
         AO_output = self.action_output(AG_output, AP_output)
 
-        print(
-            f"size_IP: {IP_output.shape}"
-            f"size_AG: {AG_output.shape}"
-            f"size_AP: {AP_output.shape}"
-            f"size_AO: {AO_output.shape}"
-        )
+        # print(
+        #     f"size_IP: {IP_output.shape}"
+        #     f"size_AG: {AG_output.shape}"
+        #     f"size_AP: {AP_output.shape}"
+        #     f"size_AO: {AO_output.shape}"
+        # )
         return {
             "IP": IP_output,
             "AG": AG_output,
@@ -110,6 +110,7 @@ if __name__ == "__main__":
     AG_output = outputs["AG"]
     AP_output = outputs["AP"]
     AO_output = outputs["AO"]
+
 
     print("IP:", IP_output.shape)
     print("AG:", AG_output.shape)

@@ -127,7 +127,7 @@ class Producer(object):
             result["Reward"] = 0
             result["Output"] += f"Stop Product: [{self.un_id}]"
         elif amount < 0:
-            result["Reward"] -= 100
+            result["Reward"] -= 10
             result["Output"] += f"Cannot take negative value for Product"
         else:
             for element in materials:
@@ -144,17 +144,20 @@ class Producer(object):
                             result["Output"] += f"Exceed Inventory Capability: Material: [{element.un_id}] | input = {amount}, space = {element.inventory_cap + element.cache_cap - (element.inventory + element.cache)}\n"
 
         if mode == "normal":
-            if result["Reward"] > 0:
+            if result["Reward"] >= 0:
                 for element in materials:
                     if element.un_id in self.material:
                         element.inventory_change("produce", amount)
                 result["Output"] += f"Produce {amount} in [{self.un_id}] succeed."
+                result["Reward"] = 10
+
         if mode == "mock":
-            if result["Reward"] > 0:
+            if result["Reward"] >= 0:
                 for element in materials:
                     if element.un_id in self.material:
                         element.inventory_change("mock-produce", amount)
                 result["Output"] += f"Produce {amount} in [{self.un_id}] succeed."
+                result["Reward"] = 10
 
 
         return result

@@ -63,6 +63,7 @@ class Factory:
         # initialize
         self.reset(0)
 
+    def relationship(self):
         # Generate product relationship
         graph_product = Digraph(comment='Product Relation')
         # get dots
@@ -229,26 +230,27 @@ class Factory:
 
         # match dictionary
         if mode == "train":
-            _result = train_return()
+            self.date += timedelta(days=1)
+            for i in self.materials:
+                i.inventory_change("refresh")
+            return train_return()
         elif mode == "play":
-            _result = play_return()
+            self.date += timedelta(days=1)
+            for i in self.materials:
+                i.inventory_change("refresh")
+            return play_return()
         elif mode == "mock":
-            _return = train_return()
+            return train_return()
         else:
-            _result = {}
-        self.date += timedelta(days=1)
-        for i in self.materials:
-            i.inventory_change("refresh")
-
-        return _result
+            return {}
 
     def action_mock(self, action_genes: torch.Tensor) -> (torch.Tensor, torch.Tensor):
         shape = action_genes.shape
-        num_actions = shape[1]
-        num_choices = shape[2]
+        num_actions = shape[0]
+        num_choices = shape[1]
 
-        mock_earn = torch.zeros(shape)
-        mock_reward = torch.zeros(shape)
+        mock_earn = torch.zeros(shape, dtype=torch.float32)
+        mock_reward = torch.zeros(shape, dtype=torch.float32)
 
         for NO_choice in range(num_choices):
             result = self.step(action_genes.t()[NO_choice], mode="mock")

@@ -12,8 +12,8 @@ import random
 
 # environment
 from src.game.factory.environment import Factory
-from .network import StrategyRL_Network as Network_Structure
-from .worker import Strategy_Worker
+from network import StrategyRL_Network as Network_Structure
+from worker import Strategy_Worker
 
 if __name__ == "__main__":
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     # training variable
     learning_rate = 0.01
-    step_max = 30
+    step_max = 7
     num_episode = 1_000_000_000
     checkpoint_interval = 100_000
 
@@ -52,13 +52,16 @@ if __name__ == "__main__":
         IP_num_layers=Net_setting["_IP_num_layers"], AG_num_layers=Net_setting["_AG_num_layers"]
     ).to(device)
 
-    # central_network.load_state_dict(torch.load(f"model/checkpoint_32559_Interrupt.pth")["State_Dict"])
+    model_num = 0
+    if model_num != 0:
+        central_network.load_state_dict(torch.load(f"model/checkpoint_{model_num}_Interrupt.pth")["State_Dict"])
 
     central_network.share_memory()
     optimizer = {
         "All": optim.Adam(central_network.parameters(), lr=learning_rate),
         "AG": optim.Adam(central_network.action_generation.parameters(), lr=learning_rate),
         "AP": optim.Adam(central_network.action_probability.parameters(), lr=learning_rate),
+        "IP": optim.Adam(central_network.information_processing.parameters(), lr=learning_rate),
     }
 
     mp.set_start_method("spawn")
@@ -74,7 +77,7 @@ if __name__ == "__main__":
         return package
 
     try:
-        for episode in range(32559, num_episode):
+        for episode in range(model_num, num_episode):
             processes = []
             for rank in range(num_processes):
                 process = Strategy_Worker(
@@ -84,7 +87,7 @@ if __name__ == "__main__":
                     environment=environment,
                     # start_day=random.randint(30, 200),
                     start_day=30,
-                    step_end=30,
+                    step_end=step_max,
                     Net_structure=Net_setting,
                 )
                 process.run()
