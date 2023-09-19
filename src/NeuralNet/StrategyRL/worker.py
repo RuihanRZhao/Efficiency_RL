@@ -104,13 +104,9 @@ class Strategy_Worker(mp.Process):
             total_mock_AG_earn.append(mock_AG_earn)
             total_mock_AG_reward.append(mock_AG_reward)
 
-            prb_act = []
-            for num_out in range(len(action_Out[0])):
-                for num_prb in range(len(action_Prb[0, num_out])):
-                    if action_Out[0, num_out] == action_Gen[0, num_out, num_prb]:
-                        prb_act.append(num_prb)
-            prb_act = torch.tensor(prb_act)
-            record_prb_act.append(prb_act)
+            self.Optimizer["All"].step()
+
+            # self.Optimizer["AP"].step()
 
             # step end
             state = next_state
@@ -120,6 +116,7 @@ class Strategy_Worker(mp.Process):
             f"step_loss: {[float(i.sum()) for i in record_step_reward]}"
             f"EP: {self.episode:10d}-{self.process:1d}\t| total earn: {total_Earn:15.3f}\t| total reward{total_Reward:20.3f}\t"
             f"Out: {action_Out.tolist()[0]}"
+    
         )
 
         def loss_AG():
@@ -141,7 +138,6 @@ class Strategy_Worker(mp.Process):
             return loss
 
         _loss_AP = loss_AP()
-
 
         self.Optimizer["AG"].zero_grad()
         ag = torch.stack(_loss_AG).sum()

@@ -257,8 +257,8 @@ class Factory:
             temp_earn = result["total_earn"]
             temp_reward = result["total_reward"]
             for NO_action in range(num_actions):
-                mock_earn[NO_action, NO_choice] = temp_earn[NO_action]
-                mock_reward[NO_action, NO_choice] = temp_reward[NO_action]
+                mock_earn[0, NO_action, NO_choice] = temp_earn[NO_action]
+                mock_reward[0, NO_action, NO_choice] = temp_reward[NO_action]
 
         return mock_earn, mock_reward
 
