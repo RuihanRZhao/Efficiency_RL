@@ -55,7 +55,7 @@ class Strategy_Worker(mp.Process):
         record_action_Out = []
         record_action_Prb = []
         record_action_Gen = []
-        record_info_Procs = []
+        # record_info_Procs = []
         record_state = []
         record_step_earn = []
         record_step_reward = []
@@ -69,12 +69,12 @@ class Strategy_Worker(mp.Process):
             action_Out = out_Brain["AO"].to(self.device)
             action_Prb = out_Brain["AP"].to(self.device)
             action_Gen = out_Brain["AG"].to(self.device)
-            info_Procs = out_Brain["IP"].to(self.device)
+            # info_Procs = out_Brain["IP"].to(self.device)
 
             record_action_Out.append(action_Out)
             record_action_Prb.append(action_Prb)
             record_action_Gen.append(action_Gen)
-            record_info_Procs.append(info_Procs)
+            # record_info_Procs.append(info_Procs)
 
             # make a step forward, unpack returned rewards
 
@@ -104,7 +104,13 @@ class Strategy_Worker(mp.Process):
             total_mock_AG_earn.append(mock_AG_earn)
             total_mock_AG_reward.append(mock_AG_reward)
 
-            self.Optimizer["All"].step()
+            prb_act = []
+            for num_out in range(len(action_Out[0])):
+                for num_prb in range(len(action_Prb[0, num_out])):
+                    if action_Out[0, num_out] == action_Gen[0, num_out, num_prb]:
+                        prb_act.append(num_prb)
+            prb_act = torch.tensor(prb_act)
+            record_prb_act.append(prb_act)
 
             # self.Optimizer["AP"].step()
 

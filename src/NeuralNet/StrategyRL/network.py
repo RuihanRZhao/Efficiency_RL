@@ -29,15 +29,15 @@ class StrategyRL_Network(nn.Module):
     ):
         super(StrategyRL_Network, self).__init__()
 
-        self.information_processing = Information_Processing(
-            input_size=input_V_size,
-            hidden_size=IP_hidden_size,
-            num_layers=IP_num_layers
-        )
+        # self.information_processing = Information_Processing(
+        #     input_size=input_V_size,
+        #     hidden_size=IP_hidden_size,
+        #     num_layers=IP_num_layers
+        # )
         AG_input_size = input_V_size + IP_hidden_size
         AG_output_size: int = num_action_choice
         self.action_generation = Action_Generation(
-            input_size=AG_input_size,
+            input_size=input_V_size,
             hidden_size=AG_hidden_size,
             output_size=AG_output_size,
             num_layers=AG_num_layers,
@@ -45,7 +45,7 @@ class StrategyRL_Network(nn.Module):
         )
         self.action_probability = Action_Probability(
             action_generation_output_size=AG_output_size,
-            information_processing_output_size=IP_hidden_size,
+            information_processing_output_size=input_V_size,
             hidden_size=AP_hidden_size,
             information_seq_size=input_H_size,
             num_actions=num_actions
@@ -58,9 +58,9 @@ class StrategyRL_Network(nn.Module):
             self,
             input_matrix,
     ) -> (torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor):
-        IP_output = self.information_processing(input_matrix)
-        AG_output = self.action_generation(IP_output, input_matrix)
-        AP_output = self.action_probability(AG_output, IP_output)
+        # IP_output = self.information_processing(input_matrix)
+        AG_output = self.action_generation(input_matrix)
+        AP_output = self.action_probability(AG_output, input_matrix)
         AO_output = self.action_output(AG_output, AP_output)
 
         # print(
@@ -70,7 +70,7 @@ class StrategyRL_Network(nn.Module):
         #     f"size_AO: {AO_output.shape}"
         # )
         return {
-            "IP": IP_output,
+            # "IP": IP_output,
             "AG": AG_output,
             "AP": AP_output,
             "AO": AO_output,
@@ -106,13 +106,13 @@ if __name__ == "__main__":
 
     # Perform a forward pass through the model
     outputs = model(input_tensor)
-    IP_output = outputs["IP"]
+    # IP_output = outputs["IP"]
     AG_output = outputs["AG"]
     AP_output = outputs["AP"]
     AO_output = outputs["AO"]
 
 
-    print("IP:", IP_output.shape)
+    # print("IP:", IP_output.shape)
     print("AG:", AG_output.shape)
     print("AP:", AP_output.shape)
     print("AO:", AO_output)

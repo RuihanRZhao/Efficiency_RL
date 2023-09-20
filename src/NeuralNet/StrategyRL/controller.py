@@ -61,7 +61,7 @@ if __name__ == "__main__":
         "All": optim.Adam(central_network.parameters(), lr=learning_rate),
         "AG": optim.Adam(central_network.action_generation.parameters(), lr=learning_rate),
         "AP": optim.Adam(central_network.action_probability.parameters(), lr=learning_rate),
-        "IP": optim.Adam(central_network.information_processing.parameters(), lr=learning_rate),
+        # "IP": optim.Adam(central_network.information_processing.parameters(), lr=learning_rate),
     }
 
     mp.set_start_method("spawn")

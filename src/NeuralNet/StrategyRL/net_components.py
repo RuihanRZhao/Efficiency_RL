@@ -47,7 +47,7 @@ class Action_Generation(nn.Module):
         self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True)
         self.fc = nn.Linear(hidden_size, output_size)
 
-    def forward(self, information_output, original_input):
+    def forward(self,original_input):
         """
         Forward pass of the Action_Generation module.
 
@@ -59,7 +59,8 @@ class Action_Generation(nn.Module):
             torch.Tensor: Action matrix.
         """
         # Concatenate the two input matrices along a specified dimension (e.g., dimension 2)
-        combined_input = torch.cat((information_output, original_input), dim=2)
+        combined_input = original_input
+        # combined_input = torch.cat((information_output, original_input), dim=2)
         lstm_out, _ = self.lstm(combined_input)
         action_matrix = self.fc(lstm_out)
         return action_matrix[:, :self.num_actions, :]
@@ -75,7 +76,7 @@ class Action_Probability(nn.Module):
         hidden_size (int): The size of the hidden layer in the DNN.
 
     """
-    def __init__(self, action_generation_output_size, num_actions,information_processing_output_size, information_seq_size, hidden_size):
+    def __init__(self, action_generation_output_size, num_actions, information_processing_output_size, information_seq_size, hidden_size):
         super(Action_Probability, self).__init__()
 
         # Create DNN structure for action generation output
