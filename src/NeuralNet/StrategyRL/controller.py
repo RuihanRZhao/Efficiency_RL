@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     # training variable
     learning_rate = 0.01
-    step_max = 7
+    step_max = 20
     num_episode = 1_000_000_000
     checkpoint_interval = 100_000
 
