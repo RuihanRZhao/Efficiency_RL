@@ -143,11 +143,10 @@ class Action_Output(nn.Module):
 
         _v = action_probability_output.view(seq_len, -1)
         action_indices = torch.multinomial(_v, 1)
+
         action_indices = action_indices.view(batch_size, -1, 1)
 
-        # Gather the corresponding actions from the action generation output
-        selected_actions = torch.gather(action_generation_output, 2, action_indices)
-        return selected_actions.squeeze(2)
+        return action_indices.squeeze(2)
 
 
 if __name__ == '__main__':
@@ -289,7 +288,7 @@ if __name__ == '__main__':
         # Pass the input through Information Processing
         information_output = info_processing_net(original_input_matrix)
         # Pass both matrices through Action Generation
-        action_matrix = action_generation_net(information_output, original_input_matrix)
+        action_matrix = action_generation_net(original_input_matrix)
         # Pass both matrices through Action Probability
         action_probabilities = action_probability_net(action_matrix, information_output)
         # Pass Action Generation output and Action Probability output through Action Output

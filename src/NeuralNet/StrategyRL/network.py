@@ -115,4 +115,4 @@ if __name__ == "__main__":
     # print("IP:", IP_output.shape)
     print("AG:", AG_output.shape)
     print("AP:", AP_output.shape)
-    print("AO:", AO_output)
+    print("AO:", AO_output.shape)
