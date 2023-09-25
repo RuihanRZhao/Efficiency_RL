@@ -47,7 +47,7 @@ class Action_Generation(nn.Module):
         self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True)
         self.fc = nn.Linear(hidden_size, output_size)
 
-    def forward(self, information_output, original_input):
+    def forward(self, original_input):
         """
         Forward pass of the Action_Generation module.
 
@@ -59,7 +59,8 @@ class Action_Generation(nn.Module):
             torch.Tensor: Action matrix.
         """
         # Concatenate the two input matrices along a specified dimension (e.g., dimension 2)
-        combined_input = torch.cat((information_output, original_input), dim=2)
+        combined_input = original_input
+        # combined_input = torch.cat((information_output, original_input), dim=2)
         lstm_out, _ = self.lstm(combined_input)
         action_matrix = self.fc(lstm_out)
         return action_matrix[:, :self.num_actions, :]
@@ -75,7 +76,7 @@ class Action_Probability(nn.Module):
         hidden_size (int): The size of the hidden layer in the DNN.
 
     """
-    def __init__(self, action_generation_output_size, num_actions,information_processing_output_size, information_seq_size, hidden_size):
+    def __init__(self, action_generation_output_size, num_actions, information_processing_output_size, information_seq_size, hidden_size):
         super(Action_Probability, self).__init__()
 
         # Create DNN structure for action generation output
@@ -142,11 +143,10 @@ class Action_Output(nn.Module):
 
         _v = action_probability_output.view(seq_len, -1)
         action_indices = torch.multinomial(_v, 1)
+
         action_indices = action_indices.view(batch_size, -1, 1)
 
-        # Gather the corresponding actions from the action generation output
-        selected_actions = torch.gather(action_generation_output, 2, action_indices)
-        return selected_actions.squeeze(2)
+        return action_indices.squeeze(2)
 
 
 if __name__ == '__main__':
@@ -288,7 +288,7 @@ if __name__ == '__main__':
         # Pass the input through Information Processing
         information_output = info_processing_net(original_input_matrix)
         # Pass both matrices through Action Generation
-        action_matrix = action_generation_net(information_output, original_input_matrix)
+        action_matrix = action_generation_net(original_input_matrix)
         # Pass both matrices through Action Probability
         action_probabilities = action_probability_net(action_matrix, information_output)
         # Pass Action Generation output and Action Probability output through Action Output

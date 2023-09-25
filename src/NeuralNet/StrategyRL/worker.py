@@ -55,7 +55,7 @@ class Strategy_Worker(mp.Process):
         record_action_Out = []
         record_action_Prb = []
         record_action_Gen = []
-        record_info_Procs = []
+        # record_info_Procs = []
         record_state = []
         record_step_earn = []
         record_step_reward = []
@@ -69,22 +69,29 @@ class Strategy_Worker(mp.Process):
             action_Out = out_Brain["AO"].to(self.device)
             action_Prb = out_Brain["AP"].to(self.device)
             action_Gen = out_Brain["AG"].to(self.device)
-            info_Procs = out_Brain["IP"].to(self.device)
+            # info_Procs = out_Brain["IP"].to(self.device)
 
             record_action_Out.append(action_Out)
             record_action_Prb.append(action_Prb)
             record_action_Gen.append(action_Gen)
-            record_info_Procs.append(info_Procs)
+            # record_info_Procs.append(info_Procs)
+            actions = []
+            prb_act = []
+            for i, choice in enumerate(action_Out[0]):
+                actions.append(float(action_Gen[0][i][choice]))
+                prb_act.append(action_Prb[0][i][choice])
+
+            prb_act = torch.tensor(prb_act)
+            record_prb_act.append(prb_act)
 
             # make a step forward, unpack returned rewards
-
             step_result = self.environment.step(
-                action=action_Out.tolist()[0],
+                action=actions,
                 mode="train"
             )
             step_earn: torch.tensor = step_result["total_earn"].to(self.device)
             step_reward: torch.tensor = step_result["total_reward"].to(self.device)
-            step_earn.to(torch.float32).requires_grad_()
+            step_earn.requires_grad_()
 
             record_step_earn.append(step_earn)
             record_step_reward.append(step_reward)
@@ -104,7 +111,7 @@ class Strategy_Worker(mp.Process):
             total_mock_AG_earn.append(mock_AG_earn)
             total_mock_AG_reward.append(mock_AG_reward)
 
-            self.Optimizer["All"].step()
+
 
             # self.Optimizer["AP"].step()
 
@@ -112,17 +119,16 @@ class Strategy_Worker(mp.Process):
             state = next_state
             self.step_now += 1
 
-        print(
-            f"step_loss: {[float(i.sum()) for i in record_step_reward]}"
-            f"EP: {self.episode:10d}-{self.process:1d}\t| total earn: {total_Earn:15.3f}\t| total reward{total_Reward:20.3f}\t"
-            f"Out: {action_Out.tolist()[0]}"
-    
-        )
+            print(
+                # f"step_loss: {[float(i.sum()) for i in record_step_reward]}"
+                f"EP: {self.episode:10d}-{self.process:1d}-{self.step_now}\t| earn: {float(step_earn.sum()):15.3f}\t| reward{float(step_reward.sum()):20.3f}\t"
+                f"Out: {actions}"
+            )
 
         def loss_AG():
             loss = []
             for i in range(len(total_mock_AG_earn)):
-                step_loss = -total_mock_AG_reward[i].sum()
+                step_loss = total_mock_AG_reward[i].sum()
                 loss.append(step_loss)
             return loss
 
@@ -131,7 +137,7 @@ class Strategy_Worker(mp.Process):
         def loss_AP():
             loss = []
             for i in range(len(record_step_earn)):
-                step_loss = -torch.log(record_prb_act[i])*record_step_earn[i]
+                step_loss = torch.log(record_prb_act[i])*record_step_earn[i]
                 # print(record_prb_act[i], " | ", record_step_earn[i])
                 loss.append(step_loss)
 
