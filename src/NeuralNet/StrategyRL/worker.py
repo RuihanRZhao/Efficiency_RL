@@ -111,8 +111,6 @@ class Strategy_Worker(mp.Process):
             total_mock_AG_earn.append(mock_AG_earn)
             total_mock_AG_reward.append(mock_AG_reward)
 
-
-
             # self.Optimizer["AP"].step()
 
             # step end

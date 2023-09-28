@@ -5,11 +5,11 @@ Click [here](https://ruihanrzhao.github.io/Efficiency_RL/index.html) to the docu
 
 ## Requirement 需求
 
-| name     | version | require |
-|----------|---------|---------|
-| python   | 3.10    | Must    |
-| anaconda | 23.3.1  | Must    |
-| cuda     |         | Flex    |
+| name    | version | require |
+|---------|---------|---------|
+| python  | 3.10    | Must    |
+| pytorch | 2.0.1   | Must    |
+| cuda    |         | Flex    |
 
 ## Install Instructions 安装指南
 ### anaconda
