@@ -83,7 +83,7 @@ class Producer(object):
 
         return info
 
-    def initialize(self) -> bool:
+    def initialize(self):
         """Initialize the Producer object with default values.
 
         Returns:
@@ -93,7 +93,7 @@ class Producer(object):
         self.material = self.raw_data["material"]
         self.daily_low_cost = self.raw_data["daily_low_cost"]
         self.daily_produce_cap = self.raw_data["daily_produce_cap"]
-        return True
+        return self
 
     def reset(self) -> bool:
         """Reset the Producer's properties to their initial values.

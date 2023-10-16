@@ -88,6 +88,9 @@ class Factory:
         """
         self.materials = self.raw["material"]
         self.producers = self.raw["producer"]
+
+        self.materials = [i.reset() for i in self.materials]
+        self.producers = [i.reset() for i in self.producers]
         self.date = self.date_start + timedelta(day_plus)
 
     def info(self) -> (torch.Tensor, list, int):

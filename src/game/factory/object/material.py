@@ -133,7 +133,7 @@ class Material(object):
             f"Origin Cache: {self.cache}  |  Capability of Cache: {self.cache_cap}\n"
         )
 
-    def initialize(self) -> bool:
+    def initialize(self):
         """
         Initialize the Material's properties based on the raw_data dictionary.
 
@@ -150,7 +150,7 @@ class Material(object):
             "purchase": self.raw_data["purchase_permit"],
             "sale": self.raw_data["sale_permit"],
         }
-        return True
+        return self
 
     def reset(self) -> bool:
         """
