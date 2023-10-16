@@ -111,25 +111,24 @@ class Strategy_Worker(mp.Process):
             total_mock_AG_earn.append(mock_AG_earn)
             total_mock_AG_reward.append(mock_AG_reward)
 
-
-
             # self.Optimizer["AP"].step()
 
             # step end
             state = next_state
             self.step_now += 1
 
-            print(
-                # f"step_loss: {[float(i.sum()) for i in record_step_reward]}"
-                f"EP: {self.episode:10d}-{self.process:1d}-{self.step_now}\t| earn: {float(step_earn.sum()):15.3f}\t| reward{float(step_reward.sum()):20.3f}\t"
-                f"Out: {actions}"
-            )
+            # print(
+            #     # f"step_loss: {[float(i.sum()) for i in record_step_reward]}"
+            #     f"EP: {self.episode:10d}-{self.process:1d}-{self.step_now}\t| earn: {float(step_earn.sum()):15.3f}\t| reward{float(step_reward.sum()):20.3f}\t"
+            #     f"Out: {actions}"
+            # )
 
+        target_earn = 1000
         def loss_AG():
             loss = []
             for i in range(len(total_mock_AG_earn)):
                 step_loss = total_mock_AG_reward[i].sum()
-                loss.append(step_loss)
+                loss.append(200 - step_loss)
             return loss
 
         _loss_AG = loss_AG()
@@ -137,7 +136,7 @@ class Strategy_Worker(mp.Process):
         def loss_AP():
             loss = []
             for i in range(len(record_step_earn)):
-                step_loss = torch.log(record_prb_act[i])*record_step_earn[i]
+                step_loss = torch.log(record_prb_act[i])*(1000-record_step_earn[i])
                 # print(record_prb_act[i], " | ", record_step_earn[i])
                 loss.append(step_loss)
 
@@ -153,6 +152,12 @@ class Strategy_Worker(mp.Process):
         self.Optimizer["AP"].zero_grad()
         torch.stack(_loss_AP).sum().backward()
         self.Optimizer["AP"].step()
+
+        print(
+            # f"step_loss: {[float(i.sum()) for i in record_step_reward]}"
+            f"EP: {self.episode:10d}-{self.process:1d}\t| earn: {float(total_Earn):15.3f}\t| reward{float(total_Reward):20.3f}\t"
+            # f"Out: {actions}"
+        )
 
         # self.Optimizer["IP"].zero_grad()
         # loss_IP.backward()

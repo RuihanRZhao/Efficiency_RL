@@ -52,7 +52,7 @@ if __name__ == "__main__":
         IP_num_layers=Net_setting["_IP_num_layers"], AG_num_layers=Net_setting["_AG_num_layers"]
     ).to(device)
 
-    model_num = 0
+    model_num = 1721
     if model_num != 0:
         central_network.load_state_dict(torch.load(f"model/checkpoint_{model_num}_Interrupt.pth")["State_Dict"])
 
